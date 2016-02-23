@@ -4,12 +4,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.codepath.oauth.OAuthLoginActionBarActivity;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class LoginActivity extends OAuthLoginActionBarActivity<RestClient> {
 
@@ -54,17 +58,19 @@ public class LoginActivity extends OAuthLoginActionBarActivity<RestClient> {
 	// Uses the client to initiate OAuth authorization
 	// This should be tied to a button used to login
 	public void onFindPets(View view) {
-
-
-		getClient().findPetList(new AsyncHttpResponseHandler() {
-			@Override
-			public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-				Log.d("LoginActivity", "SUCCESS");
+		getClient().findPetList(new JsonHttpResponseHandler(){
+			@Override public  void onSuccess(int statusCode, Header[] headers, JSONArray json) {
+//				aTweets.addAll(Tweet.fromJSONArray(json));
+//				client.lowest_id_received = findMinId();
+//				pb.setVisibility(ProgressBar.INVISIBLE);
+				String jsonString = json.toString();
+				Log.d("DEBUG", jsonString);
 			}
 
 			@Override
-			public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-				Log.d("LoginActivity", "FAILURE");
+			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+				Log.d("DEBUG",errorResponse.toString());
+//				pb.setVisibility(ProgressBar.INVISIBLE);
 			}
 		});
 	}

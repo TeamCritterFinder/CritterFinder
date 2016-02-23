@@ -28,6 +28,7 @@ public class RestClient extends OAuthBaseClient {
 	public static final String REST_CONSUMER_SECRET = "f83cf7247c48af6df08bb61064ba01ab"; 	// Petfinder Secret
 	public static final String REST_CALLBACK_URL = "oauth://cprest"; // Change this (here and in manifest)
 
+
 	public RestClient(Context context) {
 		super(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, REST_CALLBACK_URL);
 	}
@@ -42,14 +43,24 @@ public class RestClient extends OAuthBaseClient {
 		client.get(apiUrl, params, handler);
 	}
 
-	// CHANGE THIS
-	// DEFINE METHODS for different API endpoints here
+	// PetFinder get list of pets
 	public void findPetList(AsyncHttpResponseHandler handler) {
 		String apiUrl = getApiUrl("pet.find");
 		// Can specify query string params directly or through RequestParams.
 		RequestParams params = new RequestParams();
 		params.put("format", "json");
-		params.put("count", 25);
+//		params.put("count", 25);
+		params.put("key", REST_CONSUMER_KEY);
+		client.get(apiUrl, params, handler);
+	}
+
+	// PetFinder get authenticated token good usually for 60 minutes
+	public void getToken(AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("pet.find");
+		// Can specify query string params directly or through RequestParams.
+		RequestParams params = new RequestParams();
+		params.put("format", "json");
+		params.put("key", REST_CONSUMER_KEY);
 		client.get(apiUrl, params, handler);
 	}
 
