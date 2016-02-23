@@ -23,9 +23,9 @@ import com.loopj.android.http.RequestParams;
  */
 public class RestClient extends OAuthBaseClient {
 	public static final Class<? extends Api> REST_API_CLASS = FlickrApi.class; // Change this
-	public static final String REST_URL = "http://api.flickr.com/services"; // Change this, base API URL
-	public static final String REST_CONSUMER_KEY = "SOME_KEY";       // Change this
-	public static final String REST_CONSUMER_SECRET = "SOME_SECRET"; // Change this
+	public static final String REST_URL = "http://api.petfinder.com"; // PetFinder, base API URL
+	public static final String REST_CONSUMER_KEY = "7afaf97ae32a304d684d620381a63e3b";       // PetFinder
+	public static final String REST_CONSUMER_SECRET = "f83cf7247c48af6df08bb61064ba01ab"; 	// Petfinder Secret
 	public static final String REST_CALLBACK_URL = "oauth://cprest"; // Change this (here and in manifest)
 
 	public RestClient(Context context) {
@@ -39,6 +39,17 @@ public class RestClient extends OAuthBaseClient {
 		// Can specify query string params directly or through RequestParams.
 		RequestParams params = new RequestParams();
 		params.put("format", "json");
+		client.get(apiUrl, params, handler);
+	}
+
+	// CHANGE THIS
+	// DEFINE METHODS for different API endpoints here
+	public void findPetList(AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("pet.find");
+		// Can specify query string params directly or through RequestParams.
+		RequestParams params = new RequestParams();
+		params.put("format", "json");
+		params.put("count", 25);
 		client.get(apiUrl, params, handler);
 	}
 
