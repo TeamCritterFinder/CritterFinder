@@ -9,8 +9,6 @@ The problem
 7.6 Million companion animals enter shelters every year, of these 2.7 Million are adopted. Unfortunately each year another 2.7 Million Animals don't find a home and are euthanized.   *Source SPCA
 
 
-The following things are supported out of the box:
-
 ## User Stories
 
  * I want to see a list of nearby pets
