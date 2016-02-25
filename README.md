@@ -1,14 +1,16 @@
-# RestClientTemplate
+# Critter Finder
 
 ## Overview
 
-RestClientTemplate is a skeleton Android project that makes writing Android apps sourced from OAuth JSON REST APIs as easy as possible. This skeleton project
-combines the best libraries and structure to enable quick development of rich API clients. The following things are supported out of the box:
+The goal of Critter Finders is to help dogs and cats find much needed homes, and reunite lost pets.
 
- * Authenticating with any OAuth 1.0a or OAuth 2 API
- * Sending requests for and parsing JSON API data using a defined client
- * Persisting data to a local SQLite store through an ORM layer
- * Displaying and caching remote image data into views
+The problem
+
+7.6 Million companion animals enter shelters every year, of these 2.7 Million are adopted. Unfortunately each year another 2.7 Million Animals don't find a home and are euthanized.   *Source SPCA
+
+
+The following things are supported out of the box:
+
 
 The following libraries are used to make this possible:
 
@@ -18,7 +20,10 @@ The following libraries are used to make this possible:
  * [Picasso](https://github.com/square/picasso) - Used for async image loading and caching them in memory and on disk.
  * [ActiveAndroid](https://github.com/pardom/ActiveAndroid) - Simple ORM for persisting a local SQLite database on the Android device
 
-## Usage
+## User Stories
+
+ * Identify User State (whether first launch or subsequent)
+ * 
 
 ### 1. Configure the REST client
 
