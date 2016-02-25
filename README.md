@@ -22,8 +22,14 @@ The following libraries are used to make this possible:
 
 ## User Stories
 
- * Identify User State (whether first launch or subsequent)
- * 
+ * I want to see a list of nearby pets
+ * I want to see more information about a particular pet e.g. Age, Breed, Characteristics
+ * I want to mark pets that I am interested in learning more about
+ * I want to be able search by my Location, Dogs Breed, Gender, Age or Size
+ * I want to see list of pets that I am interested in checking out
+ * I should be able to drill down on details for the pets I have marked as being interested in
+ * I should be able to launch the app again and filter based on previous search criteria
+ * I should be ablt to change search criteria
 
 ### 1. Configure the REST client
 
