@@ -30,6 +30,7 @@ The following libraries are used to make this possible:
  * I should be able to drill down on details for the pets I have marked as being interested in
  * I should be able to launch the app again and filter based on previous search criteria
  * I should be ablt to change search criteria
+ * I don't want to have pets that I have flagged as not being interested in displayed again
 
 ### 1. Configure the REST client
 
