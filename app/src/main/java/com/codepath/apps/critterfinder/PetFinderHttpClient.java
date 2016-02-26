@@ -35,7 +35,7 @@ public class PetFinderHttpClient  {
         params.put("format", "json");
 //		params.put("count", 25);
         params.put("key", REST_CONSUMER_KEY);
-        params.put("location", "94941");
+        params.put("location", "94941");        // TO DO don't hard code Zip Code
         client.get(apiUrl, params, handler);
     }
 
