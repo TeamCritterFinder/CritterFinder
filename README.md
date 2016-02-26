@@ -21,6 +21,15 @@ The problem
  * I should be ablt to change search criteria
  * I don't want to have pets that I have flagged as not being interested in displayed again
  * I want to be able to get info & contact the shelter the pet is located 
+ * 
+ 
+## Wireframe 
+
+Here's the wireframe of implemented user stories:
+
+<img src='https://github.com/TeamCritterFinder/CritterFinder/blob/master/CFWireframe/index.html' title='Wireframe' width='' alt='Critter Finder Wireframe' />
+
+Wireframe created with [pencils](http://pencil.evolus.vn).
 
 ### The following libraries are used to make this possible:
 
