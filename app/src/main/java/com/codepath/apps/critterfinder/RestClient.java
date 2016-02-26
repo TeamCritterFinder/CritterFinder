@@ -51,6 +51,7 @@ public class RestClient extends OAuthBaseClient {
 		params.put("format", "json");
 //		params.put("count", 25);
 		params.put("key", REST_CONSUMER_KEY);
+		params.put("location", 94941);
 		client.get(apiUrl, params, handler);
 	}
 
