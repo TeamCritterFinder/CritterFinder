@@ -26,7 +26,7 @@ The problem
 ## Wireframe 
 
 Here's the wireframe of implemented user stories:
-
+Please click [here](https://github.com/TeamCritterFinder/CritterFinder/blob/master/CFWireframe/index.html) to see the wireframe.
 <img src='https://github.com/TeamCritterFinder/CritterFinder/blob/master/CFWireframe/index.html' title='Wireframe' width='' alt='Critter Finder Wireframe' />
 
 Wireframe created with [pencils](http://pencil.evolus.vn).
