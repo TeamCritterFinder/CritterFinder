@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.codepath.apps.critterfinder.models.PetModel;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.squareup.picasso.Picasso;
 
 
 import org.json.JSONArray;
@@ -86,6 +87,7 @@ public class FindActivity extends AppCompatActivity {
 	private void updateViewWithPet(PetModel petModel) {
 		this.petNameView.setText(petModel.getName());
 		this.petSexView.setText(petModel.getSex());
+		Picasso.with(this).load(petModel.getImageUrl()).into(petImage);
 	}
 
 	public void onLike(View v) {

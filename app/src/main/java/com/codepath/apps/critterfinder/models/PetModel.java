@@ -34,13 +34,38 @@ public class PetModel implements Serializable {
         try {
             this.name = petJson.getJSONObject("name").getString(weirdNameSpace);
             this.sex = petJson.getJSONObject("sex").getString(weirdNameSpace);
-            JSONArray media = petJson.getJSONArray("media");
-            if (media != null && media.length() > 0) {
-
+            JSONObject photosObject = petJson.getJSONObject("media").getJSONObject("photos");
+            if (photosObject != null) {
+                JSONArray photosArray = photosObject.getJSONArray("photo");
+                if (photosArray != null & photosArray.length() > 0) {
+//                    JSONObject photoObject = (JSONObject)photosArray.get(0);
+                    JSONObject photoObject = findObjectWithNameValuePair(photosArray,"@size","pn");
+                    imageUrl = photoObject.getString(weirdNameSpace);
+                    imageUrl.replace("\\/","/");
+                }
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    // look up a node in the array that contains a matching name value pair and return it
+    public static JSONObject findObjectWithNameValuePair(JSONArray jsonArray,String name, String value) {
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject currentObject = null;
+            try {
+                currentObject = (JSONObject)jsonArray.get(i);
+                String objectValue = currentObject.getString(name);
+                if (objectValue.length() > 0) {
+                    if (objectValue.compareTo(value) == 0)
+                        return currentObject;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
     public static ArrayList<PetModel> fromJSONArray(JSONArray array) {
