@@ -33,7 +33,7 @@ public class PetModel implements Serializable {
     public PetModel(JSONObject petJson) {
         try {
             this.name = petJson.getJSONObject("name").getString(weirdNameSpace);
-            this.sex = petJson.getString("sex");
+            this.sex = petJson.getJSONObject("sex").getString(weirdNameSpace);
             JSONArray media = petJson.getJSONArray("media");
             if (media != null && media.length() > 0) {
 

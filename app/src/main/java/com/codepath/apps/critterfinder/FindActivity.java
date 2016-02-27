@@ -23,6 +23,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class FindActivity extends AppCompatActivity {
 	TextView petNameView;
+	TextView petSexView;
 	ImageView petImage;
 	ArrayList<PetModel> petsList;
 	Integer currentPet = 0;
@@ -32,8 +33,9 @@ public class FindActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_find);
 		petNameView = (TextView)findViewById(R.id.petName);
+		petSexView = (TextView)findViewById(R.id.petSex);
 		petImage = (ImageView)findViewById(R.id.petImage);
-
+		onFindPets();
 	}
 
 
@@ -47,7 +49,7 @@ public class FindActivity extends AppCompatActivity {
 	// Click handler method for the button used to start OAuth flow
 	// Uses the client to initiate OAuth authorization
 	// This should be tied to a button used to login
-	public void onFindPets(View view) {
+	public void onFindPets() {
 		PetFinderHttpClient client = new PetFinderHttpClient();
 		try {
 
@@ -83,6 +85,14 @@ public class FindActivity extends AppCompatActivity {
 
 	private void updateViewWithPet(PetModel petModel) {
 		this.petNameView.setText(petModel.getName());
+		this.petSexView.setText(petModel.getSex());
+	}
 
+	public void onLike(View v) {
+		updateViewWithPet(petsList.get(++currentPet));
+	}
+
+	public void onDislike(View v) {
+		updateViewWithPet(petsList.get(++currentPet));
 	}
 }
