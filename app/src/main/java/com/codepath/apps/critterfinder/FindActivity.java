@@ -83,6 +83,6 @@ public class FindActivity extends AppCompatActivity {
 
 	private void updateViewWithPet(PetModel petModel) {
 		this.petNameView.setText(petModel.getName());
-		
+
 	}
 }

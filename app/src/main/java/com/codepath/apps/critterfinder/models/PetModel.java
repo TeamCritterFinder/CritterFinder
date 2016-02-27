@@ -14,6 +14,7 @@ public class PetModel implements Serializable {
     String name;
     String imageUrl;
     String sex;
+    private static String weirdNameSpace = "$t";
 
     public String getName() {
         return name;
@@ -31,7 +32,7 @@ public class PetModel implements Serializable {
 
     public PetModel(JSONObject petJson) {
         try {
-            this.name = petJson.getString("name");
+            this.name = petJson.getJSONObject("name").getString(weirdNameSpace);
             this.sex = petJson.getString("sex");
             JSONArray media = petJson.getJSONArray("media");
             if (media != null && media.length() > 0) {
