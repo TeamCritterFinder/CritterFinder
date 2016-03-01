@@ -4,4 +4,7 @@
     <string name="app_name">Critter Finder</string>
     <string name="login_label">Log in</string>
 
+    <!-- Pet Details Strings -->
+    <string name="pet_details_description">Example text description. This is a great pet to adopt. Adopt me!</string>
+
 </resources>
