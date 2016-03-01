@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.codepath.apps.critterfinder.R;
+import com.codepath.apps.critterfinder.models.PetModel;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -17,7 +18,19 @@ import butterknife.ButterKnife;
  */
 public class PetDetailsFragment extends Fragment {
 
+    private static final String ARGUMENT_PET = "ARGUMENT_USER_ID";
+
     @Bind(R.id.text_pet_details) TextView mPetDetailsLabel;
+
+    public static PetDetailsFragment newInstance(PetModel pet) {
+        PetDetailsFragment petDetailsFragment = new PetDetailsFragment();
+        Bundle args = new Bundle();
+
+        // TODO - once our pet model is parcelable wire it up
+        args.putString(ARGUMENT_PET, "");
+        petDetailsFragment.setArguments(args);
+        return petDetailsFragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
