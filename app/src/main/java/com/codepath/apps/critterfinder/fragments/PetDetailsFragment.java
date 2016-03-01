@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
  */
 public class PetDetailsFragment extends Fragment {
 
-    private static final String ARGUMENT_PET = "ARGUMENT_USER_ID";
+    private static final String ARGUMENT_PET = "ARGUMENT_PET";
 
     @Bind(R.id.text_pet_details) TextView mPetDetailsLabel;
 
