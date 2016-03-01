@@ -47,8 +47,6 @@
             android:name=".activities.PetDetailsActivity"
             android:label="@string/title_activity_pet_details"
             android:theme="@style/AppTheme.NoActionBar">
-
-
         </activity>
     </application>
 
