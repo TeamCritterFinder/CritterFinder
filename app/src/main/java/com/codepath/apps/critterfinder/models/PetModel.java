@@ -71,13 +71,12 @@ public class PetModel implements Serializable {
     public static ArrayList<PetModel> fromJSONArray(JSONArray array) {
         ArrayList<PetModel> results = new ArrayList<>();
 
-        for (int x=0; x< array.length(); x++) {
+        for (int x=0; x < array.length(); x++) {
             try {
                 results.add(new PetModel(array.getJSONObject(x)));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
         }
         return results;
     }
