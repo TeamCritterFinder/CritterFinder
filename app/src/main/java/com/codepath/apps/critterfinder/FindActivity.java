@@ -1,6 +1,7 @@
 package com.codepath.apps.critterfinder;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -9,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.apps.critterfinder.models.PetModel;
+import com.codepath.apps.critterfinder.services.LocationService;
 import com.loopj.android.http.JsonHttpResponseHandler;
-
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,12 +22,13 @@ import java.util.ArrayList;
 import cz.msebera.android.httpclient.Header;
 
 
-public class FindActivity extends AppCompatActivity {
+public class FindActivity extends AppCompatActivity implements LocationService.OnLocationListener {
 	TextView petNameView;
 	TextView petSexView;
 	ImageView petImage;
 	ArrayList<PetModel> petsList;
 	Integer currentPet = 0;
+	LocationService mLocationService;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,25 @@ public class FindActivity extends AppCompatActivity {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		mLocationService = new LocationService(this, this);
+	}
+
+	@Override
+	public void onLocationAvailable() {
+
+	}
+
+	@Override
+	public void onLocationFailed() {
+		Snackbar.make(findViewById(android.R.id.content),
+				"Make sure you have google play services installed",
+				Snackbar.LENGTH_LONG).
+				show();
 	}
 
 	private void updateViewWithPet(PetModel petModel) {
