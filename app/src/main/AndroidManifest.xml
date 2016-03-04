@@ -6,7 +6,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -46,8 +45,11 @@
         <activity
             android:name=".activities.PetDetailsActivity"
             android:label="@string/title_activity_pet_details"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activities.PetFavoritesActivity"
+            android:label="@string/title_activity_pet_favorites"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
