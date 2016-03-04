@@ -25,7 +25,6 @@ public class LocationService implements GoogleApiClient.ConnectionCallbacks,
 
     private Context mContext;
     private GoogleApiClient mGoogleApiClient;
-    private Location mLastLocation;
 
     // for notifying our activity about the zip code
     private OnLocationListener mLocationListener;
@@ -39,20 +38,21 @@ public class LocationService implements GoogleApiClient.ConnectionCallbacks,
 
     @Override
     public void onConnected(Bundle bundle) {
+        Location location = null;
         try {
-            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
             // TODO - not getting a consistent last location out of the genymotion simulator
             // for now make sure we send something back...
-            if (mLastLocation == null) {
-                mLastLocation = new Location("Placeholder");
-                mLastLocation.setLatitude(37.743242);
-                mLastLocation.setLongitude(-122.497667);
+            if (location == null) {
+                location = new Location("Placeholder");
+                location.setLatitude(37.743242);
+                location.setLongitude(-122.497667);
             }
         } catch (SecurityException ex) {
             ex.printStackTrace();
         }
 
-        new GeoCoderAsyncTask().execute(mLastLocation);
+        new GeoCoderAsyncTask().execute(location);
     }
 
     @Override

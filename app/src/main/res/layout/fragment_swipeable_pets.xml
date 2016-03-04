@@ -6,47 +6,49 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".FindActivity" >
+    tools:context=".fragments.SwipeablePetsFragment"
+    tools:showIn="@layout/activity_pet_browser">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:id="@+id/petImage"
-        />
+        android:scaleType="fitCenter"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/image_pet"/>
 
     <TextView
-        android:layout_below="@id/petImage"
+        android:layout_below="@id/image_pet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:id="@+id/petSex"/>
+        android:id="@+id/text_pet_gender"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
-        android:layout_toRightOf="@id/petSex"
-        android:layout_below="@id/petImage"
+        android:layout_toRightOf="@id/text_pet_gender"
+        android:layout_below="@id/image_pet"
         android:text="Pet Name"
-        android:id="@+id/petName"/>
+        android:id="@+id/text_pet_name"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Pass"
         android:onClick="onDislike"
-        android:layout_below="@id/petName"
-        android:id="@+id/passBtn"
-        />
+        android:layout_below="@id/text_pet_name"
+        android:id="@+id/button_pass"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Like"
         android:onClick="onLike"
-        android:layout_below="@id/petName"
-        android:id="@+id/likeButtton"
-        android:layout_toRightOf="@id/passBtn"
-        />
+        android:layout_below="@id/text_pet_name"
+        android:id="@+id/button_like"
+        android:layout_toRightOf="@id/button_pass"/>
 
 </RelativeLayout>

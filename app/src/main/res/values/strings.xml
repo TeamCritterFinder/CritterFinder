@@ -7,5 +7,11 @@
     <!-- Pet Details Strings -->
     <string name="pet_details_description">Example text description. This is a great pet to adopt. Adopt me!</string>
     <string name="title_activity_pet_details">PetDetailsActivity</string>
+    <string name="action_settings">Settings</string>
 
+    <!-- Pet Browser -->
+    <string name="actionbar_search_title">Search Filters</string>
+
+    <!-- Search Filter Dialog -->
+    <string name="filter_save">Save</string>
 </resources>
