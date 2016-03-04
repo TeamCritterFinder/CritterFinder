@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.codepath.apps.critterfinder.models.PetModel;
 import com.codepath.apps.critterfinder.services.LocationService;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -121,6 +122,7 @@ public class FindActivity extends AppCompatActivity implements LocationService.O
 	private void updateViewWithPet(PetModel petModel) {
 		this.petNameView.setText(petModel.getName());
 		this.petSexView.setText(petModel.getSex());
+		Picasso.with(this).load(petModel.getImageUrl()).into(petImage);
 	}
 
 	public void onLike(View v) {
