@@ -1,5 +1,6 @@
 package com.codepath.apps.critterfinder;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -20,8 +21,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.RuntimePermissions;
 
 
+@RuntimePermissions
 public class FindActivity extends AppCompatActivity implements LocationService.OnLocationListener {
 	TextView petNameView;
 	TextView petSexView;
@@ -86,9 +90,16 @@ public class FindActivity extends AppCompatActivity implements LocationService.O
 	}
 
 	@Override
+	@NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
 	protected void onStart() {
 		super.onStart();
 		mLocationService = new LocationService(this, this);
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		FindActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
 	}
 
 	@Override

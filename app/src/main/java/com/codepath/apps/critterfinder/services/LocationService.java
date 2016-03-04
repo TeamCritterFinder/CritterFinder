@@ -1,16 +1,21 @@
 package com.codepath.apps.critterfinder.services;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.os.ResultReceiver;
+import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by smacgregor on 2/29/16.
@@ -18,38 +23,36 @@ import com.google.android.gms.location.LocationServices;
 public class LocationService implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 
-    /*
-     * Define a request code to send to Google Play services This code is
-     * returned in Activity.onActivityResult
-     */
     private Context mContext;
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
-
-    // for tracking the async task to convert a lat/long into a zipcode
-    private AddressResultReceiver mAddressLookupResultsReceiver;
 
     // for notifying our activity about the zip code
     private OnLocationListener mLocationListener;
 
     public LocationService(Context context, OnLocationListener onLocationListener) {
         mLocationListener = onLocationListener;
-        mAddressLookupResultsReceiver = new AddressResultReceiver(new Handler());
         mContext = context;
         setupGoogleApiClient(context);
-        mGoogleApiClient.connect();
+        connectClient();
     }
 
     @Override
     public void onConnected(Bundle bundle) {
         try {
             mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        } catch (SecurityException ex) {}
-
-        if (mLastLocation != null) {
-            Intent intent = FetchAddressIntentService.getStartIntent(mContext, mLastLocation, mAddressLookupResultsReceiver);
-            mContext.startService(intent);
+            // TODO - not getting a consistent last location out of the genymotion simulator
+            // for now make sure we send something back...
+            if (mLastLocation == null) {
+                mLastLocation = new Location("Placeholder");
+                mLastLocation.setLatitude(37.743242);
+                mLastLocation.setLongitude(-122.497667);
+            }
+        } catch (SecurityException ex) {
+            ex.printStackTrace();
         }
+
+        new GeoCoderAsyncTask().execute(mLastLocation);
     }
 
     @Override
@@ -74,26 +77,37 @@ public class LocationService implements GoogleApiClient.ConnectionCallbacks,
         }
     }
 
-    /**
-     * Receiver to handle geo decoding a location into a postal code
-     */
-    @SuppressLint("ParcelCreator")
-    private class AddressResultReceiver extends ResultReceiver {
+    private class GeoCoderAsyncTask extends AsyncTask<Location, Void, String> {
 
-        public AddressResultReceiver(Handler handler) {
-            super(handler);
+        @Override
+        protected String doInBackground(Location... params) {
+            String postalCode = null;
+            Geocoder geocoder = new Geocoder(mContext, Locale.getDefault());
+            List<Address> addresses = null;
+
+            try {
+                addresses = geocoder.getFromLocation(params[0].getLatitude(), params[0].getLongitude(), 1);
+            } catch (IOException ioException) {
+                Log.e("DEBUG", "Geocoder not available");
+            } catch (IllegalArgumentException illegalArumentException) {
+                Log.e("DEBUG", "Invalid location");
+            }
+
+            if (addresses != null && addresses.size() > 0) {
+                postalCode = addresses.get(0).getPostalCode();
+            }
+            return postalCode;
         }
 
         @Override
-        protected void onReceiveResult(int resultCode, Bundle resultData) {
-            if (resultCode == FetchAddressIntentService.LOCATION_SUCCESS_RESULT) {
-                mLocationListener.onLocationAvailable(resultData.getString(FetchAddressIntentService.LOCATION_RESULT, ""));
-            } else {
+        protected void onPostExecute(String postalCode) {
+            if (TextUtils.isEmpty(postalCode)) {
                 mLocationListener.onLocationFailed();
+            } else {
+                mLocationListener.onLocationAvailable(postalCode);
             }
         }
     }
-
     public interface OnLocationListener {
         void onLocationAvailable(String postalCode);
         void onLocationFailed();
