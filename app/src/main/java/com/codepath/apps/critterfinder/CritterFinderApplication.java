@@ -7,20 +7,20 @@ import android.content.Context;
  * including the image cache in memory and on disk. This also adds a singleton
  * for accessing the relevant rest client.
  *
- *     RestClient client = RestApplication.getRestClient();
+ *     RestClient client = CritterFinderApplication.getRestClient();
  *     // use client to send requests to API
  *
  */
-public class RestApplication extends com.activeandroid.app.Application {
+public class CritterFinderApplication extends com.activeandroid.app.Application {
 	private static Context context;
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		RestApplication.context = this;
+		CritterFinderApplication.context = this;
 	}
 
 	public static RestClient getRestClient() {
-		return (RestClient) RestClient.getInstance(RestClient.class, RestApplication.context);
+		return (RestClient) RestClient.getInstance(RestClient.class, CritterFinderApplication.context);
 	}
 }
