@@ -31,6 +31,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -43,6 +46,18 @@
             </intent-filter>
         </activity>
         <activity
+        android:name=".activities.PetBrowserActivity"
+        android:label=""
+        android:theme="@style/AppTheme.NoActionBar">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+
+
+    <activity
             android:name=".activities.PetDetailsActivity"
             android:label="@string/title_activity_pet_details"
             android:theme="@style/AppTheme.NoActionBar"></activity>
