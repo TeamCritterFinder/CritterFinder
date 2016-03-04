@@ -92,8 +92,11 @@ public class FindActivity extends AppCompatActivity implements LocationService.O
 	}
 
 	@Override
-	public void onLocationAvailable() {
-
+	public void onLocationAvailable(String postalCode) {
+		Snackbar.make(findViewById(android.R.id.content),
+				"Location found: " + postalCode,
+				Snackbar.LENGTH_LONG).
+				show();
 	}
 
 	@Override
