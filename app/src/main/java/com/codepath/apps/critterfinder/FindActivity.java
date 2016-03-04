@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.codepath.apps.critterfinder.models.PetModel;
@@ -28,6 +29,7 @@ public class FindActivity extends AppCompatActivity {
 	ImageView petImage;
 	ArrayList<PetModel> petsList;
 	Integer currentPet = 0;
+	ProgressBar pb;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,7 @@ public class FindActivity extends AppCompatActivity {
 		petNameView = (TextView)findViewById(R.id.petName);
 		petSexView = (TextView)findViewById(R.id.petSex);
 		petImage = (ImageView)findViewById(R.id.petImage);
+		pb = (ProgressBar)findViewById(R.id.pb);
 		onFindPets();
 	}
 
@@ -51,6 +54,7 @@ public class FindActivity extends AppCompatActivity {
 	// Uses the client to initiate OAuth authorization
 	// This should be tied to a button used to login
 	public void onFindPets() {
+		pb.setVisibility(ProgressBar.VISIBLE);
 		PetFinderHttpClient client = new PetFinderHttpClient();
 		try {
 
@@ -58,6 +62,7 @@ public class FindActivity extends AppCompatActivity {
 				@Override
 				public void onSuccess(int statusCode, Header[] headers, JSONObject json) {
 					String jsonString = json.toString();
+					pb.setVisibility(ProgressBar.INVISIBLE);
 					Log.d("DEBUG", "SUCCESS loading: " + jsonString);
 					try {
 						JSONObject petsJsonObject = json.getJSONObject("petfinder").getJSONObject("pets");
@@ -76,7 +81,7 @@ public class FindActivity extends AppCompatActivity {
 				@Override
 				public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
 					Log.d("DEBUG", "ERROR loading: " + errorResponse.toString());
-//				pb.setVisibility(ProgressBar.INVISIBLE);
+					pb.setVisibility(ProgressBar.INVISIBLE);
 				}
 			});
 		} catch (Exception e) {
@@ -90,8 +95,15 @@ public class FindActivity extends AppCompatActivity {
 		Picasso.with(this).load(petModel.getImageUrl()).into(petImage);
 	}
 
+	public void goToNextPet() {
+		if (currentPet < petsList.size() - 1) {
+			updateViewWithPet(petsList.get(++currentPet));
+		} else {
+			// TO DO load next page
+		}
+	}
 	public void onLike(View v) {
-		updateViewWithPet(petsList.get(++currentPet));
+		goToNextPet();
 	}
 
 	public void onDislike(View v) {
