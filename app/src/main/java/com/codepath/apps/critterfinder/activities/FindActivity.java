@@ -12,21 +12,12 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.codepath.apps.critterfinder.PetFinderHttpClient;
 import com.codepath.apps.critterfinder.R;
 import com.codepath.apps.critterfinder.models.PetModel;
-import com.codepath.apps.critterfinder.models.PetSearch;
+import com.codepath.apps.critterfinder.services.PetSearch;
 import com.codepath.apps.critterfinder.services.LocationService;
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
-import cz.msebera.android.httpclient.Header;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
@@ -123,10 +114,10 @@ public class FindActivity extends AppCompatActivity implements LocationService.O
 	public void onPetSearchSuccess(String result) {
 		loadingProgress.setVisibility(View.GONE);
 		updateViewWithPet(petSearch.getCurrentPet());
-		Log.d("FindActivity","SUCCESS");
+		Log.d("FindActivity", "SUCCESS");
 	}
 	public void onPetSearchError(String result) {
 		loadingProgress.setVisibility(View.GONE);
-		Log.d("FindActivity","ERROR");
+		Log.d("FindActivity", "ERROR");
 	}
 }
