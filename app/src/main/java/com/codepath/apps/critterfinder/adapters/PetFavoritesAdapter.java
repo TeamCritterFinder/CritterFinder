@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.codepath.apps.critterfinder.R;
 import com.codepath.apps.critterfinder.models.PetModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -22,9 +23,10 @@ public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapte
 
     AdapterView.OnItemClickListener mOnItemClickListener;
 
+    // Store a member variable for the pets
     private List<PetModel> mPets;
 
-    // Pass in the contact array into the constructor
+    // Pass in the pet array into the constructor
     public PetFavoritesAdapter(List<PetModel> petModels) {
         mPets = petModels;
     }
@@ -45,6 +47,7 @@ public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapte
 
             tvPetFavName = (TextView) itemView.findViewById(R.id.petFavName);
             tvPetFavSex = (TextView) itemView.findViewById(R.id.petFavSex);
+            ivPetFavImage = (ImageView) itemView.findViewById(R.id.petFavImage);
         }
     }
 
@@ -73,6 +76,14 @@ public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapte
         // Set item views based on the data model
         TextView tvSex = viewHolder.tvPetFavSex;
         tvSex.setText(petModel.getSex());
+
+        //
+        ImageView ivImage = viewHolder.ivPetFavImage;
+        Picasso.with(ivImage.getContext())
+                .load(petModel.getImageUrl())
+                .into(viewHolder.ivPetFavImage);
+        viewHolder.ivPetFavImage.setTag(position);
+       // viewHolder.ivPetFavImage.setOnClickListener(ivImage.getContext());
 
     }
 

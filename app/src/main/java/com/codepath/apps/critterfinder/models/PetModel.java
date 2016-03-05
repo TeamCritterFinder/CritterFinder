@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Created by srichard on 2/26/16.
@@ -28,7 +29,11 @@ public class PetModel implements Serializable {
         return sex;
     }
 
-
+   public PetModel(String name, String sex, String image){
+       this.name = name;
+       this.sex = sex;
+       this.imageUrl = image;
+   }
 
     public PetModel(JSONObject petJson) {
         try {
@@ -80,4 +85,5 @@ public class PetModel implements Serializable {
         }
         return results;
     }
+
 }
