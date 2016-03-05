@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.codepath.apps.critterfinder.R;
 import com.codepath.apps.critterfinder.adapters.SearchCriteriaAdapter;
@@ -97,6 +98,8 @@ public class PetSearchFilterActivity extends AppCompatActivity implements Search
                 break;
             case SIZE:
                 changeSize(searchCriteria, position);
+            case LOCATION:
+                changeLocation(searchCriteria, position);
                 break;
             default:
                 break;
@@ -131,31 +134,31 @@ public class PetSearchFilterActivity extends AppCompatActivity implements Search
         mSearchCriteria = new ArrayList<>();
 
         mSearchCriteria.add(new SearchCriteria(SearchCriteria.CriteriaType.LOCATION,
-                getResources().getString(R.string.title_search_criteria_location),
+                getString(R.string.title_search_criteria_location),
                 mSearchFilter.getPostalCode()));
 
         mSearchCriteria.add(new SearchCriteria(SearchCriteria.CriteriaType.GENDER,
-                getResources().getString(R.string.title_search_criteria_gender),
+                getString(R.string.title_search_criteria_gender),
                 mGenderViewStrings[searchFilter.getGender().ordinal()]));
 
         mSearchCriteria.add(new SearchCriteria(SearchCriteria.CriteriaType.SPECIES,
-                getResources().getString(R.string.title_search_criteria_species),
+                getString(R.string.title_search_criteria_species),
                 mSpeciesViewStrings[searchFilter.getSpecies().ordinal()]));
 
         SearchFilter.Age age = searchFilter.getAge();
         String ageValue = (age != null) ? mAgeViewStrings[searchFilter.getAge().ordinal()] : null;
         mSearchCriteria.add(new SearchCriteria(SearchCriteria.CriteriaType.AGE,
-                getResources().getString(R.string.title_search_criteria_age),
+                getString(R.string.title_search_criteria_age),
                 ageValue));
 
         SearchFilter.Size size = searchFilter.getSize();
         String sizeValue = (size != null) ? mSizeViewStrings[searchFilter.getSize().ordinal()] : null;
         mSearchCriteria.add(new SearchCriteria(SearchCriteria.CriteriaType.SIZE,
-                getResources().getString(R.string.title_search_criteria_size),
+                getString(R.string.title_search_criteria_size),
                 sizeValue));
 
         mSearchCriteria.add(new SearchCriteria(SearchCriteria.CriteriaType.BREEDS,
-                getResources().getString(R.string.title_search_criteria_breeds),
+                getString(R.string.title_search_criteria_breeds),
                 "Coton Du Tulear"));
     }
 
@@ -172,7 +175,7 @@ public class PetSearchFilterActivity extends AppCompatActivity implements Search
                         return true;
                     }
                 })
-                .positiveText(getResources().getString(R.string.filter_choose))
+                .positiveText(getString(R.string.filter_choose))
                 .show();
     }
 
@@ -189,7 +192,7 @@ public class PetSearchFilterActivity extends AppCompatActivity implements Search
                         return true;
                     }
                 })
-                .positiveText(getResources().getString(R.string.filter_choose))
+                .positiveText(getString(R.string.filter_choose))
                 .show();
     }
 
@@ -216,7 +219,7 @@ public class PetSearchFilterActivity extends AppCompatActivity implements Search
                         return false;
                     }
                 })
-                .positiveText(getResources().getString(R.string.filter_choose))
+                .positiveText(getString(R.string.filter_choose))
                 .show();
     }
 
@@ -239,7 +242,34 @@ public class PetSearchFilterActivity extends AppCompatActivity implements Search
                         return false;
                     }
                 })
-                .positiveText(getResources().getString(R.string.filter_choose))
+                .positiveText(getString(R.string.filter_choose))
                 .show();
+    }
+
+    private void changeLocation(final SearchCriteria searchCriteria, final int position) {
+        new MaterialDialog.Builder(this)
+                .title(searchCriteria.title)
+                .alwaysCallInputCallback()
+                .input(getString(R.string.filter_edit_location_hint), mSearchFilter.getPostalCode(), new MaterialDialog.InputCallback() {
+                    @Override
+                    public void onInput(MaterialDialog dialog, CharSequence input) {
+                        String postalCode = input.toString();
+                        dialog.getActionButton(DialogAction.POSITIVE).setEnabled(isValidPostalCode(postalCode));
+                    }
+                }).
+                onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(MaterialDialog dialog, DialogAction which) {
+                        String postalCode = dialog.getInputEditText().getText().toString();
+                        searchCriteria.value = postalCode;
+                        mSearchFilter.setPostalCode(postalCode);
+                        mSearchCriteriaAdapter.notifyItemChanged(position);
+                    }
+                }).
+                show();
+    }
+
+    private boolean isValidPostalCode(String postalCode) {
+        return postalCode.matches("[0-9]+") && postalCode.length() == 5;
     }
 }

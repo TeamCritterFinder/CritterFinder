@@ -28,5 +28,6 @@
     <string name="title_search_criteria_age">Age</string>
     <string name="title_search_criteria_size">Size</string>
     <string name="title_search_criteria_breeds">Breeds</string>
+    <string name="filter_edit_location_hint">Enter your zip code</string>
 
 </resources>
