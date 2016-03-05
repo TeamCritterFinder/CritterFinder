@@ -10,6 +10,7 @@ android {
         applicationId "com.codepath.apps.critterfinder"
         minSdkVersion 16
         targetSdkVersion 23
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -47,4 +48,10 @@ dependencies {
         transitive = true
     }
 
+    // for GPS location
+    compile 'com.google.android.gms:play-services-maps:8.4.0'
+    compile 'com.google.android.gms:play-services-location:8.4.0'
+    compile 'com.github.hotchemi:permissionsdispatcher:2.0.7'
+    // for marshmallow permission handling
+    apt 'com.github.hotchemi:permissionsdispatcher-processor:2.0.7'
 }
