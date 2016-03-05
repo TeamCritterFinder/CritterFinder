@@ -8,4 +8,10 @@
         android:title="@string/actionbar_search_title"
         android:icon="@android:drawable/ic_menu_search"
         app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/menu_item_favorites"
+        android:title="@string/actionbar_favorites_title"
+        android:icon="@android:drawable/ic_input_add"
+        app:showAsAction="ifRoom"/>
 </menu>
