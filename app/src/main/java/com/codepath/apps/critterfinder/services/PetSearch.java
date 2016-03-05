@@ -1,9 +1,8 @@
 package com.codepath.apps.critterfinder.services;
 
 import android.util.Log;
-import android.widget.ProgressBar;
 
-import com.codepath.apps.critterfinder.PetFinderHttpClient;
+import com.codepath.apps.critterfinder.network.PetFinderHttpClient;
 import com.codepath.apps.critterfinder.models.PetModel;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
