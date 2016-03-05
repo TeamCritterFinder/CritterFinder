@@ -67,19 +67,8 @@
                     android:scheme="oauth" />
             </intent-filter>
 
-<<<<<<< .merge_file_HokFHQ
-        </activity>
-=======
-    <activity
-            android:name=".activities.PetDetailsActivity"
-            android:label="@string/title_activity_pet_details"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
-            android:name=".activities.PetFavoritesActivity"
-            android:label="@string/title_activity_pet_favorites"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
->>>>>>> .merge_file_cLkMUQ
+
+      
     </application>
 
 </manifest>
