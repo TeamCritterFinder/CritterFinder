@@ -8,20 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.TextView;
 
-import com.codepath.apps.critterfinder.PetFinderHttpClient;
 import com.codepath.apps.critterfinder.R;
 import com.codepath.apps.critterfinder.adapters.PetFavoritesAdapter;
 import com.codepath.apps.critterfinder.models.PetModel;
-import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
