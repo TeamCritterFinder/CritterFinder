@@ -28,7 +28,7 @@ import butterknife.ButterKnife;
 
 public class PetSearchFilterActivity extends AppCompatActivity implements SearchCriteriaAdapter.OnItemClickListener {
 
-    private static String EXTRA_SEARCH_FILTER = "com.codepath.apps.critterfinder.activities.searchfilteractivity.searchfilter";
+    public static String EXTRA_SEARCH_FILTER = "com.codepath.apps.critterfinder.activities.searchfilteractivity.searchfilter";
 
     @Bind(R.id.recycler_search_criteria) RecyclerView mSearchCriteriaRecyclerView;
 
@@ -74,7 +74,8 @@ public class PetSearchFilterActivity extends AppCompatActivity implements Search
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            finish();
+            // for now the back button will save the results
+            onSubmitSearchFilter();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -100,6 +101,13 @@ public class PetSearchFilterActivity extends AppCompatActivity implements Search
             default:
                 break;
         }
+    }
+
+    private void onSubmitSearchFilter() {
+        Intent data = new Intent();
+        data.putExtra(EXTRA_SEARCH_FILTER, Parcels.wrap(mSearchFilter));
+        setResult(RESULT_OK, data);
+        finish();
     }
 
     private void setupSearchCriteriaView() {
@@ -135,7 +143,7 @@ public class PetSearchFilterActivity extends AppCompatActivity implements Search
                 mSpeciesViewStrings[searchFilter.getSpecies().ordinal()]));
 
         SearchFilter.Age age = searchFilter.getAge();
-        String ageValue = (age != null) ? mAgeViewStrings[searchFilter.getSize().ordinal()] : null;
+        String ageValue = (age != null) ? mAgeViewStrings[searchFilter.getAge().ordinal()] : null;
         mSearchCriteria.add(new SearchCriteria(SearchCriteria.CriteriaType.AGE,
                 getResources().getString(R.string.title_search_criteria_age),
                 ageValue));
