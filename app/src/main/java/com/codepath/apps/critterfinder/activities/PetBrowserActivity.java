@@ -64,7 +64,8 @@ public class PetBrowserActivity extends AppCompatActivity implements
             case R.id.menu_item_search:
                 showSearchFilterDialog();
                 return true;
-            // TODO - add support for loading the favorites fragment here
+            case R.id.menu_item_favorites:
+                showFavorites();
             default:
         }
         return super.onOptionsItemSelected(item);
@@ -106,5 +107,9 @@ public class PetBrowserActivity extends AppCompatActivity implements
 
     private void showSearchFilterDialog() {
         startActivityForResult(PetSearchFilterActivity.getStartIntent(this, mSearchFilter), SEARCH_FILTER_REQUEST_CODE);
+    }
+
+    private void showFavorites() {
+        startActivity(PetFavoritesActivity.getStartIntent(this));
     }
 }
