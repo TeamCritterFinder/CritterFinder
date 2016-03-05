@@ -23,7 +23,7 @@ public class PetSearch {
     String age;
     String size;
     String sex;
-    ArrayList<PetModel> petsList;
+    public ArrayList<PetModel> petsList;
     PetFinderHttpClient client;
 
     PetSearch() {
