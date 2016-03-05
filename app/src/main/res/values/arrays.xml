@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="gender">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Both</item>
+    </string-array>
+
+    <string-array name="species">
+        <item>Dog</item>
+        <item>Cat</item>
+    </string-array>
+
+    <string-array name="age">
+        <item>Baby</item>
+        <item>Young</item>
+        <item>Adult</item>
+        <item>Senior</item>
+    </string-array>
+
+    <string-array name="size">
+        <item>Small</item>
+        <item>Medium</item>
+        <item>Large</item>
+    </string-array>
+</resources>

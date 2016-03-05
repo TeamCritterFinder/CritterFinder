@@ -13,7 +13,8 @@ public class SearchFilter {
 
     public enum Gender {
         MALE("M"),
-        FEMALE("F");
+        FEMALE("F"),
+        ALL("");
 
         private final String mName;
 
@@ -30,8 +31,7 @@ public class SearchFilter {
     public enum Size {
         SMALL("S"),
         MEDIUM("M"),
-        LARGE("L"),
-        XLARGE("XL");
+        LARGE("L");
 
         private final String mName;
 
@@ -47,14 +47,14 @@ public class SearchFilter {
 
     public enum Species {
         DOG,
-        CAT;
+        CAT
     }
 
     public enum Age {
         BABY,
         YOUNG,
         ADULT,
-        SENIOR;
+        SENIOR
     }
 
     // TODO - this should become a first level model populated by the
@@ -85,7 +85,8 @@ public class SearchFilter {
     Age mAge;
 
     public SearchFilter() {
-        mGender = Gender.MALE;
+        mGender = Gender.ALL;
+        mSpecies = Species.DOG;
     }
 
     public Gender getGender() {
@@ -98,7 +99,6 @@ public class SearchFilter {
     public String getPostalCode() {
         return mPostalCode;
     }
-
     public void setPostalCode(String postalCode) {
         mPostalCode = postalCode;
     }
@@ -106,7 +106,6 @@ public class SearchFilter {
     public Species getSpecies() {
         return mSpecies;
     }
-
     public void setSpecies(Species species) {
         mSpecies = species;
     }
@@ -114,7 +113,6 @@ public class SearchFilter {
     public Breed getBreed() {
         return mBreed;
     }
-
     public void setBreed(Breed breed) {
         mBreed = breed;
     }
@@ -122,8 +120,14 @@ public class SearchFilter {
     public Age getAge() {
         return mAge;
     }
-
     public void setAge(Age age) {
         mAge = age;
+    }
+
+    public Size getSize() {
+        return mSize;
+    }
+    public void setSize(Size size) {
+        mSize = size;
     }
 }
