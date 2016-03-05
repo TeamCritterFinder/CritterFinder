@@ -7,10 +7,12 @@
     <!-- Pet Details Strings -->
     <string name="pet_details_description">Example text description. This is a great pet to adopt. Adopt me!</string>
     <string name="title_activity_pet_details">PetDetailsActivity</string>
-    <string name="title_activity_pet_favorites">PetFavoritesActivity</string>
 
-    <!-- Pet Details Favorites -->
+
+    <!-- Pet Favorites -->
     <string name="pet_favorites_description">This is one of my favorites pet.</string>
+    <string name="title_activity_pet_favorites">Pet Favorites</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -19,6 +21,13 @@
 
     <!-- Search Filter Dialog -->
     <string name="filter_save">Save</string>
-
+    <string name="filter_choose">Choose</string>
+    <string name="title_activity_pet_search_filter">Filter</string>
+    <string name="title_search_criteria_gender">Gender</string>
+    <string name="title_search_criteria_location">Location</string>
+    <string name="title_search_criteria_species">Animal</string>
+    <string name="title_search_criteria_age">Age</string>
+    <string name="title_search_criteria_size">Size</string>
+    <string name="title_search_criteria_breeds">Breeds</string>
 
 </resources>
