@@ -12,34 +12,27 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.codepath.apps.critterfinder.PetFinderHttpClient;
 import com.codepath.apps.critterfinder.R;
 import com.codepath.apps.critterfinder.models.PetModel;
+import com.codepath.apps.critterfinder.services.PetSearch;
 import com.codepath.apps.critterfinder.services.LocationService;
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
-import cz.msebera.android.httpclient.Header;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
 
 @RuntimePermissions
-public class FindActivity extends AppCompatActivity implements LocationService.OnLocationListener {
+public class FindActivity extends AppCompatActivity implements LocationService.OnLocationListener, PetSearch.PetSearchCallbackInterface {
 	TextView petNameView;
 	TextView petSexView;
 	ImageView petImage;
-	ArrayList<PetModel> petsList;
-	Integer currentPet = 0;
+//	ArrayList<PetModel> petsList;
+//	Integer currentPet = 0;
 	LocationService mLocationService;
 	ProgressBar pb;
 	LinearLayout loadingProgress;
+	PetSearch petSearch;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +43,10 @@ public class FindActivity extends AppCompatActivity implements LocationService.O
 		petImage = (ImageView)findViewById(R.id.petImage);
 		pb = (ProgressBar)findViewById(R.id.pb);
 		loadingProgress = (LinearLayout)findViewById(R.id.loadingProgress);
-		onFindPets();
+		//onFindPets();
+		petSearch = new PetSearch(this);
+		petSearch.setZipCode("94025");
+		doPetSearch();
 	}
 
 
@@ -59,43 +55,6 @@ public class FindActivity extends AppCompatActivity implements LocationService.O
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.login, menu);
 		return true;
-	}
-
-	// Click handler method for the button used to start OAuth flow
-	// Uses the client to initiate OAuth authorization
-	// This should be tied to a button used to login
-	public void onFindPets() {
-		PetFinderHttpClient client = new PetFinderHttpClient();
-		try {
-
-			client.findPetList(new JsonHttpResponseHandler() {
-				@Override
-				public void onSuccess(int statusCode, Header[] headers, JSONObject json) {
-					String jsonString = json.toString();
-					Log.d("DEBUG", "SUCCESS loading: " + jsonString);
-					try {
-						JSONObject petsJsonObject = json.getJSONObject("petfinder").getJSONObject("pets");
-						if (petsJsonObject != null) {
-							JSONArray petsArray = petsJsonObject.getJSONArray("pet");
-							if (petsArray != null && petsArray.length() > 0 ) {
-								petsList = PetModel.fromJSONArray(petsArray);
-								updateViewWithPet(petsList.get(currentPet));
-							}
-						}
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				}
-
-				@Override
-				public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-					Log.d("DEBUG", "ERROR loading: " + errorResponse.toString());
-//				pb.setVisibility(ProgressBar.INVISIBLE);
-				}
-			});
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	@Override
@@ -127,17 +86,38 @@ public class FindActivity extends AppCompatActivity implements LocationService.O
 				show();
 	}
 
+	// update the View with the image and data for a Pet
 	private void updateViewWithPet(PetModel petModel) {
 		this.petNameView.setText(petModel.getName());
 		this.petSexView.setText(petModel.getSex());
 		Picasso.with(this).load(petModel.getImageUrl()).into(petImage);
 	}
 
+	public void goToNextPet() {
+		updateViewWithPet(petSearch.getNextPet());
+	}
 	public void onLike(View v) {
-		updateViewWithPet(petsList.get(++currentPet));
+		goToNextPet();
 	}
 
 	public void onDislike(View v) {
-		updateViewWithPet(petsList.get(++currentPet));
+		goToNextPet();
+	}
+
+	// Pet Search Interface calls
+
+	// start a pet search call
+	public void doPetSearch() {
+		loadingProgress.setVisibility(View.VISIBLE);
+		petSearch.doPetSearch();
+	}
+	public void onPetSearchSuccess(String result) {
+		loadingProgress.setVisibility(View.GONE);
+		updateViewWithPet(petSearch.getCurrentPet());
+		Log.d("FindActivity", "SUCCESS");
+	}
+	public void onPetSearchError(String result) {
+		loadingProgress.setVisibility(View.GONE);
+		Log.d("FindActivity", "ERROR");
 	}
 }

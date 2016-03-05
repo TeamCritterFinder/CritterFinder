@@ -15,6 +15,9 @@ public class PetModel implements Serializable {
     String name;
     String imageUrl;
     String sex;
+    String age;
+    String size;
+
     private static String weirdNameSpace = "$t";
 
     public String getName() {
