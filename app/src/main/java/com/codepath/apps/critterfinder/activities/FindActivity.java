@@ -1,18 +1,23 @@
-package com.codepath.apps.critterfinder;
+package com.codepath.apps.critterfinder.activities;
 
+import android.Manifest;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.codepath.apps.critterfinder.PetFinderHttpClient;
+import com.codepath.apps.critterfinder.R;
 import com.codepath.apps.critterfinder.models.PetModel;
+import com.codepath.apps.critterfinder.services.LocationService;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
-
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,15 +26,20 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.RuntimePermissions;
 
 
-public class FindActivity extends AppCompatActivity {
+@RuntimePermissions
+public class FindActivity extends AppCompatActivity implements LocationService.OnLocationListener {
 	TextView petNameView;
 	TextView petSexView;
 	ImageView petImage;
 	ArrayList<PetModel> petsList;
 	Integer currentPet = 0;
+	LocationService mLocationService;
 	ProgressBar pb;
+	LinearLayout loadingProgress;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +49,7 @@ public class FindActivity extends AppCompatActivity {
 		petSexView = (TextView)findViewById(R.id.petSex);
 		petImage = (ImageView)findViewById(R.id.petImage);
 		pb = (ProgressBar)findViewById(R.id.pb);
+		loadingProgress = (LinearLayout)findViewById(R.id.loadingProgress);
 		onFindPets();
 	}
 
@@ -87,6 +98,35 @@ public class FindActivity extends AppCompatActivity {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	@NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
+	protected void onStart() {
+		super.onStart();
+		mLocationService = new LocationService(this, this);
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		FindActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
+	}
+
+	@Override
+	public void onLocationAvailable(String postalCode) {
+		Snackbar.make(findViewById(android.R.id.content),
+				"Location found: " + postalCode,
+				Snackbar.LENGTH_LONG).
+				show();
+	}
+
+	@Override
+	public void onLocationFailed() {
+		Snackbar.make(findViewById(android.R.id.content),
+				"Make sure you have google play services installed",
+				Snackbar.LENGTH_LONG).
+				show();
 	}
 
 	private void updateViewWithPet(PetModel petModel) {

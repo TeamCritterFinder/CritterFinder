@@ -41,8 +41,23 @@ public class SearchFilter {
         }
     }
 
+    public enum Animal {
+        DOG("dog"),
+        CAT("cat");
+
+        private final String mAnimal;
+
+        Animal(String animal) {
+            mAnimal = animal;
+        }
+        public String toString() {
+            return this.mAnimal;
+        }
+    }
+
     Gender mGender;
     Size mSize;
+    Animal mAnimal;
 
     public SearchFilter() {
         mGender = Gender.MALE;
