@@ -33,7 +33,7 @@
             android:value="1" />
 
         <activity
-            android:name=".FindActivity"
+            android:name=".activities.FindActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
             <intent-filter>
