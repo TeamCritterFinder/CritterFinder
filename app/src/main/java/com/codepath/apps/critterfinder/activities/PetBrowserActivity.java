@@ -40,7 +40,10 @@ public class PetBrowserActivity extends AppCompatActivity implements
         setSupportActionBar(toolbar);
 
         mSearchFilter = new SearchFilter();
-        mSwipeablePetsFragment = (SwipeablePetsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_swipeable_pets_browser);
+
+        if (savedInstanceState == null) {
+            setupSwipeableFragment();
+        }
     }
 
     @Override
@@ -111,5 +114,13 @@ public class PetBrowserActivity extends AppCompatActivity implements
 
     private void showFavorites() {
         startActivity(PetFavoritesActivity.getStartIntent(this));
+    }
+
+    private void setupSwipeableFragment() {
+        mSwipeablePetsFragment = SwipeablePetsFragment.newInstance(mSearchFilter);
+        getSupportFragmentManager().
+                beginTransaction().
+                replace(R.id.layout_swipeable_pets_fragment_placeholder, mSwipeablePetsFragment).
+                commit();
     }
 }
