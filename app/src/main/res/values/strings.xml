@@ -6,7 +6,7 @@
 
     <!-- Pet Details Strings -->
     <string name="pet_details_description">Example text description. This is a great pet to adopt. Adopt me!</string>
-    <string name="title_activity_pet_details">PetDetailsActivity</string>
+    <string name="title_activity_pet_details">Pet Details</string>
 
     <!-- Pet Favorites -->
     <string name="pet_favorites_description">This is one of my favorites pet.</string>

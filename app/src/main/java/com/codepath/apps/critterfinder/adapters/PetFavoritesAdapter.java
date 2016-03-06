@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapter.ViewHolder> {
 
-    AdapterView.OnItemClickListener mOnItemClickListener;
+    private static OnItemClickListener mOnItemClickListener;
 
     // Store a member variable for the pets
     private List<PetModel> mPets;
@@ -29,6 +29,9 @@ public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapte
     public PetFavoritesAdapter(List<PetModel> petModels) {
         mPets = petModels;
     }
+
+
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // Your holder should contain a member variable
@@ -39,7 +42,7 @@ public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapte
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
-        public ViewHolder(View itemView) {
+        public ViewHolder(final View itemView) {
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
@@ -47,6 +50,15 @@ public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapte
             tvPetFavName = (TextView) itemView.findViewById(R.id.petFavName);
             tvPetFavSex = (TextView) itemView.findViewById(R.id.petFavSex);
             ivPetFavImage = (ImageView) itemView.findViewById(R.id.petFavImage);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                               @Override
+                                public void onClick(View v) {
+                                        if (mOnItemClickListener!= null){
+                                            mOnItemClickListener.onItemClick(itemView,getLayoutPosition());
+                                           }
+                               }
+            });
         }
     }
 
@@ -90,6 +102,20 @@ public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapte
     public int getItemCount() {
         return mPets.size();
     }
-
+    public interface OnItemClickListener {
+        /**
+         * An item in the recycler view has been clicked
+         * @param view
+         * @param position
+         */
+        void onItemClick(View view, int position);
+    }
+    /**
+     +     * Register a callback to be notified when an item in the RecyclerView is clicked
+     +     * @param mOnItemClickListener
+     +     */
+    public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
+               this.mOnItemClickListener = mOnItemClickListener;
+    }
 
 }
