@@ -1,9 +1,18 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_swipeable_pets_browser"
-    android:name="com.codepath.apps.critterfinder.fragments.SwipeablePetsFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:layout="@layout/fragment_swipeable_pets" />
+    tools:context="com.codepath.apps.simpletweets.activities.ProfileActivity"
+    tools:showIn="@layout/activity_pet_browser">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout_swipeable_pets_fragment_placeholder"/>
+
+</LinearLayout>
