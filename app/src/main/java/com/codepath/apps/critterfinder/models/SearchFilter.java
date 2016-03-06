@@ -2,6 +2,8 @@ package com.codepath.apps.critterfinder.models;
 
 import org.parceler.Parcel;
 
+import java.util.List;
+
 /**
  * Created by smacgregor on 3/3/16.
  */
@@ -72,7 +74,7 @@ public class SearchFilter {
     Size mSize;
     Species mSpecies;
     String mPostalCode;
-    Breed mBreed;
+    List<Breed> mBreeds;
     Age mAge;
 
     public SearchFilter() {
@@ -101,11 +103,11 @@ public class SearchFilter {
         mSpecies = species;
     }
 
-    public Breed getBreed() {
-        return mBreed;
+    public List<Breed> getBreeds() {
+        return mBreeds;
     }
-    public void setBreed(Breed breed) {
-        mBreed = breed;
+    public void setBreeds(List<Breed> breed) {
+        mBreeds = breed;
     }
 
     public Age getAge() {

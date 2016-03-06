@@ -21,6 +21,7 @@ import com.codepath.apps.critterfinder.models.SearchCriteria;
 import com.codepath.apps.critterfinder.models.SearchFilter;
 import com.codepath.apps.critterfinder.services.PetSearch;
 import com.codepath.apps.critterfinder.utils.DividerItemDecoration;
+import com.codepath.apps.critterfinder.utils.SearchFilterHelpers;
 
 import org.parceler.Parcels;
 
@@ -37,6 +38,8 @@ public class PetSearchFilterActivity extends AppCompatActivity implements
         PetSearch.PetBreedsReceivedCallback {
 
     public static String EXTRA_SEARCH_FILTER = "com.codepath.apps.critterfinder.activities.searchfilteractivity.searchfilter";
+
+    private static String BREED_UI_DELIMETER = System.getProperty("line.separator");
 
     @Bind(R.id.recycler_search_criteria) RecyclerView mSearchCriteriaRecyclerView;
 
@@ -192,7 +195,7 @@ public class PetSearchFilterActivity extends AppCompatActivity implements
                 getString(R.string.title_search_criteria_size),
                 sizeValue));
 
-        String breedValue = mSearchFilter.getBreed() != null ? mSearchFilter.getBreed().getName() : null;
+        String breedValue = SearchFilterHelpers.generateStringForBreeds(mSearchFilter.getBreeds(), BREED_UI_DELIMETER);
         mSearchCriteria.add(new SearchCriteria(SearchCriteria.CriteriaType.BREEDS,
                 getString(R.string.title_search_criteria_breeds),
                 breedValue));
@@ -314,12 +317,12 @@ public class PetSearchFilterActivity extends AppCompatActivity implements
                     @Override
                     public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
                         if (which == null || which.length == 0) {
-                            mSearchFilter.setBreed(null);
+                            mSearchFilter.setBreeds(null);
                             searchCriteria.value = "";
                         } else {
-                            Breed newBreed = mBreeds.get(mSearchFilter.getSpecies()).get(which[0]);
-                            searchCriteria.value = newBreed.getName();
-                            mSearchFilter.setBreed(newBreed);
+                            List<Breed> breedsToSearch = SearchFilterHelpers.generateSubsetFromList(mBreeds.get(mSearchFilter.getSpecies()), which);
+                            searchCriteria.value = SearchFilterHelpers.generateStringForBreeds(breedsToSearch, BREED_UI_DELIMETER);
+                            mSearchFilter.setBreeds(breedsToSearch);
                             mSearchCriteriaAdapter.notifyItemChanged(position);
                         }
                         mSearchCriteriaAdapter.notifyItemChanged(position);
