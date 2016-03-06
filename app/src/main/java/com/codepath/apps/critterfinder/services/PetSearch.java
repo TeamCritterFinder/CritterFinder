@@ -2,15 +2,23 @@ package com.codepath.apps.critterfinder.services;
 
 import android.util.Log;
 
-import com.codepath.apps.critterfinder.network.PetFinderHttpClient;
+import com.codepath.apps.critterfinder.models.Breed;
 import com.codepath.apps.critterfinder.models.PetModel;
+import com.codepath.apps.critterfinder.models.SearchFilter;
+import com.codepath.apps.critterfinder.network.PetFinderHttpClient;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.TextHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -129,6 +137,58 @@ public class PetSearch {
             return null;
             // TO DO implement another search call
         }
+    }
+
+    /**
+     * Fetch a list of breeds for a particular animal
+     * @param species
+     * @param breedsReceivedCallback
+     */
+    public void fetchBreeds(final SearchFilter.Species species, final PetBreedsReceivedCallback breedsReceivedCallback) {
+        client.getBreedList(species, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                breedsReceivedCallback.onBreedsFailed(species);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                List<Breed> breeds = null;
+                if (responseString != null) {
+                    breeds = parseBreedsFromJSON(responseString);
+                }
+                breedsReceivedCallback.onBreedsReceived(species, breeds);
+            }
+        });
+    }
+
+    // Private helper class to allow gson to extract breeds out of a deeply nested response
+    private class BreedResponse {
+        PetFinder petfinder;
+        private class PetFinder {
+            Breeds breeds;
+            private class Breeds {
+                List<Breed> breed;
+            }
+        }
+        public List<Breed> getBreeds() { return petfinder.breeds.breed; }
+    }
+
+    private List<Breed> parseBreedsFromJSON(String response) {
+        Gson gson = new GsonBuilder().
+                setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).
+                excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC).
+                create();
+        BreedResponse breedResponse = gson.fromJson(response, BreedResponse.class);
+        return breedResponse.getBreeds();
+    }
+
+    /**
+     * Callback for fetching breeds for a species
+     */
+    public interface PetBreedsReceivedCallback {
+        void onBreedsReceived(SearchFilter.Species species, List<Breed> breeds);
+        void onBreedsFailed(SearchFilter.Species species);
     }
 }
 

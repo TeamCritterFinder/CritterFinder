@@ -1,8 +1,10 @@
 package com.codepath.apps.critterfinder.network;
 
+import com.codepath.apps.critterfinder.models.SearchFilter;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.TextHttpResponseHandler;
 
 /**
  * Created by srichard on 2/24/16.
@@ -35,6 +37,22 @@ public class PetFinderHttpClient  {
 //		params.put("count", 25);
         params.put("key", REST_CONSUMER_KEY);
         params.put("location", "94941");        // TO DO don't hard code Zip Code
+        client.get(apiUrl, params, handler);
+    }
+
+    /**
+     * Return a list of breeds for a particular species
+     * @param species
+     * @param handler
+     */
+    public void getBreedList(SearchFilter.Species species, TextHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("breed.list");
+
+        RequestParams params = new RequestParams();
+        params.put("format", "json");
+        params.put("animal", species.toString());
+        params.put("key", REST_CONSUMER_KEY);
+
         client.get(apiUrl, params, handler);
     }
 
