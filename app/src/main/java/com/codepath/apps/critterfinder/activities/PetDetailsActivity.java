@@ -37,6 +37,8 @@ public class PetDetailsActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        // add a back button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (savedInstanceState == null) {
             // TODO - pass in the pet
@@ -50,4 +52,6 @@ public class PetDetailsActivity extends AppCompatActivity {
                 replace(R.id.layout_details_fragment_placeholder, petDetailsFragment).
                 commit();
     }
+
+
 }
