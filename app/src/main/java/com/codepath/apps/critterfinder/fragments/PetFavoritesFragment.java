@@ -46,7 +46,6 @@ public class PetFavoritesFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         setupFavoritesPet();
-        //mrvPetFavorites.setOn
         return view;
 
     }

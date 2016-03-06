@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.codepath.apps.critterfinder.R;
-import com.codepath.apps.critterfinder.adapters.PetFavoritesAdapter;
 import com.codepath.apps.critterfinder.fragments.PetDetailsFragment;
 import com.codepath.apps.critterfinder.models.PetModel;
 
