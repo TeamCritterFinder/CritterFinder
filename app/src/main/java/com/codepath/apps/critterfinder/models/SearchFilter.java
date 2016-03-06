@@ -2,6 +2,8 @@ package com.codepath.apps.critterfinder.models;
 
 import org.parceler.Parcel;
 
+import java.util.List;
+
 /**
  * Created by smacgregor on 3/3/16.
  */
@@ -46,28 +48,12 @@ public class SearchFilter {
     }
 
     public enum Species {
-        DOG,
-        CAT
-    }
-
-    public enum Age {
-        BABY,
-        YOUNG,
-        ADULT,
-        SENIOR
-    }
-
-    // TODO - this should become a first level model populated by the
-    // breeds end point.
-    // A filter should work with an array of breeds
-    public enum Breed {
-        COTON("Coton Du Tulear"),
-        KINGCHARLES("King Charles Cavalier"),
-        HAVANESE("Havanese");
+        DOG("dog"),
+        CAT("cat");
 
         private final String mName;
 
-        Breed(String name) {
+        Species(String name) {
             mName = name;
         }
 
@@ -77,11 +63,18 @@ public class SearchFilter {
         }
     }
 
+    public enum Age {
+        BABY,
+        YOUNG,
+        ADULT,
+        SENIOR
+    }
+
     Gender mGender;
     Size mSize;
     Species mSpecies;
     String mPostalCode;
-    Breed mBreed;
+    List<Breed> mBreeds;
     Age mAge;
 
     public SearchFilter() {
@@ -110,11 +103,11 @@ public class SearchFilter {
         mSpecies = species;
     }
 
-    public Breed getBreed() {
-        return mBreed;
+    public List<Breed> getBreeds() {
+        return mBreeds;
     }
-    public void setBreed(Breed breed) {
-        mBreed = breed;
+    public void setBreeds(List<Breed> breed) {
+        mBreeds = breed;
     }
 
     public Age getAge() {
