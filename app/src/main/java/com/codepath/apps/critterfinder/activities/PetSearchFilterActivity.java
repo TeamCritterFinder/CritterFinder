@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,19 +16,25 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.codepath.apps.critterfinder.R;
 import com.codepath.apps.critterfinder.adapters.SearchCriteriaAdapter;
+import com.codepath.apps.critterfinder.models.Breed;
 import com.codepath.apps.critterfinder.models.SearchCriteria;
 import com.codepath.apps.critterfinder.models.SearchFilter;
+import com.codepath.apps.critterfinder.services.PetSearch;
 import com.codepath.apps.critterfinder.utils.DividerItemDecoration;
 
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class PetSearchFilterActivity extends AppCompatActivity implements SearchCriteriaAdapter.OnItemClickListener {
+public class PetSearchFilterActivity extends AppCompatActivity implements
+        SearchCriteriaAdapter.OnItemClickListener,
+        PetSearch.PetBreedsReceivedCallback {
 
     public static String EXTRA_SEARCH_FILTER = "com.codepath.apps.critterfinder.activities.searchfilteractivity.searchfilter";
 
@@ -36,6 +43,8 @@ public class PetSearchFilterActivity extends AppCompatActivity implements Search
     private List<SearchCriteria> mSearchCriteria;
     private SearchCriteriaAdapter mSearchCriteriaAdapter;
     private SearchFilter mSearchFilter;
+    private PetSearch mPetService;
+    private Map<SearchFilter.Species, List<Breed>> mBreeds;
 
     // can the model manage the view strings to keep this out of the activity?
     String[] mGenderViewStrings;
@@ -66,10 +75,13 @@ public class PetSearchFilterActivity extends AppCompatActivity implements Search
         // add a back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mSearchFilter = Parcels.unwrap(getIntent().getParcelableExtra(PetSearchFilterActivity.EXTRA_SEARCH_FILTER));
+        mPetService = new PetSearch(null);
+        mBreeds = new HashMap<SearchFilter.Species, List<Breed>>();
 
         setupCriteriaDisplayStrings();
         createSearchCriteriaFromFilter(mSearchFilter);
         setupSearchCriteriaView();
+        setupBreedsForSpecies(mSearchFilter.getSpecies());
     }
 
     @Override
@@ -101,9 +113,22 @@ public class PetSearchFilterActivity extends AppCompatActivity implements Search
             case LOCATION:
                 changeLocation(searchCriteria, position);
                 break;
+            case BREEDS:
+                changeBreed(searchCriteria, position);
+                break;
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onBreedsReceived(SearchFilter.Species species, List<Breed> breeds) {
+        mBreeds.put(species, breeds);
+    }
+
+    @Override
+    public void onBreedsFailed(SearchFilter.Species species) {
+        Snackbar.make(findViewById(android.R.id.content), "We were unable to fetch pet breeds", Snackbar.LENGTH_LONG).show();
     }
 
     private void onSubmitSearchFilter() {
@@ -130,6 +155,16 @@ public class PetSearchFilterActivity extends AppCompatActivity implements Search
         mSizeViewStrings = res.getStringArray(R.array.size);
     }
 
+    private void setupBreedsForSpecies(SearchFilter.Species species) {
+        if (mBreeds.get(species) == null) {
+            mPetService.fetchBreeds(species, this);
+        }
+    }
+
+    /**
+     * Build a data source of search criteria to power our search filter view
+     * @param searchFilter
+     */
     private void createSearchCriteriaFromFilter(SearchFilter searchFilter) {
         mSearchCriteria = new ArrayList<>();
 
@@ -157,9 +192,10 @@ public class PetSearchFilterActivity extends AppCompatActivity implements Search
                 getString(R.string.title_search_criteria_size),
                 sizeValue));
 
+        String breedValue = mSearchFilter.getBreed() != null ? mSearchFilter.getBreed().getName() : null;
         mSearchCriteria.add(new SearchCriteria(SearchCriteria.CriteriaType.BREEDS,
                 getString(R.string.title_search_criteria_breeds),
-                "Coton Du Tulear"));
+                breedValue));
     }
 
     private void changeGender(final SearchCriteria searchCriteria, final int position) {
@@ -189,6 +225,7 @@ public class PetSearchFilterActivity extends AppCompatActivity implements Search
                         mSearchFilter.setSpecies(SearchFilter.Species.values()[which]);
                         searchCriteria.value = text.toString();
                         mSearchCriteriaAdapter.notifyItemChanged(position);
+                        setupBreedsForSpecies(mSearchFilter.getSpecies());
                         return true;
                     }
                 })
@@ -266,6 +303,30 @@ public class PetSearchFilterActivity extends AppCompatActivity implements Search
                         mSearchCriteriaAdapter.notifyItemChanged(position);
                     }
                 }).
+                show();
+    }
+
+    private void changeBreed(final SearchCriteria searchCriteria, final int position) {
+        new MaterialDialog.Builder(this)
+                .title(searchCriteria.title)
+                .items(mBreeds.get(mSearchFilter.getSpecies()))
+                .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMultiChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+                        if (which == null || which.length == 0) {
+                            mSearchFilter.setBreed(null);
+                            searchCriteria.value = "";
+                        } else {
+                            Breed newBreed = mBreeds.get(mSearchFilter.getSpecies()).get(which[0]);
+                            searchCriteria.value = newBreed.getName();
+                            mSearchFilter.setBreed(newBreed);
+                            mSearchCriteriaAdapter.notifyItemChanged(position);
+                        }
+                        mSearchCriteriaAdapter.notifyItemChanged(position);
+                        return false;
+                    }
+                }).
+                positiveText(getString(R.string.filter_choose)).
                 show();
     }
 

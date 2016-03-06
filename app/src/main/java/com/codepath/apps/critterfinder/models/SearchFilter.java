@@ -46,28 +46,12 @@ public class SearchFilter {
     }
 
     public enum Species {
-        DOG,
-        CAT
-    }
-
-    public enum Age {
-        BABY,
-        YOUNG,
-        ADULT,
-        SENIOR
-    }
-
-    // TODO - this should become a first level model populated by the
-    // breeds end point.
-    // A filter should work with an array of breeds
-    public enum Breed {
-        COTON("Coton Du Tulear"),
-        KINGCHARLES("King Charles Cavalier"),
-        HAVANESE("Havanese");
+        DOG("dog"),
+        CAT("cat");
 
         private final String mName;
 
-        Breed(String name) {
+        Species(String name) {
             mName = name;
         }
 
@@ -75,6 +59,13 @@ public class SearchFilter {
         public String toString() {
             return this.mName;
         }
+    }
+
+    public enum Age {
+        BABY,
+        YOUNG,
+        ADULT,
+        SENIOR
     }
 
     Gender mGender;
