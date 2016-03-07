@@ -14,6 +14,7 @@ import com.codepath.apps.critterfinder.activities.PetDetailsActivity;
 import com.codepath.apps.critterfinder.adapters.PetFavoritesAdapter;
 import com.codepath.apps.critterfinder.models.PetModel;
 import com.codepath.apps.critterfinder.services.PetSearch;
+import com.codepath.apps.critterfinder.utils.DividerItemDecoration;
 
 import java.util.ArrayList;
 
@@ -53,6 +54,9 @@ public class PetFavoritesFragment extends Fragment {
 
         // Create adapter passing in the sample user data
         PetFavoritesAdapter adapter = new PetFavoritesAdapter(pets);
+
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST);
+        mrvPetFavorites.addItemDecoration(itemDecoration);
 
         adapter.setOnItemClickListener(new PetFavoritesAdapter.OnItemClickListener() {
             @Override
