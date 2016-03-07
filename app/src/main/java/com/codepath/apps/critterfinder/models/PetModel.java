@@ -3,22 +3,25 @@ package com.codepath.apps.critterfinder.models;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  * Created by srichard on 2/26/16.
  */
-public class PetModel implements Serializable {
+@Parcel
+public class PetModel {
     String name;
     String imageUrl;
     String sex;
     String age;
     String size;
+    String description;
 
     private static String weirdNameSpace = "$t";
+
+    public PetModel() {}
 
     public String getName() {
         return name;
@@ -32,6 +35,10 @@ public class PetModel implements Serializable {
         return sex;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
    public PetModel(String name, String sex, String image){
        this.name = name;
        this.sex = sex;
@@ -42,6 +49,7 @@ public class PetModel implements Serializable {
         try {
             this.name = petJson.getJSONObject("name").getString(weirdNameSpace);
             this.sex = petJson.getJSONObject("sex").getString(weirdNameSpace);
+            this.description = petJson.getJSONObject("description").getString(weirdNameSpace);
             JSONObject photosObject = petJson.getJSONObject("media").getJSONObject("photos");
             if (photosObject != null) {
                 JSONArray photosArray = photosObject.getJSONArray("photo");
