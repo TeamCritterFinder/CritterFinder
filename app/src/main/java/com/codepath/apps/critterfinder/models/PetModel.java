@@ -76,17 +76,18 @@ public class PetModel implements Serializable {
         return null;
     }
 
-    public static ArrayList<PetModel> fromJSONArray(JSONArray array) {
-        ArrayList<PetModel> results = new ArrayList<>();
+    // converts the JSONArray to an ArrayList of pets appending to existing petList
+    public static void fromJSONArray(ArrayList<PetModel> petList,JSONArray array) {
+        if (petList == null)
+            petList = new ArrayList<>();
 
         for (int x=0; x < array.length(); x++) {
             try {
-                results.add(new PetModel(array.getJSONObject(x)));
+                petList.add(new PetModel(array.getJSONObject(x)));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-        return results;
     }
 
 }

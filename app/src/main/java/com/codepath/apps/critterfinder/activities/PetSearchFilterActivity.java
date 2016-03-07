@@ -41,8 +41,6 @@ public class PetSearchFilterActivity extends AppCompatActivity implements
     public static String EXTRA_SEARCH_FILTER = "com.codepath.apps.critterfinder.activities.searchfilteractivity.searchfilter";
 
     private static String BREED_UI_DELIMETER = System.getProperty("line.separator");
-    // Define the events that the fragment will use to communicate
-
 
     @Bind(R.id.recycler_search_criteria) RecyclerView mSearchCriteriaRecyclerView;
 
