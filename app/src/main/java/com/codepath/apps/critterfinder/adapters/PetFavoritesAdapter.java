@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,7 +19,7 @@ import java.util.List;
  */
 public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapter.ViewHolder> {
 
-    private static OnItemClickListener mOnItemClickListener;
+    private OnItemClickListener mOnItemClickListener;
 
     // Store a member variable for the pets
     private List<PetModel> mPets;
@@ -30,10 +29,7 @@ public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapte
         mPets = petModels;
     }
 
-
-
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         public TextView tvPetFavName;
@@ -50,15 +46,14 @@ public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapte
             tvPetFavName = (TextView) itemView.findViewById(R.id.petFavName);
             tvPetFavSex = (TextView) itemView.findViewById(R.id.petFavSex);
             ivPetFavImage = (ImageView) itemView.findViewById(R.id.petFavImage);
+            itemView.setOnClickListener(this);
+        }
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                               @Override
-                                public void onClick(View v) {
-                                        if (mOnItemClickListener!= null){
-                                            mOnItemClickListener.onItemClick(itemView,getLayoutPosition());
-                                           }
-                               }
-            });
+        @Override
+        public void onClick(View v) {
+            if (mOnItemClickListener != null) {
+                mOnItemClickListener.onItemClick(v, getAdapterPosition());
+            }
         }
     }
 
@@ -93,8 +88,6 @@ public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapte
                 .load(petModel.getImageUrl())
                 .into(viewHolder.ivPetFavImage);
         viewHolder.ivPetFavImage.setTag(position);
-       // viewHolder.ivPetFavImage.setOnClickListener(ivImage.getContext());
-
     }
 
     // Return the total count of items
@@ -102,6 +95,7 @@ public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapte
     public int getItemCount() {
         return mPets.size();
     }
+
     public interface OnItemClickListener {
         /**
          * An item in the recycler view has been clicked
@@ -110,12 +104,13 @@ public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapte
          */
         void onItemClick(View view, int position);
     }
+
     /**
-     +     * Register a callback to be notified when an item in the RecyclerView is clicked
-     +     * @param mOnItemClickListener
-     +     */
-    public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
-               this.mOnItemClickListener = mOnItemClickListener;
+     * Register a callback to be notified when an item in the RecyclerView is clicked
+     * @param mOnItemClickListener
+     */
+    public void setOnItemClickListener(final OnItemClickListener mOnItemClickListener) {
+        this.mOnItemClickListener = mOnItemClickListener;
     }
 
 }

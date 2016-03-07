@@ -71,11 +71,11 @@ public class SearchFilter {
     }
 
     Gender mGender;
-    Size mSize;
+    List<Size> mSizes;
     Species mSpecies;
     String mPostalCode;
     List<Breed> mBreeds;
-    Age mAge;
+    List<Age> mAges;
 
     public SearchFilter() {
         mGender = Gender.ALL;
@@ -110,17 +110,17 @@ public class SearchFilter {
         mBreeds = breed;
     }
 
-    public Age getAge() {
-        return mAge;
+    public List<Age> getAges() {
+        return mAges;
     }
-    public void setAge(Age age) {
-        mAge = age;
+    public void setAges(List<Age> age) {
+        mAges = age;
     }
 
-    public Size getSize() {
-        return mSize;
+    public List<Size> getSizes() {
+        return mSizes;
     }
-    public void setSize(Size size) {
-        mSize = size;
+    public void setSizes(List<Size> sizes) {
+        mSizes = sizes;
     }
 }

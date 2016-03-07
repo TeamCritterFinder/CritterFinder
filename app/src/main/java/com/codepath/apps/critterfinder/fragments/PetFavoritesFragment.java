@@ -70,6 +70,4 @@ public class PetFavoritesFragment extends Fragment {
         mrvPetFavorites.setLayoutManager(new LinearLayoutManager(getContext()));
 
     }
-
-
 }

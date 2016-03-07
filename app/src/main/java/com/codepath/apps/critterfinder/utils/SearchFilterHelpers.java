@@ -2,8 +2,6 @@ package com.codepath.apps.critterfinder.utils;
 
 import android.text.TextUtils;
 
-import com.codepath.apps.critterfinder.models.Breed;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,36 +11,50 @@ import java.util.List;
 public class SearchFilterHelpers {
 
     /**
-     * Given a list of breeds and a set of indices, returns a sublist of breeds corresponding to the
-     * indices
-     * @param breeds
+     * Given a list of type T and a set of indices returns a sublist of type T
+     * containing just the selected indices
+     *
+     * @param list
      * @param which
+     * @param <T>
      * @return
      */
-    public static List<Breed> generateSubsetFromList(List<Breed> breeds, Integer[] which) {
-        ArrayList<Breed> newBreeds = new ArrayList<>();
-        for (Integer index: which) {
-            newBreeds.add(breeds.get(index));
+    public static <T> List<T> generateSubsetFromList(List<T> list, Integer[] which) {
+        ArrayList<T> sublist = new ArrayList<>();
+        for (Integer index : which) {
+            sublist.add(list.get(index));
         }
-        return newBreeds;
+        return sublist;
     }
 
     /**
      * Convert a list of breeds into a string using the passed in delimeter
-     * @param breeds
-     * @param delimeter
+     *
+     * @param list
+     * @param delimiter
      * @return
      */
-    public static String generateStringForBreeds(List<Breed> breeds, String delimeter) {
+    public static <T> String generateStringForList(List<T> list, String delimiter) {
         String displayString = "";
-        if (breeds != null) {
-            for (Breed breed : breeds) {
+        if (list != null) {
+            for (T item : list) {
                 if (!TextUtils.isEmpty(displayString)) {
-                    displayString += delimeter;
+                    displayString += delimiter;
                 }
-                displayString += breed.getName();
+                displayString += item.toString();
             }
         }
         return displayString;
+    }
+
+    public static <T extends Enum<T>> Integer[] getIndicesForList(List<T> list) {
+        Integer[] selectedIndices = null;
+        if (list != null) {
+            selectedIndices = new Integer[list.size()];
+            for (int index = 0; index < list.size(); index++) {
+                selectedIndices[index] = list.get(index).ordinal();
+            }
+        }
+        return selectedIndices;
     }
 }

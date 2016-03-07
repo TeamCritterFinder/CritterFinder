@@ -26,6 +26,7 @@ import com.codepath.apps.critterfinder.utils.SearchFilterHelpers;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,8 @@ public class PetSearchFilterActivity extends AppCompatActivity implements
     public static String EXTRA_SEARCH_FILTER = "com.codepath.apps.critterfinder.activities.searchfilteractivity.searchfilter";
 
     private static String BREED_UI_DELIMETER = System.getProperty("line.separator");
+    // Define the events that the fragment will use to communicate
+
 
     @Bind(R.id.recycler_search_criteria) RecyclerView mSearchCriteriaRecyclerView;
 
@@ -79,8 +82,7 @@ public class PetSearchFilterActivity extends AppCompatActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mSearchFilter = Parcels.unwrap(getIntent().getParcelableExtra(PetSearchFilterActivity.EXTRA_SEARCH_FILTER));
         mPetService = new PetSearch(null);
-        mBreeds = new HashMap<SearchFilter.Species, List<Breed>>();
-
+        mBreeds = new HashMap<>();
         setupCriteriaDisplayStrings();
         createSearchCriteriaFromFilter(mSearchFilter);
         setupSearchCriteriaView();
@@ -113,6 +115,7 @@ public class PetSearchFilterActivity extends AppCompatActivity implements
                 break;
             case SIZE:
                 changeSize(searchCriteria, position);
+                break;
             case LOCATION:
                 changeLocation(searchCriteria, position);
                 break;
@@ -183,19 +186,15 @@ public class PetSearchFilterActivity extends AppCompatActivity implements
                 getString(R.string.title_search_criteria_species),
                 mSpeciesViewStrings[searchFilter.getSpecies().ordinal()]));
 
-        SearchFilter.Age age = searchFilter.getAge();
-        String ageValue = (age != null) ? mAgeViewStrings[searchFilter.getAge().ordinal()] : null;
         mSearchCriteria.add(new SearchCriteria(SearchCriteria.CriteriaType.AGE,
                 getString(R.string.title_search_criteria_age),
-                ageValue));
+                generateViewStringForSelectedAges()));
 
-        SearchFilter.Size size = searchFilter.getSize();
-        String sizeValue = (size != null) ? mSizeViewStrings[searchFilter.getSize().ordinal()] : null;
         mSearchCriteria.add(new SearchCriteria(SearchCriteria.CriteriaType.SIZE,
                 getString(R.string.title_search_criteria_size),
-                sizeValue));
+                generateViewStringForSelectedSizes()));
 
-        String breedValue = SearchFilterHelpers.generateStringForBreeds(mSearchFilter.getBreeds(), BREED_UI_DELIMETER);
+        String breedValue = SearchFilterHelpers.generateStringForList(mSearchFilter.getBreeds(), BREED_UI_DELIMETER);
         mSearchCriteria.add(new SearchCriteria(SearchCriteria.CriteriaType.BREEDS,
                 getString(R.string.title_search_criteria_breeds),
                 breedValue));
@@ -237,24 +236,17 @@ public class PetSearchFilterActivity extends AppCompatActivity implements
     }
 
     private void changeAge(final SearchCriteria searchCriteria, final int position) {
-        // TODO - SearchFilter needs to support an array of ages
-        Integer[] selectedAge = null;
-        if (mSearchFilter.getAge() != null) {
-            selectedAge = new Integer[] {mSearchFilter.getAge().ordinal()};
-        }
+        Integer[] selectedAges = SearchFilterHelpers.getIndicesForList(mSearchFilter.getAges());
         new MaterialDialog.Builder(this)
                 .title(searchCriteria.title)
                 .items(mAgeViewStrings)
-                .itemsCallbackMultiChoice(selectedAge, new MaterialDialog.ListCallbackMultiChoice() {
+                .itemsCallbackMultiChoice(selectedAges, new MaterialDialog.ListCallbackMultiChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
-                        if (which == null || which.length == 0) {
-                            mSearchFilter.setAge(null);
-                            searchCriteria.value = "";
-                        } else {
-                            mSearchFilter.setAge(SearchFilter.Age.values()[which[0]]);
-                            searchCriteria.value = text[0].toString();
-                        }
+                        List<SearchFilter.Age> agesToSearch = new ArrayList<>(Arrays.asList(SearchFilter.Age.values()));
+                        mSearchFilter.setAges(SearchFilterHelpers.generateSubsetFromList(agesToSearch, which));
+                        searchCriteria.value = generateViewStringForSelectedAges();
+
                         mSearchCriteriaAdapter.notifyItemChanged(position);
                         return false;
                     }
@@ -264,20 +256,17 @@ public class PetSearchFilterActivity extends AppCompatActivity implements
     }
 
     private void changeSize(final SearchCriteria searchCriteria, final int position) {
+        Integer[] selectedSizeIndices = SearchFilterHelpers.getIndicesForList(mSearchFilter.getSizes());
         new MaterialDialog.Builder(this)
                 .title(searchCriteria.title)
                 .items(mSizeViewStrings)
-                .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMultiChoice() {
+                .itemsCallbackMultiChoice(selectedSizeIndices, new MaterialDialog.ListCallbackMultiChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
-                        // TODO - SearchFilter needs to support an array of sizes
-                        if (which == null || which.length == 0) {
-                            mSearchFilter.setSize(null);
-                            searchCriteria.value = "";
-                        } else {
-                            mSearchFilter.setSize(SearchFilter.Size.values()[which[0]]);
-                            searchCriteria.value = text[0].toString();
-                        }
+                        List<SearchFilter.Size> sizesToSearch = new ArrayList<>(Arrays.asList(SearchFilter.Size.values()));
+                        mSearchFilter.setSizes(SearchFilterHelpers.generateSubsetFromList(sizesToSearch, which));
+                        searchCriteria.value = generateViewStringForSelectedSizes();
+
                         mSearchCriteriaAdapter.notifyItemChanged(position);
                         return false;
                     }
@@ -310,27 +299,42 @@ public class PetSearchFilterActivity extends AppCompatActivity implements
     }
 
     private void changeBreed(final SearchCriteria searchCriteria, final int position) {
+        // TODO - figure out how to pass in the selected breeds into the dialog
         new MaterialDialog.Builder(this)
                 .title(searchCriteria.title)
                 .items(mBreeds.get(mSearchFilter.getSpecies()))
                 .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMultiChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
-                        if (which == null || which.length == 0) {
-                            mSearchFilter.setBreeds(null);
-                            searchCriteria.value = "";
-                        } else {
-                            List<Breed> breedsToSearch = SearchFilterHelpers.generateSubsetFromList(mBreeds.get(mSearchFilter.getSpecies()), which);
-                            searchCriteria.value = SearchFilterHelpers.generateStringForBreeds(breedsToSearch, BREED_UI_DELIMETER);
-                            mSearchFilter.setBreeds(breedsToSearch);
-                            mSearchCriteriaAdapter.notifyItemChanged(position);
-                        }
+                        List<Breed> breedsToSearch = SearchFilterHelpers.generateSubsetFromList(mBreeds.get(mSearchFilter.getSpecies()), which);
+                        searchCriteria.value = SearchFilterHelpers.generateStringForList(breedsToSearch, BREED_UI_DELIMETER);
+                        mSearchFilter.setBreeds(breedsToSearch);
                         mSearchCriteriaAdapter.notifyItemChanged(position);
                         return false;
                     }
                 }).
                 positiveText(getString(R.string.filter_choose)).
                 show();
+    }
+
+    private String generateViewStringForSelectedSizes() {
+        List<String> sizeStringsToSearch = null;
+        if (mSearchFilter.getSizes() != null) {
+            Integer[] selectedSizeIndices = SearchFilterHelpers.getIndicesForList(mSearchFilter.getSizes());
+            sizeStringsToSearch = new ArrayList<>(Arrays.asList(mSizeViewStrings));
+            sizeStringsToSearch = SearchFilterHelpers.generateSubsetFromList(sizeStringsToSearch, selectedSizeIndices);
+        }
+        return SearchFilterHelpers.generateStringForList(sizeStringsToSearch, " ");
+    }
+
+    private String generateViewStringForSelectedAges() {
+        List<String> ageStringsToSearch = null;
+        if (mSearchFilter.getAges() != null) {
+            Integer[] selectedAgeIndices = SearchFilterHelpers.getIndicesForList(mSearchFilter.getAges());
+            ageStringsToSearch = new ArrayList<>(Arrays.asList(mAgeViewStrings));
+            ageStringsToSearch = SearchFilterHelpers.generateSubsetFromList(ageStringsToSearch, selectedAgeIndices);
+        }
+        return SearchFilterHelpers.generateStringForList(ageStringsToSearch, " ");
     }
 
     private boolean isValidPostalCode(String postalCode) {

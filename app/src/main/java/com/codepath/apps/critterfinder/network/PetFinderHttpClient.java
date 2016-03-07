@@ -6,6 +6,8 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 
+import java.util.List;
+
 /**
  * Created by srichard on 2/24/16.
  */
@@ -29,14 +31,33 @@ public class PetFinderHttpClient  {
     }
 
     // PetFinder get list of pets
-    public void findPetList(JsonHttpResponseHandler handler) {
+    public void findPetList(JsonHttpResponseHandler handler,SearchFilter searchFilter) {
         String apiUrl = getApiUrl("pet.find");
         // Can specify query string params directly or through RequestParams.
         RequestParams params = new RequestParams();
         params.put("format", "json");
-//		params.put("count", 25);
+		params.put("count", 25);
         params.put("key", REST_CONSUMER_KEY);
-        params.put("location", "94941");        // TO DO don't hard code Zip Code
+        if (searchFilter.getPostalCode() != null)
+            params.put("location", searchFilter.getPostalCode());
+        else    // location is a REQUIRED field
+            params.put("location","94140");
+        if (searchFilter.getSpecies() != null)
+            params.put("animal", searchFilter.getSpecies());
+        List<SearchFilter.Age> ages = searchFilter.getAges();
+        if (ages != null) {
+            for (int x = 0; x < ages.size(); x++) {
+                params.add("age", ages.get(x).toString());
+            }
+        }
+        if (searchFilter.getGender() != null && (searchFilter.getGender().toString().length() > 0))
+            params.put("sex",searchFilter.getGender());
+        List<SearchFilter.Size> sizes = searchFilter.getSizes();
+        if (sizes != null) {
+            for (int x = 0; x < sizes.size(); x++) {
+                params.add("size", sizes.get(x).toString());
+            }
+        }
         client.get(apiUrl, params, handler);
     }
 
