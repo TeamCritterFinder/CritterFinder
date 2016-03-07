@@ -2,7 +2,7 @@
 
 ## Overview
 
-The goal of Critter Finder is to help dogs and cats find much needed homes, and reunite lost pets.
+The goal of Critter Finder is to help dogs and cats find their forever home.
 
 The problem
 
@@ -29,6 +29,12 @@ The following **optional** features are implemented:
 * [ ] I should be able to launch the app again and filter based on previous search criteria
 * [ ] Don't resurface pets the user is not interested in seeing
 * [ ] A user should be able to see contact information about the shelter for a pet and reach out to the shelter via e-mail
+
+## Video Walkthrough 
+
+Here's a walkthrough of the implemented user stories:
+
+<img src='https://cloud.githubusercontent.com/assets/1521460/13561218/36c67498-e3df-11e5-8c57-da1fad2bec0b.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 ## Wireframe 
 
