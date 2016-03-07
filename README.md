@@ -22,7 +22,7 @@ The following **required** functionality is completed:
 * [X] User should be able to change the search criteria and see a new list of results
 
 The following **optional** features are implemented:
-* [X] On first launch, the application uses the GPS to determine the current users location, turns that lat and longitude into a zip code and presents a set of pet results near the user.
+* [X] On first launch, the application uses the GPS to determine the current users location, turns that lat and longitude into a zip code and presents a set of pet results near the user. This was done as an AsyncTask.
 * [X] User should be able to see a list of breeds for a particular animal. This list should come from PetFinder
 * [X] User should be able to select multiple breeds, ages and sizes and see results that meet that advanced criteria
 * [ ] A user should be able to mark pets she is interested in learning more about
