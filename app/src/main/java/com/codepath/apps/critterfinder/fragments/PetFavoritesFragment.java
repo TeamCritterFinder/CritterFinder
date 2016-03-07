@@ -13,6 +13,8 @@ import com.codepath.apps.critterfinder.R;
 import com.codepath.apps.critterfinder.activities.PetDetailsActivity;
 import com.codepath.apps.critterfinder.adapters.PetFavoritesAdapter;
 import com.codepath.apps.critterfinder.models.PetModel;
+import com.codepath.apps.critterfinder.services.PetSearch;
+import com.codepath.apps.critterfinder.utils.DividerItemDecoration;
 
 import java.util.ArrayList;
 
@@ -44,19 +46,17 @@ public class PetFavoritesFragment extends Fragment {
 
         setupFavoritesPet();
         return view;
-
     }
 
     public void setupFavoritesPet(){
         // Create and Initialize pets
-        final ArrayList<PetModel> pets = new ArrayList<PetModel>();
-        pets.add(new PetModel("Bentley", "Male", "http://scontent.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/12071062_736784449785114_1231793951_n.jpg"));
-        pets.add(new PetModel("Poupy", "Female", "https://scontent.fsnc1-1.fna.fbcdn.net/hphotos-xpf1/v/t1.0-9/12728762_466082140242189_6767280098049037634_n.jpg?oh=c126f89d6cf86e2565cfee259860f2d8&oe=57617860"));
-        pets.add(new PetModel("Medor", "Female", "https://scontent.fsnc1-1.fna.fbcdn.net/hphotos-xfp1/v/t1.0-9/12745854_466081670242236_4794760548093027033_n.jpg?oh=d57de859d7025f418bcc38d7e0ea2bdd&oe=5767E3EC"));
-        pets.add(new PetModel("Jade", "male", "https://scontent.fsnc1-1.fna.fbcdn.net/hphotos-xaf1/v/t1.0-9/421787_597568786939521_640112203_n.jpg?oh=7485347901753050c7a41e07de9cfd17&oe=5796EE28"));
+        final ArrayList<PetModel> pets = PetSearch.getInstance().petsList;
 
         // Create adapter passing in the sample user data
         PetFavoritesAdapter adapter = new PetFavoritesAdapter(pets);
+
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST);
+        mrvPetFavorites.addItemDecoration(itemDecoration);
 
         adapter.setOnItemClickListener(new PetFavoritesAdapter.OnItemClickListener() {
             @Override
@@ -68,6 +68,5 @@ public class PetFavoritesFragment extends Fragment {
         mrvPetFavorites.setAdapter(adapter);
         // Set layout manager to position the items
         mrvPetFavorites.setLayoutManager(new LinearLayoutManager(getContext()));
-
     }
 }

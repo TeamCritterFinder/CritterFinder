@@ -20,7 +20,6 @@ public class PetFavoritesActivity extends AppCompatActivity {
      * @return
      */
     public static Intent getStartIntent(Context context) {
-        // TODO - once we have a data source - pass in the list of favorite pets here
         Intent intent= new Intent(context, PetFavoritesActivity.class);
         return intent;
     }

@@ -22,10 +22,6 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
-
-
-
-
 /**
  * Created by srichard on 3/4/16.
  */
@@ -37,24 +33,24 @@ public class PetSearch {
         void onPetSearchError(String result);
     }
 
+    private static PetSearch mInstance = new PetSearch();
+
     public ArrayList<PetModel> petsList;
     PetFinderHttpClient client;
-    PetSearchCallbackInterface callbackInterface;
     Integer currentPet = 0; // currently selected pet
     private Integer pageBuffer = 4; // when to start loading
     SearchFilter searchFilter;
 
-    public PetSearch(PetSearchCallbackInterface callbackInterface) {
-        client = new PetFinderHttpClient();
-        petsList = new ArrayList<PetModel>();
-        this.callbackInterface = callbackInterface;
+    public static PetSearch getInstance() {
+        return mInstance;
     }
 
+    public PetSearch() {
+        client = new PetFinderHttpClient();
+        petsList = new ArrayList<PetModel>();
+    }
 
-    // Click handler method for the button used to start OAuth flow
-    // Uses the client to initiate OAuth authorization
-    // This should be tied to a button used to login
-    public void doPetSearch(SearchFilter searchFilter) {
+    public void doPetSearch(SearchFilter searchFilter, final PetSearchCallbackInterface callbackInterface) {
         this.searchFilter = searchFilter;
         client.findPetList(new JsonHttpResponseHandler() {
             @Override
@@ -83,7 +79,7 @@ public class PetSearch {
         },searchFilter);
     }
 
-    public void doLoadMorePets(SearchFilter searchFilter) {
+    public void doLoadMorePets(SearchFilter searchFilter, final PetSearchCallbackInterface callbackInterface) {
         client.findPetList(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject json) {
@@ -115,10 +111,10 @@ public class PetSearch {
         return petsList.get(currentPet);
     }
 
-    public PetModel getNextPet() {
+    public PetModel getNextPet(final PetSearchCallbackInterface callbackInterface) {
         if (currentPet < petsList.size() - 1) {
             if (currentPet > petsList.size() - pageBuffer) {
-                doLoadMorePets(searchFilter);
+                doLoadMorePets(searchFilter, callbackInterface);
             }
             return petsList.get(++currentPet);
         } else {

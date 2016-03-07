@@ -103,7 +103,6 @@ public class PetBrowserActivity extends AppCompatActivity implements
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == SEARCH_FILTER_REQUEST_CODE) {
             mSearchFilter = Parcels.unwrap(data.getParcelableExtra(PetSearchFilterActivity.EXTRA_SEARCH_FILTER));
-            Snackbar.make(findViewById(android.R.id.content), "Search filters have been updated. Gender: " + mSearchFilter.getGender().toString(), Snackbar.LENGTH_LONG).show();
             mSwipeablePetsFragment.doPetSearch(mSearchFilter);
         }
     }

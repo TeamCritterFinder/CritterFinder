@@ -79,7 +79,7 @@ public class PetSearchFilterActivity extends AppCompatActivity implements
         // add a back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mSearchFilter = Parcels.unwrap(getIntent().getParcelableExtra(PetSearchFilterActivity.EXTRA_SEARCH_FILTER));
-        mPetService = new PetSearch(null);
+        mPetService = PetSearch.getInstance();
         mBreeds = new HashMap<>();
         setupCriteriaDisplayStrings();
         createSearchCriteriaFromFilter(mSearchFilter);
