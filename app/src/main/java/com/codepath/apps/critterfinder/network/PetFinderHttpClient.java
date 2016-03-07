@@ -29,14 +29,25 @@ public class PetFinderHttpClient  {
     }
 
     // PetFinder get list of pets
-    public void findPetList(JsonHttpResponseHandler handler) {
+    public void findPetList(JsonHttpResponseHandler handler,SearchFilter searchFilter) {
         String apiUrl = getApiUrl("pet.find");
         // Can specify query string params directly or through RequestParams.
         RequestParams params = new RequestParams();
         params.put("format", "json");
-//		params.put("count", 25);
+		params.put("count", 25);
         params.put("key", REST_CONSUMER_KEY);
-        params.put("location", "94941");        // TO DO don't hard code Zip Code
+        if (searchFilter.getPostalCode() != null)
+            params.put("location", searchFilter.getPostalCode());
+        else    // location is a REQUIRED field
+            params.put("location","94140");
+        if (searchFilter.getSpecies() != null)
+            params.put("animal", searchFilter.getSpecies());
+        if (searchFilter.getAge() != null)
+            params.put("age",searchFilter.getAge());
+        if (searchFilter.getGender() != null && (searchFilter.getGender().toString().length() > 0))
+            params.put("sex",searchFilter.getGender());
+        if (searchFilter.getSize() != null)
+            params.put("size",searchFilter.getSize());
         client.get(apiUrl, params, handler);
     }
 
