@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_toRightOf="@id/petFavSex"
-        android:layout_below="@id/petImage"
+        android:layout_below="@id/petFavImage"
         android:text="Pet Name"
         android:id="@+id/petFavName"/>
 

@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.codepath.apps.critterfinder.R;
-import com.codepath.apps.critterfinder.activities.PetSearchFilterActivity;
 import com.codepath.apps.critterfinder.models.PetModel;
 import com.codepath.apps.critterfinder.models.SearchFilter;
 import com.codepath.apps.critterfinder.services.PetSearch;
@@ -70,12 +69,6 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
         doPetSearch(mSearchFilter);
         setupPet();
         return currentView;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        Log.d("SwipeablePetsFragment","onAttach");
     }
 
     @OnClick(R.id.button_like)
