@@ -14,6 +14,8 @@ import android.view.View;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.codepath.apps.critterfinder.R;
 import com.codepath.apps.critterfinder.adapters.SearchCriteriaAdapter;
+import com.codepath.apps.critterfinder.fragments.SwipeablePetsFragment;
+import com.codepath.apps.critterfinder.models.Breed;
 import com.codepath.apps.critterfinder.models.SearchCriteria;
 import com.codepath.apps.critterfinder.models.SearchFilter;
 import com.codepath.apps.critterfinder.utils.DividerItemDecoration;
@@ -29,6 +31,10 @@ import butterknife.ButterKnife;
 public class PetSearchFilterActivity extends AppCompatActivity implements SearchCriteriaAdapter.OnItemClickListener {
 
     public static String EXTRA_SEARCH_FILTER = "com.codepath.apps.critterfinder.activities.searchfilteractivity.searchfilter";
+
+    private static String BREED_UI_DELIMETER = System.getProperty("line.separator");
+    // Define the events that the fragment will use to communicate
+
 
     @Bind(R.id.recycler_search_criteria) RecyclerView mSearchCriteriaRecyclerView;
 
@@ -65,7 +71,8 @@ public class PetSearchFilterActivity extends AppCompatActivity implements Search
         // add a back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mSearchFilter = Parcels.unwrap(getIntent().getParcelableExtra(PetSearchFilterActivity.EXTRA_SEARCH_FILTER));
-
+        mPetService = new PetSearch(null);
+        mBreeds = new HashMap<SearchFilter.Species, List<Breed>>();
         setupCriteriaDisplayStrings();
         createSearchCriteriaFromFilter(mSearchFilter);
         setupSearchCriteriaView();
@@ -197,7 +204,7 @@ public class PetSearchFilterActivity extends AppCompatActivity implements Search
         // TODO - SearchFilter needs to support an array of ages
         Integer[] selectedAge = null;
         if (mSearchFilter.getAge() != null) {
-            selectedAge = new Integer[] {mSearchFilter.getAge().ordinal()};
+            selectedAge = new Integer[]{mSearchFilter.getAge().ordinal()};
         }
         new MaterialDialog.Builder(this)
                 .title(searchCriteria.title)

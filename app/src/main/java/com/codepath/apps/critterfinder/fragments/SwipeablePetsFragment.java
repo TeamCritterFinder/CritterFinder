@@ -1,5 +1,6 @@
 package com.codepath.apps.critterfinder.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -13,7 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.codepath.apps.critterfinder.R;
+import com.codepath.apps.critterfinder.activities.PetSearchFilterActivity;
 import com.codepath.apps.critterfinder.models.PetModel;
+import com.codepath.apps.critterfinder.models.SearchFilter;
 import com.codepath.apps.critterfinder.services.PetSearch;
 import com.squareup.picasso.Picasso;
 
@@ -24,9 +27,13 @@ import butterknife.OnClick;
 /**
  * Our tinder-like pet browser
  */
-public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSearchCallbackInterface {
+public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSearchCallbackInterface  {
+
+    private static final String ARGUMENT_SEARCH_FILTER = "ARGUMENT_SEARCH_FILTER";
+
     private PetSearch petSearch;
     private LinearLayout loadingProgress;
+    SearchFilter mSearchFilter;
     @Bind(R.id.text_pet_gender) TextView mPetGender;
     @Bind(R.id.text_pet_name) TextView mPetName;
     @Bind(R.id.image_pet) ImageView mPetImage;
@@ -35,8 +42,6 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         petSearch = new PetSearch(this);
-        petSearch.setZipCode("94025");
-
     }
 
     @Override
@@ -44,10 +49,16 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
                              Bundle savedInstanceState) {
         View currentView = inflater.inflate(R.layout.fragment_swipeable_pets, container, false);
         ButterKnife.bind(this, currentView);
- //       loadingProgress = (LinearLayout)getActivity().findViewById(R.id.loadingProgress);
-        doPetSearch();
+        loadingProgress = (LinearLayout)getActivity().findViewById(R.id.loadingProgress);
+        doPetSearch(mSearchFilter);
         setupPet();
         return currentView;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Log.d("SwipeablePetsFragment","onAttach");
     }
 
     @OnClick(R.id.button_like)
@@ -78,9 +89,9 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
     }
 
     // start a pet search call
-    public void doPetSearch() {
+    public void doPetSearch(SearchFilter searchFilter) {
  //       loadingProgress.setVisibility(View.VISIBLE);
-        petSearch.doPetSearch();
+        petSearch.doPetSearch(searchFilter);
     }
     public void onPetSearchSuccess(String result) {
  //       loadingProgress.setVisibility(View.GONE);
@@ -91,4 +102,5 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
  //       loadingProgress.setVisibility(View.GONE);
         Log.d("FindActivity", "ERROR");
     }
+
 }
