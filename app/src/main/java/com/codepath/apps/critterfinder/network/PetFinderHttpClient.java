@@ -6,6 +6,8 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 
+import java.util.List;
+
 /**
  * Created by srichard on 2/24/16.
  */
@@ -42,12 +44,20 @@ public class PetFinderHttpClient  {
             params.put("location","94140");
         if (searchFilter.getSpecies() != null)
             params.put("animal", searchFilter.getSpecies());
-        if (searchFilter.getAge() != null)
-            params.put("age",searchFilter.getAge());
+        List<SearchFilter.Age> ages = searchFilter.getAges();
+        if (ages != null) {
+            for (int x = 0; x < ages.size(); x++) {
+                params.put("age", ages.get(x));
+            }
+        }
         if (searchFilter.getGender() != null && (searchFilter.getGender().toString().length() > 0))
             params.put("sex",searchFilter.getGender());
-        if (searchFilter.getSize() != null)
-            params.put("size",searchFilter.getSize());
+        List<SearchFilter.Size> sizes = searchFilter.getSizes();
+        if (sizes != null) {
+            for (int x = 0; x < sizes.size(); x++) {
+                params.put("size", sizes.get(x));
+            }
+        }
         client.get(apiUrl, params, handler);
     }
 
