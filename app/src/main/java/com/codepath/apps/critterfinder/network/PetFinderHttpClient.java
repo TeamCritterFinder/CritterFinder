@@ -47,7 +47,7 @@ public class PetFinderHttpClient  {
         List<SearchFilter.Age> ages = searchFilter.getAges();
         if (ages != null) {
             for (int x = 0; x < ages.size(); x++) {
-                params.put("age", ages.get(x));
+                params.add("age", ages.get(x).toString());
             }
         }
         if (searchFilter.getGender() != null && (searchFilter.getGender().toString().length() > 0))
@@ -55,7 +55,7 @@ public class PetFinderHttpClient  {
         List<SearchFilter.Size> sizes = searchFilter.getSizes();
         if (sizes != null) {
             for (int x = 0; x < sizes.size(); x++) {
-                params.put("size", sizes.get(x));
+                params.add("size", sizes.get(x).toString());
             }
         }
         client.get(apiUrl, params, handler);
