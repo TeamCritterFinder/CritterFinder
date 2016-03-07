@@ -56,7 +56,7 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSearchFilter = Parcels.unwrap(getArguments().getParcelable(ARGUMENT_SEARCH_FILTER));
-        petSearch = new PetSearch(this);
+        petSearch = PetSearch.getInstance();
     }
 
     @Override
@@ -66,28 +66,19 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
         ButterKnife.bind(this, currentView);
         loadingProgress = (LinearLayout)getActivity().findViewById(R.id.loadingProgress);
         doPetSearch(mSearchFilter);
-        setupPet();
         return currentView;
     }
 
     @OnClick(R.id.button_like)
     public void onLikeButtonClicked(Button button) {
         Snackbar.make(getActivity().findViewById(android.R.id.content), "Yeah you like this pet!", Snackbar.LENGTH_LONG).show();
-        updateViewWithPet(petSearch.getNextPet());
+        updateViewWithPet(petSearch.getNextPet(this));
     }
 
     @OnClick(R.id.button_pass)
     public void onPassButtonClicked(Button button) {
         Snackbar.make(getActivity().findViewById(android.R.id.content), "Keep trying the right pet is out there!", Snackbar.LENGTH_LONG).show();
-        updateViewWithPet(petSearch.getNextPet());
-    }
-
-    private void setupPet() {
-        mPetName.setText("Bentley The Coton");
-        mPetGender.setText("Male");
-        Picasso.with(mPetImage.getContext()).
-                load("http://scontent.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/12071062_736784449785114_1231793951_n.jpg").
-                into(mPetImage);
+        updateViewWithPet(petSearch.getNextPet(this));
     }
 
     // update the View with the image and data for a Pet
@@ -100,7 +91,7 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
     // start a pet search call
     public void doPetSearch(SearchFilter searchFilter) {
  //       loadingProgress.setVisibility(View.VISIBLE);
-        petSearch.doPetSearch(searchFilter);
+        petSearch.doPetSearch(searchFilter, this);
     }
     public void onPetSearchSuccess(String result) {
  //       loadingProgress.setVisibility(View.GONE);
