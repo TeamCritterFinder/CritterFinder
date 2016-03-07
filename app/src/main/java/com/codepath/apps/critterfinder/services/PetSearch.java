@@ -37,11 +37,6 @@ public class PetSearch {
         void onPetSearchError(String result);
     }
 
-    String zipCode;
-    String animalType;
-    String age;
-    String size;
-    String sex;
     public ArrayList<PetModel> petsList;
     PetFinderHttpClient client;
     PetSearchCallbackInterface callbackInterface;
@@ -53,50 +48,11 @@ public class PetSearch {
         this.callbackInterface = callbackInterface;
     }
 
-    public String getZipCode() {
-        return zipCode;
-    }
-
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
-
-    public String getAnimalType() {
-        return animalType;
-    }
-
-    public void setAnimalType(String animalType) {
-        this.animalType = animalType;
-    }
-
-    public String getAge() {
-        return age;
-    }
-
-    public void setAge(String age) {
-        this.age = age;
-    }
-
-    public String getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
 
     // Click handler method for the button used to start OAuth flow
     // Uses the client to initiate OAuth authorization
     // This should be tied to a button used to login
-    public void doPetSearch() {
+    public void doPetSearch(SearchFilter searchFilter) {
 
         client.findPetList(new JsonHttpResponseHandler() {
             @Override
@@ -122,7 +78,7 @@ public class PetSearch {
                 Log.d("DEBUG", "ERROR loading: " + errorResponse.toString());
                 callbackInterface.onPetSearchError(errorResponse.toString());
             }
-        });
+        },searchFilter);
     }
 
     public PetModel getCurrentPet() {

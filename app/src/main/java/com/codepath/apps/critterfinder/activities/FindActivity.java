@@ -45,7 +45,7 @@ public class FindActivity extends AppCompatActivity implements LocationService.O
 		loadingProgress = (LinearLayout)findViewById(R.id.loadingProgress);
 		//onFindPets();
 		petSearch = new PetSearch(this);
-		petSearch.setZipCode("94025");
+		//petSearch.setZipCode("94025");
 		doPetSearch();
 	}
 
@@ -109,7 +109,7 @@ public class FindActivity extends AppCompatActivity implements LocationService.O
 	// start a pet search call
 	public void doPetSearch() {
 		loadingProgress.setVisibility(View.VISIBLE);
-		petSearch.doPetSearch();
+	//	petSearch.doPetSearch();
 	}
 	public void onPetSearchSuccess(String result) {
 		loadingProgress.setVisibility(View.GONE);
