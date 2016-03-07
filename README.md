@@ -24,6 +24,7 @@ The following **required** functionality is completed:
 The following **optional** features are implemented:
 * [X] On first launch, the application uses the GPS to determine the current users location, turns that lat and longitude into a zip code and presents a set of pet results near the user.
 * [X] User should be able to see a list of breeds for a particular animal. This list should come from PetFinder
+* [X] User should be able to select multiple breeds, ages and sizes and see results that meet that advanced criteria
 * [ ] A user should be able to mark pets she is interested in learning more about
 * [ ] I should be able to launch the app again and filter based on previous search criteria
 * [ ] Don't resurface pets the user is not interested in seeing
