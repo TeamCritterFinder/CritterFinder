@@ -11,11 +11,14 @@ import com.codepath.apps.critterfinder.R;
 import com.codepath.apps.critterfinder.fragments.PetDetailsFragment;
 import com.codepath.apps.critterfinder.models.PetModel;
 
+import org.parceler.Parcels;
+
 import butterknife.ButterKnife;
 
 public class PetDetailsActivity extends AppCompatActivity {
 
     private static String EXTRA_PET = "com.codepath.apps.critterfinder.activities.details.pet";
+    private PetModel mPet;
 
     /**
      * Create an intent which will start the pet details activity
@@ -25,8 +28,7 @@ public class PetDetailsActivity extends AppCompatActivity {
      */
     public static Intent getStartIntent(Context context, PetModel pet) {
         Intent intent= new Intent(context, PetDetailsActivity.class);
-        // TODO - once our pet model is parcelabe, work our magic
-        intent.putExtra(PetDetailsActivity.EXTRA_PET, "");
+        intent.putExtra(PetDetailsActivity.EXTRA_PET, Parcels.wrap(pet));
         return intent;
     }
 
@@ -41,14 +43,15 @@ public class PetDetailsActivity extends AppCompatActivity {
         // add a back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        mPet = Parcels.unwrap(getIntent().getParcelableExtra(EXTRA_PET));
+
         if (savedInstanceState == null) {
-            // TODO - pass in the pet
-            setupPetDetails(null);
+            setupPetDetails(mPet);
         }
     }
 
     private void setupPetDetails(PetModel pet) {
-        PetDetailsFragment petDetailsFragment = PetDetailsFragment.newInstance(null);
+        PetDetailsFragment petDetailsFragment = PetDetailsFragment.newInstance(pet);
         getSupportFragmentManager().beginTransaction().
                 replace(R.id.layout_details_fragment_placeholder, petDetailsFragment).
                 commit();

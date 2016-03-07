@@ -1,6 +1,5 @@
 package com.codepath.apps.critterfinder.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
