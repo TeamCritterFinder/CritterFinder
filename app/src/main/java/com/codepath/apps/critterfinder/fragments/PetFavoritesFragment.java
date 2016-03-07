@@ -1,7 +1,6 @@
 package com.codepath.apps.critterfinder.fragments;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,8 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Toast;
 
 import com.codepath.apps.critterfinder.R;
 import com.codepath.apps.critterfinder.activities.PetDetailsActivity;
@@ -72,12 +69,5 @@ public class PetFavoritesFragment extends Fragment {
         // Set layout manager to position the items
         mrvPetFavorites.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
     }
-
-
-
-
-
-
 }

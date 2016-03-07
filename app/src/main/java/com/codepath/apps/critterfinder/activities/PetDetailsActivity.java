@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import com.codepath.apps.critterfinder.R;
 import com.codepath.apps.critterfinder.fragments.PetDetailsFragment;
@@ -53,5 +54,14 @@ public class PetDetailsActivity extends AppCompatActivity {
                 commit();
     }
 
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            // for now the back button will save the results
+            finish();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
 }
