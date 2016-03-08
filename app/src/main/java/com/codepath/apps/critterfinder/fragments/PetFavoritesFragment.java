@@ -13,10 +13,10 @@ import com.codepath.apps.critterfinder.R;
 import com.codepath.apps.critterfinder.activities.PetDetailsActivity;
 import com.codepath.apps.critterfinder.adapters.PetFavoritesAdapter;
 import com.codepath.apps.critterfinder.models.PetModel;
-import com.codepath.apps.critterfinder.services.PetSearch;
+import com.codepath.apps.critterfinder.services.FavoritesService;
 import com.codepath.apps.critterfinder.utils.DividerItemDecoration;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -50,7 +50,7 @@ public class PetFavoritesFragment extends Fragment {
 
     public void setupFavoritesPet(){
         // Create and Initialize pets
-        final ArrayList<PetModel> pets = PetSearch.getInstance().petsList;
+        final List<PetModel> pets = FavoritesService.getInstance().getFavoritePets();
 
         // Create adapter passing in the sample user data
         PetFavoritesAdapter adapter = new PetFavoritesAdapter(pets);

@@ -18,6 +18,7 @@ public class PetModel {
     String age;
     String size;
     String description;
+    long serverId;
 
     private static String weirdNameSpace = "$t";
 
@@ -39,7 +40,11 @@ public class PetModel {
         return description;
     }
 
-   public PetModel(String name, String sex, String image){
+    public long getServerId() {
+        return serverId;
+    }
+
+    public PetModel(String name, String sex, String image){
        this.name = name;
        this.sex = sex;
        this.imageUrl = image;
@@ -49,6 +54,7 @@ public class PetModel {
         try {
             this.name = petJson.getJSONObject("name").getString(weirdNameSpace);
             this.sex = petJson.getJSONObject("sex").getString(weirdNameSpace);
+            this.serverId = petJson.getJSONObject("id").getLong(weirdNameSpace);
             this.description = petJson.getJSONObject("description").getString(weirdNameSpace);
             JSONObject photosObject = petJson.getJSONObject("media").getJSONObject("photos");
             if (photosObject != null) {
