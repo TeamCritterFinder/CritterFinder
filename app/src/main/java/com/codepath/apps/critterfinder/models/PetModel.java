@@ -35,6 +35,15 @@ public class PetModel {
         return sex;
     }
 
+    public String getSexFullName() {
+
+        switch (sex) {
+            case "M" : return "Male";
+            case "F" : return "Female";
+        }
+        return "";
+    }
+
     public String getDescription() {
         return description;
     }
