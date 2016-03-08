@@ -60,6 +60,7 @@ public class PetSearch {
                 try {
                     JSONObject petsJsonObject = json.getJSONObject("petfinder").getJSONObject("pets");
                     if (petsJsonObject != null) {
+                        petsList = new ArrayList<>();
                         JSONArray petsArray = petsJsonObject.getJSONArray("pet");
                         if (petsArray != null && petsArray.length() > 0) {
                             PetModel.fromJSONArray(petsList,petsArray);
@@ -90,7 +91,7 @@ public class PetSearch {
                     if (petsJsonObject != null) {
                         JSONArray petsArray = petsJsonObject.getJSONArray("pet");
                         if (petsArray != null && petsArray.length() > 0) {
-                            PetModel.fromJSONArray(petsList,petsArray);
+                            PetModel.fromJSONArray(petsList, petsArray);
                            // callbackInterface.onPetSearchSuccess("SUCCESS");
                         }
                     }
