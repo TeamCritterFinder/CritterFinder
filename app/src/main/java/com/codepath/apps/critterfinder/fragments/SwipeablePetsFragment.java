@@ -1,7 +1,6 @@
 package com.codepath.apps.critterfinder.fragments;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +14,7 @@ import android.widget.TextView;
 import com.codepath.apps.critterfinder.R;
 import com.codepath.apps.critterfinder.models.PetModel;
 import com.codepath.apps.critterfinder.models.SearchFilter;
+import com.codepath.apps.critterfinder.services.FavoritesService;
 import com.codepath.apps.critterfinder.services.PetSearch;
 import com.squareup.picasso.Picasso;
 
@@ -34,6 +34,7 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
     private PetSearch petSearch;
     private LinearLayout loadingProgress;
     private SearchFilter mSearchFilter;
+    private PetModel mCurrentPet;
 
     @Bind(R.id.text_pet_gender) TextView mPetGender;
     @Bind(R.id.text_pet_name) TextView mPetName;
@@ -71,19 +72,20 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
 
     @OnClick(R.id.button_like)
     public void onLikeButtonClicked(Button button) {
-        Snackbar.make(getActivity().findViewById(android.R.id.content), "Yeah you like this pet!", Snackbar.LENGTH_LONG).show();
+        FavoritesService.getInstance().addFavoritePet(mCurrentPet);
         updateViewWithPet(petSearch.getNextPet(this));
     }
 
     @OnClick(R.id.button_pass)
     public void onPassButtonClicked(Button button) {
-        Snackbar.make(getActivity().findViewById(android.R.id.content), "Keep trying the right pet is out there!", Snackbar.LENGTH_LONG).show();
+        FavoritesService.getInstance().skipPet(mCurrentPet);
         updateViewWithPet(petSearch.getNextPet(this));
     }
 
     // update the View with the image and data for a Pet
     private void updateViewWithPet(PetModel petModel) {
         this.mPetName.setText(petModel.getName());
+        mCurrentPet = petModel;
         this.mPetGender.setText(petModel.getSexFullName());
         Picasso.with(mPetImage.getContext()).load(petModel.getImageUrl()).into(mPetImage);
     }
