@@ -55,7 +55,7 @@ public class PetDetailsFragment extends Fragment {
 
     private void setupPetDetailsView() {
         mPetName.setText(mPet.getName());
-        mPetGender.setText(mPet.getSex());
+        mPetGender.setText(mPet.getSexFullName());
         Picasso.with(mPetImage.getContext()).
                 load(mPet.getImageUrl()).
                 into(mPetImage);
