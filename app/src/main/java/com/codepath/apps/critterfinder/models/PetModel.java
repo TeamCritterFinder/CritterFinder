@@ -49,6 +49,9 @@ public class PetModel {
         return description;
     }
 
+    public long getServerId() {
+        return serverId;
+    }
 
     public String getAge(){
         return age;
@@ -64,17 +67,13 @@ public class PetModel {
         this.imageUrl = image;
     }
 
-    public long getServerId() {
-        return serverId;
-    }
-
     public PetModel(JSONObject petJson) {
         try {
             this.name = petJson.getJSONObject("name").getString(weirdNameSpace);
             this.sex = petJson.getJSONObject("sex").getString(weirdNameSpace);
+            this.serverId = petJson.getJSONObject("id").getLong(weirdNameSpace);
             this.age = petJson.getJSONObject("age").getString(weirdNameSpace);
             this.size = petJson.getJSONObject("size").getString(weirdNameSpace);
-            this.serverId = petJson.getJSONObject("id").getLong(weirdNameSpace);
             this.description = petJson.getJSONObject("description").getString(weirdNameSpace);
             JSONObject photosObject = petJson.getJSONObject("media").getJSONObject("photos");
             if (photosObject != null) {

@@ -85,7 +85,6 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
     // update the View with the image and data for a Pet
     private void updateViewWithPet(PetModel petModel) {
         this.mPetName.setText(petModel.getName());
-
         this.mPetGender.setText(petModel.getSexFullName());
         mCurrentPet = petModel;
         Picasso.with(mPetImage.getContext()).load(petModel.getImageUrl()).into(mPetImage);
