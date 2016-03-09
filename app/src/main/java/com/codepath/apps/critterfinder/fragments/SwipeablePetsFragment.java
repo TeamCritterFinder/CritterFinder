@@ -8,17 +8,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.codepath.apps.critterfinder.R;
+import com.codepath.apps.critterfinder.adapters.SwipeableCardAdapter;
 import com.codepath.apps.critterfinder.models.PetModel;
 import com.codepath.apps.critterfinder.models.SearchFilter;
 import com.codepath.apps.critterfinder.services.PetSearch;
-import com.squareup.picasso.Picasso;
+import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import org.parceler.Parcels;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,7 +29,8 @@ import butterknife.OnClick;
 /**
  * Our tinder-like pet browser
  */
-public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSearchCallbackInterface  {
+public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSearchCallbackInterface,
+        SwipeFlingAdapterView.onFlingListener {
 
     private static final String ARGUMENT_SEARCH_FILTER = "ARGUMENT_SEARCH_FILTER";
 
@@ -35,9 +38,10 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
     private LinearLayout loadingProgress;
     private SearchFilter mSearchFilter;
 
-    @Bind(R.id.text_pet_gender) TextView mPetGender;
-    @Bind(R.id.text_pet_name) TextView mPetName;
-    @Bind(R.id.image_pet) ImageView mPetImage;
+    @Bind(R.id.card_view) SwipeFlingAdapterView mCardContainer;
+
+    private List<PetModel> mPets;
+    private SwipeableCardAdapter mCardAdapter;
 
     /**
      * Factory method to generate a swipe-able fragment
@@ -56,6 +60,8 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSearchFilter = Parcels.unwrap(getArguments().getParcelable(ARGUMENT_SEARCH_FILTER));
+        mPets = new ArrayList<>();
+        mCardAdapter = new SwipeableCardAdapter(getContext(), mPets);
         petSearch = PetSearch.getInstance();
     }
 
@@ -65,27 +71,45 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
         View currentView = inflater.inflate(R.layout.fragment_swipeable_pets, container, false);
         ButterKnife.bind(this, currentView);
         loadingProgress = (LinearLayout)getActivity().findViewById(R.id.loadingProgress);
+
+        mCardContainer.setAdapter(mCardAdapter);
+        mCardContainer.setFlingListener(this);
         doPetSearch(mSearchFilter);
         return currentView;
+    }
+
+    @Override
+    public void removeFirstObjectInAdapter() {
+
+    }
+
+    @Override
+    public void onLeftCardExit(Object o) {
+        mCardAdapter.remove((PetModel) o);
+    }
+
+    @Override
+    public void onRightCardExit(Object o) {
+        mCardAdapter.remove((PetModel) o);
+    }
+
+    @Override
+    public void onAdapterAboutToEmpty(int i) {
+        doPetSearch(mSearchFilter);
+    }
+
+    @Override
+    public void onScroll(float v) {
     }
 
     @OnClick(R.id.button_like)
     public void onLikeButtonClicked(Button button) {
         Snackbar.make(getActivity().findViewById(android.R.id.content), "Yeah you like this pet!", Snackbar.LENGTH_LONG).show();
-        updateViewWithPet(petSearch.getNextPet(this));
     }
 
     @OnClick(R.id.button_pass)
     public void onPassButtonClicked(Button button) {
         Snackbar.make(getActivity().findViewById(android.R.id.content), "Keep trying the right pet is out there!", Snackbar.LENGTH_LONG).show();
-        updateViewWithPet(petSearch.getNextPet(this));
-    }
-
-    // update the View with the image and data for a Pet
-    private void updateViewWithPet(PetModel petModel) {
-        this.mPetName.setText(petModel.getName());
-        this.mPetGender.setText(petModel.getSexFullName());
-        Picasso.with(mPetImage.getContext()).load(petModel.getImageUrl()).into(mPetImage);
     }
 
     // start a pet search call
@@ -94,13 +118,12 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
         petSearch.doPetSearch(searchFilter, this);
     }
     public void onPetSearchSuccess(String result) {
+        mCardAdapter.addAll(petSearch.petsList);
  //       loadingProgress.setVisibility(View.GONE);
-        updateViewWithPet(petSearch.getCurrentPet());
         Log.d("FindActivity", "SUCCESS");
     }
     public void onPetSearchError(String result) {
  //       loadingProgress.setVisibility(View.GONE);
         Log.d("FindActivity", "ERROR");
     }
-
 }

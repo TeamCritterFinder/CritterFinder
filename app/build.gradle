@@ -49,6 +49,9 @@ dependencies {
         transitive = true
     }
 
+    // SwipeCards
+    compile 'com.lorentzos.swipecards:library:1.0.9'
+
     // for GPS location
     compile 'com.google.android.gms:play-services-maps:8.4.0'
     compile 'com.google.android.gms:play-services-location:8.4.0'
