@@ -39,6 +39,14 @@ public class PetModel {
         return description;
     }
 
+    public String getAge(){
+        return age;
+    }
+
+    public String getSize(){
+        return size;
+    }
+
    public PetModel(String name, String sex, String image){
        this.name = name;
        this.sex = sex;
@@ -49,6 +57,8 @@ public class PetModel {
         try {
             this.name = petJson.getJSONObject("name").getString(weirdNameSpace);
             this.sex = petJson.getJSONObject("sex").getString(weirdNameSpace);
+            this.age = petJson.getJSONObject("age").getString(weirdNameSpace);
+            this.size = petJson.getJSONObject("size").getString(weirdNameSpace);
             this.description = petJson.getJSONObject("description").getString(weirdNameSpace);
             JSONObject photosObject = petJson.getJSONObject("media").getJSONObject("photos");
             if (photosObject != null) {
