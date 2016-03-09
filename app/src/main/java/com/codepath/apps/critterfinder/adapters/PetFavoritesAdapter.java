@@ -80,7 +80,7 @@ public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapte
 
         // Set item views based on the data model
         TextView tvSex = viewHolder.tvPetFavSex;
-        tvSex.setText(petModel.getSex());
+        tvSex.setText(petModel.getSexFullName());
 
         //
         ImageView ivImage = viewHolder.ivPetFavImage;

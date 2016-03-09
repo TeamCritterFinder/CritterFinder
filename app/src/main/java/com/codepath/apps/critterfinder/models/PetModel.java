@@ -36,6 +36,15 @@ public class PetModel {
         return sex;
     }
 
+    public String getSexFullName() {
+
+        switch (sex) {
+            case "M" : return "Male";
+            case "F" : return "Female";
+        }
+        return "";
+    }
+
     public String getDescription() {
         return description;
     }
@@ -44,7 +53,15 @@ public class PetModel {
         return serverId;
     }
 
-    public PetModel(String name, String sex, String image){
+    public String getAge(){
+        return age;
+    }
+
+    public String getSize(){
+        return size;
+    }
+
+   public PetModel(String name, String sex, String image){
        this.name = name;
        this.sex = sex;
        this.imageUrl = image;
@@ -55,6 +72,8 @@ public class PetModel {
             this.name = petJson.getJSONObject("name").getString(weirdNameSpace);
             this.sex = petJson.getJSONObject("sex").getString(weirdNameSpace);
             this.serverId = petJson.getJSONObject("id").getLong(weirdNameSpace);
+            this.age = petJson.getJSONObject("age").getString(weirdNameSpace);
+            this.size = petJson.getJSONObject("size").getString(weirdNameSpace);
             this.description = petJson.getJSONObject("description").getString(weirdNameSpace);
             JSONObject photosObject = petJson.getJSONObject("media").getJSONObject("photos");
             if (photosObject != null) {
