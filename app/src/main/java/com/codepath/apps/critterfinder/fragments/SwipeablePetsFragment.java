@@ -1,7 +1,6 @@
 package com.codepath.apps.critterfinder.fragments;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +13,7 @@ import com.codepath.apps.critterfinder.R;
 import com.codepath.apps.critterfinder.adapters.SwipeableCardAdapter;
 import com.codepath.apps.critterfinder.models.PetModel;
 import com.codepath.apps.critterfinder.models.SearchFilter;
+import com.codepath.apps.critterfinder.services.FavoritesService;
 import com.codepath.apps.critterfinder.services.PetSearch;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
@@ -37,6 +37,7 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
     private PetSearch petSearch;
     private LinearLayout loadingProgress;
     private SearchFilter mSearchFilter;
+    private PetModel mCurrentPet;
 
     @Bind(R.id.card_view) SwipeFlingAdapterView mCardContainer;
 
@@ -94,22 +95,25 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
     }
 
     @Override
-    public void onAdapterAboutToEmpty(int i) {
+    public void onAdapterAboutToEmpty(int itemsInAdapter) {
         doPetSearch(mSearchFilter);
     }
 
     @Override
-    public void onScroll(float v) {
+    public void onScroll(float scrollProgressPercent) {
+        View view = mCardContainer.getSelectedView();
+        view.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
+        view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
     }
 
     @OnClick(R.id.button_like)
     public void onLikeButtonClicked(Button button) {
-        Snackbar.make(getActivity().findViewById(android.R.id.content), "Yeah you like this pet!", Snackbar.LENGTH_LONG).show();
+        FavoritesService.getInstance().addFavoritePet(mCurrentPet);
     }
 
     @OnClick(R.id.button_pass)
     public void onPassButtonClicked(Button button) {
-        Snackbar.make(getActivity().findViewById(android.R.id.content), "Keep trying the right pet is out there!", Snackbar.LENGTH_LONG).show();
+        FavoritesService.getInstance().skipPet(mCurrentPet);
     }
 
     // start a pet search call
