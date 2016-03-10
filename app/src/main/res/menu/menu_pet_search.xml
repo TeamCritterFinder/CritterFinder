@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.codepath.apps.critterfinder.activities.PetBrowserActivity">
+
+    <item
+        android:id="@+id/menu_item_ok"
+        android:title="@string/do_search"
+        app:showAsAction="ifRoom"/>
+
+</menu>
