@@ -18,26 +18,21 @@ public class PetFinderHttpClient  {
     public static final String REST_CONSUMER_KEY = "7afaf97ae32a304d684d620381a63e3b";       // PetFinder
     public static final String REST_CONSUMER_SECRET = "f83cf7247c48af6df08bb61064ba01ab"; 	// Petfinder Secret
 
-//    public static PetFinderHttpClient getInstance(){
-//        if(mInstance == null)
-//        {
-//            mInstance = new PetFinderHttpClient();
-//        }
-//        return mInstance;
-//    }
-
     public PetFinderHttpClient() {
         client = new AsyncHttpClient();
     }
 
     // PetFinder get list of pets
-    public void findPetList(JsonHttpResponseHandler handler,SearchFilter searchFilter) {
+    public void findPetList(JsonHttpResponseHandler handler, SearchFilter searchFilter, long pageOffset) {
         String apiUrl = getApiUrl("pet.find");
         // Can specify query string params directly or through RequestParams.
         RequestParams params = new RequestParams();
         params.put("format", "json");
 		params.put("count", 25);
         params.put("key", REST_CONSUMER_KEY);
+        if (pageOffset > 0) {
+            params.put("offset", pageOffset);
+        }
         if (searchFilter.getPostalCode() != null)
             params.put("location", searchFilter.getPostalCode());
         else    // location is a REQUIRED field

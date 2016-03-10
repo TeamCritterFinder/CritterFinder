@@ -37,7 +37,6 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
     private PetSearch petSearch;
     private LinearLayout loadingProgress;
     private SearchFilter mSearchFilter;
-    private PetModel mCurrentPet;
 
     @Bind(R.id.card_view) SwipeFlingAdapterView mCardContainer;
 
@@ -80,9 +79,7 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
     }
 
     @Override
-    public void removeFirstObjectInAdapter() {
-
-    }
+    public void removeFirstObjectInAdapter() {}
 
     @Override
     public void onLeftCardExit(Object o) {
@@ -100,7 +97,9 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
 
     @Override
     public void onAdapterAboutToEmpty(int itemsInAdapter) {
-        doPetSearch(mSearchFilter);
+        if (itemsInAdapter > 0) {
+            petSearch.doLoadMorePets(this);
+        }
     }
 
     @Override
@@ -123,20 +122,23 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
     }
 
     private void likePet(PetModel pet) {
-        FavoritesService.getInstance().addFavoritePet(mCurrentPet);
+        FavoritesService.getInstance().addFavoritePet(pet);
     }
 
     private void skipPet(PetModel pet) {
-        FavoritesService.getInstance().addFavoritePet(mCurrentPet);
+        FavoritesService.getInstance().addFavoritePet(pet);
     }
 
     // start a pet search call
     public void doPetSearch(SearchFilter searchFilter) {
  //       loadingProgress.setVisibility(View.VISIBLE);
+        // when performing a new search, clear out all existing
+        // search results
+        mCardAdapter.clear();
         petSearch.doPetSearch(searchFilter, this);
     }
-    public void onPetSearchSuccess(String result) {
-        mCardAdapter.addAll(petSearch.petsList);
+    public void onPetSearchSuccess(List<PetModel> pets) {
+        mCardAdapter.addAll(pets);
  //       loadingProgress.setVisibility(View.GONE);
         Log.d("FindActivity", "SUCCESS");
     }
