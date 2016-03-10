@@ -6,12 +6,12 @@
     <item
         android:id="@+id/menu_item_search"
         android:title="@string/actionbar_search_title"
-        android:icon="@android:drawable/ic_menu_search"
+        android:icon="@drawable/ic_search"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/menu_item_favorites"
         android:title="@string/actionbar_favorites_title"
-        android:icon="@drawable/ic_action_favorites"
+        android:icon="@drawable/ic_favorite_white_24dp"
         app:showAsAction="ifRoom"/>
 </menu>
