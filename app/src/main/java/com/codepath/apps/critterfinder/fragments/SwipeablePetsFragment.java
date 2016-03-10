@@ -86,12 +86,16 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
 
     @Override
     public void onLeftCardExit(Object o) {
-        mCardAdapter.remove((PetModel) o);
+        PetModel pet = (PetModel) o;
+        skipPet(pet);
+        mCardAdapter.remove(pet);
     }
 
     @Override
     public void onRightCardExit(Object o) {
-        mCardAdapter.remove((PetModel) o);
+        PetModel pet = (PetModel) o;
+        likePet(pet);
+        mCardAdapter.remove(pet);
     }
 
     @Override
@@ -108,12 +112,22 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
 
     @OnClick(R.id.button_like)
     public void onLikeButtonClicked(Button button) {
-        FavoritesService.getInstance().addFavoritePet(mCurrentPet);
+        // route the click through the card which understands which pet is currently selected
+        mCardContainer.getTopCardListener().selectRight();
     }
 
     @OnClick(R.id.button_pass)
     public void onPassButtonClicked(Button button) {
-        FavoritesService.getInstance().skipPet(mCurrentPet);
+        // route the click through the card which understands which pet is currently selected
+        mCardContainer.getTopCardListener().selectLeft();
+    }
+
+    private void likePet(PetModel pet) {
+        FavoritesService.getInstance().addFavoritePet(mCurrentPet);
+    }
+
+    private void skipPet(PetModel pet) {
+        FavoritesService.getInstance().addFavoritePet(mCurrentPet);
     }
 
     // start a pet search call
