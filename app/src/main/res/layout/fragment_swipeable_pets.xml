@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.SwipeablePetsFragment"
-    tools:showIn="@layout/activity_pet_browser">
+    >
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -32,8 +32,9 @@
         app:max_visible="4"
         app:min_adapter_stack="6" />
 
+
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:layout_below="@id/card_view">
@@ -41,18 +42,20 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pass"
             android:onClick="onDislike"
-            android:id="@+id/button_pass"/>
+            android:background="@drawable/cancel_drawable"
+            android:id="@+id/button_pass"
+            android:height="80dp"
+            android:width="80dp" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Like"
             android:onClick="onLike"
-            android:layout_below="@id/text_pet_name"
+            android:background="@drawable/heart_drawable"
             android:id="@+id/button_like"
-            android:layout_toRightOf="@id/button_pass"/>
+            android:height="80dp"
+            android:width="80dp" />
 
     </LinearLayout>
 
