@@ -13,7 +13,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="450dp"
-            android:scaleType="fitCenter"
+            android:scaleType="centerCrop"
             android:id="@+id/image_pet"/>
 
             <TextView
@@ -22,14 +22,15 @@
                 android:layout_below="@id/image_pet"
                 android:layout_alignParentLeft="true"
                 android:text="Pet Name"
+                style="@style/HeaderFont"
                 android:id="@+id/text_pet_name"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/text_pet_name"
+                android:layout_alignParentRight="true"
+                style="@style/HeaderFont"
                 android:layout_below="@id/image_pet"
-                android:layout_marginLeft="5dp"
                 android:id="@+id/text_pet_gender"/>
     </RelativeLayout>
 
