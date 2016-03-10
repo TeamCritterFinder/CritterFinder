@@ -66,7 +66,8 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
         View currentView = inflater.inflate(R.layout.fragment_swipeable_pets, container, false);
         ButterKnife.bind(this, currentView);
         loadingProgress = (LinearLayout)getActivity().findViewById(R.id.loadingProgress);
-        doPetSearch(mSearchFilter);
+        if (mSearchFilter != null)
+            doPetSearch(mSearchFilter);
         return currentView;
     }
 
