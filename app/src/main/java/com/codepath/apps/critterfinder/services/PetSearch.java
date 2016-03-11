@@ -29,17 +29,16 @@ public class PetSearch {
     //define callback interface
     public interface PetSearchCallbackInterface {
 
-        void onPetSearchSuccess(String result);
+        void onPetSearchSuccess(List<PetModel> pets);
         void onPetSearchError(String result);
     }
 
+    private static String weirdNameSpace = "$t";
     private static PetSearch mInstance = new PetSearch();
 
-    public ArrayList<PetModel> petsList;
     PetFinderHttpClient client;
-    Integer currentPet = 0; // currently selected pet
-    private Integer pageBuffer = 4; // when to start loading
     SearchFilter searchFilter;
+    private long mOffsetForNextSearch;
 
     public static PetSearch getInstance() {
         return mInstance;
@@ -47,52 +46,50 @@ public class PetSearch {
 
     public PetSearch() {
         client = new PetFinderHttpClient();
-        petsList = new ArrayList<PetModel>();
+        mOffsetForNextSearch = 0;
     }
 
+    /**
+     * A new search for pets that match the passed in searchFilter
+     * @param searchFilter
+     * @param callbackInterface
+     */
     public void doPetSearch(SearchFilter searchFilter, final PetSearchCallbackInterface callbackInterface) {
+        // clear search results
         this.searchFilter = searchFilter;
-        client.findPetList(new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject json) {
-                String jsonString = json.toString();
-                Log.d("DEBUG", "SUCCESS loading: " + jsonString);
-                try {
-                    JSONObject petsJsonObject = json.getJSONObject("petfinder").getJSONObject("pets");
-                    if (petsJsonObject != null) {
-                        petsList = new ArrayList<>();
-                        JSONArray petsArray = petsJsonObject.getJSONArray("pet");
-                        if (petsArray != null && petsArray.length() > 0) {
-                            PetModel.fromJSONArray(petsList,petsArray);
-                            callbackInterface.onPetSearchSuccess("SUCCESS");
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d("DEBUG", "ERROR loading: " + errorResponse.toString());
-                callbackInterface.onPetSearchError(errorResponse.toString());
-            }
-        },searchFilter);
+        mOffsetForNextSearch = 0;
+        fetchPets(callbackInterface);
     }
 
-    public void doLoadMorePets(SearchFilter searchFilter, final PetSearchCallbackInterface callbackInterface) {
+    /**
+     * Load more pets for the current search
+     * @param callbackInterface
+     */
+    public void doLoadMorePets(final PetSearchCallbackInterface callbackInterface) {
+        fetchPets(callbackInterface);
+    }
+
+    /**
+     * Helper method to allow searching and loading pets to share the same code
+     * @param callbackInterface
+     */
+    private void fetchPets(final PetSearchCallbackInterface callbackInterface) {
         client.findPetList(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject json) {
                 String jsonString = json.toString();
                 Log.d("DEBUG", "SUCCESS loading: " + jsonString);
                 try {
-                    JSONObject petsJsonObject = json.getJSONObject("petfinder").getJSONObject("pets");
+                    JSONObject petFinderObject = json.getJSONObject("petfinder");
+                    mOffsetForNextSearch = petFinderObject.getJSONObject("lastOffset").getLong(weirdNameSpace);
+
+                    JSONObject petsJsonObject = petFinderObject.getJSONObject("pets");
                     if (petsJsonObject != null) {
                         JSONArray petsArray = petsJsonObject.getJSONArray("pet");
                         if (petsArray != null && petsArray.length() > 0) {
+                            ArrayList<PetModel> petsList = new ArrayList<>();
                             PetModel.fromJSONArray(petsList, petsArray);
-                           // callbackInterface.onPetSearchSuccess("SUCCESS");
+                            callbackInterface.onPetSearchSuccess(petsList);
                         }
                     }
                 } catch (JSONException e) {
@@ -105,24 +102,7 @@ public class PetSearch {
                 Log.d("DEBUG", "ERROR loading: " + errorResponse.toString());
                 callbackInterface.onPetSearchError(errorResponse.toString());
             }
-        },searchFilter);
-    }
-
-    public PetModel getCurrentPet() {
-        return petsList.get(currentPet);
-    }
-
-    public PetModel getNextPet(final PetSearchCallbackInterface callbackInterface) {
-        if (currentPet < petsList.size() - 1) {
-            if (currentPet > petsList.size() - pageBuffer) {
-                doLoadMorePets(searchFilter, callbackInterface);
-            }
-            return petsList.get(++currentPet);
-        } else {
-            Log.d("PetSearch","Find More Pets");
-            return null;
-            // TO DO implement another search call
-        }
+        }, searchFilter, mOffsetForNextSearch);
     }
 
     /**

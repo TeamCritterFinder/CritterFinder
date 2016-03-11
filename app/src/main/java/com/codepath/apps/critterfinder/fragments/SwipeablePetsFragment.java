@@ -7,18 +7,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.codepath.apps.critterfinder.R;
+import com.codepath.apps.critterfinder.adapters.SwipeableCardAdapter;
 import com.codepath.apps.critterfinder.models.PetModel;
 import com.codepath.apps.critterfinder.models.SearchFilter;
 import com.codepath.apps.critterfinder.services.FavoritesService;
 import com.codepath.apps.critterfinder.services.PetSearch;
-import com.squareup.picasso.Picasso;
+import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import org.parceler.Parcels;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,18 +29,19 @@ import butterknife.OnClick;
 /**
  * Our tinder-like pet browser
  */
-public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSearchCallbackInterface  {
+public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSearchCallbackInterface,
+        SwipeFlingAdapterView.onFlingListener {
 
     private static final String ARGUMENT_SEARCH_FILTER = "ARGUMENT_SEARCH_FILTER";
 
     private PetSearch petSearch;
     private LinearLayout loadingProgress;
     private SearchFilter mSearchFilter;
-    private PetModel mCurrentPet;
 
-    @Bind(R.id.text_pet_gender) TextView mPetGender;
-    @Bind(R.id.text_pet_name) TextView mPetName;
-    @Bind(R.id.image_pet) ImageView mPetImage;
+    @Bind(R.id.card_view) SwipeFlingAdapterView mCardContainer;
+
+    private List<PetModel> mPets;
+    private SwipeableCardAdapter mCardAdapter;
 
     /**
      * Factory method to generate a swipe-able fragment
@@ -57,6 +60,8 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSearchFilter = Parcels.unwrap(getArguments().getParcelable(ARGUMENT_SEARCH_FILTER));
+        mPets = new ArrayList<>();
+        mCardAdapter = new SwipeableCardAdapter(getContext(), mPets);
         petSearch = PetSearch.getInstance();
     }
 
@@ -66,43 +71,79 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
         View currentView = inflater.inflate(R.layout.fragment_swipeable_pets, container, false);
         ButterKnife.bind(this, currentView);
         loadingProgress = (LinearLayout)getActivity().findViewById(R.id.loadingProgress);
+
+        mCardContainer.setAdapter(mCardAdapter);
+        mCardContainer.setFlingListener(this);
         doPetSearch(mSearchFilter);
         return currentView;
     }
 
+    @Override
+    public void removeFirstObjectInAdapter() {}
+
+    @Override
+    public void onLeftCardExit(Object o) {
+        PetModel pet = (PetModel) o;
+        skipPet(pet);
+        mCardAdapter.remove(pet);
+    }
+
+    @Override
+    public void onRightCardExit(Object o) {
+        PetModel pet = (PetModel) o;
+        likePet(pet);
+        mCardAdapter.remove(pet);
+    }
+
+    @Override
+    public void onAdapterAboutToEmpty(int itemsInAdapter) {
+        if (itemsInAdapter > 0) {
+            petSearch.doLoadMorePets(this);
+        }
+    }
+
+    @Override
+    public void onScroll(float scrollProgressPercent) {
+        View view = mCardContainer.getSelectedView();
+        view.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
+        view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
+    }
+
     @OnClick(R.id.button_like)
     public void onLikeButtonClicked(Button button) {
-        FavoritesService.getInstance().addFavoritePet(mCurrentPet);
-        updateViewWithPet(petSearch.getNextPet(this));
+        // route the click through the card which understands which pet is currently selected
+        mCardContainer.getTopCardListener().selectRight();
     }
 
     @OnClick(R.id.button_pass)
     public void onPassButtonClicked(Button button) {
-        FavoritesService.getInstance().skipPet(mCurrentPet);
-        updateViewWithPet(petSearch.getNextPet(this));
+        // route the click through the card which understands which pet is currently selected
+        mCardContainer.getTopCardListener().selectLeft();
     }
 
-    // update the View with the image and data for a Pet
-    private void updateViewWithPet(PetModel petModel) {
-        this.mPetName.setText(petModel.getName());
-        this.mPetGender.setText(petModel.getSexFullName());
-        mCurrentPet = petModel;
-        Picasso.with(mPetImage.getContext()).load(petModel.getImageUrl()).into(mPetImage);
+    private void likePet(PetModel pet) {
+        FavoritesService.getInstance().addFavoritePet(pet);
+    }
+
+    private void skipPet(PetModel pet) {
+        FavoritesService.getInstance().addFavoritePet(pet);
     }
 
     // start a pet search call
     public void doPetSearch(SearchFilter searchFilter) {
  //       loadingProgress.setVisibility(View.VISIBLE);
+        // when performing a new search, clear out all existing
+        // search results
+        mCardAdapter.clear();
         petSearch.doPetSearch(searchFilter, this);
     }
-    public void onPetSearchSuccess(String result) {
+    public void onPetSearchSuccess(List<PetModel> pets) {
+        mCardAdapter.addAll(pets);
  //       loadingProgress.setVisibility(View.GONE);
-        updateViewWithPet(petSearch.getCurrentPet());
         Log.d("FindActivity", "SUCCESS");
     }
     public void onPetSearchError(String result) {
  //       loadingProgress.setVisibility(View.GONE);
         Log.d("FindActivity", "ERROR");
     }
-
 }
