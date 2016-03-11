@@ -109,10 +109,12 @@ public class PetBrowserActivity extends AppCompatActivity implements
 
     private void showSearchFilterDialog() {
         startActivityForResult(PetSearchFilterActivity.getStartIntent(this, mSearchFilter), SEARCH_FILTER_REQUEST_CODE);
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
     private void showFavorites() {
         startActivity(PetFavoritesActivity.getStartIntent(this));
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
     private void setupSwipeableFragment() {

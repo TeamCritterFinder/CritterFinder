@@ -5,15 +5,10 @@
     <string name="login_label">Log in</string>
 
     <!-- Pet Details Strings -->
-    <string name="pet_details_description">Example text description. This is a great pet to adopt. Adopt me!</string>
-    <string name="title_activity_pet_details">PetDetailsActivity</string>
 
     <!-- Pet Favorites -->
-    <string name="pet_favorites_description">This is one of my favorites pet.</string>
-    <string name="title_activity_pet_favorites">Pet Favorites</string>
+    <string name="title_activity_pet_favorites">Favorites</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- Pet Browser -->
     <string name="actionbar_search_title">Search Filters</string>
     <string name="actionbar_favorites_title">Favorites</string>

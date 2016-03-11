@@ -62,6 +62,7 @@ public class PetDetailsActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             // for now the back button will save the results
             finish();
+            overridePendingTransition(R.anim.left_in, R.anim.right_out);
             return true;
         } else {
             return super.onOptionsItemSelected(item);
