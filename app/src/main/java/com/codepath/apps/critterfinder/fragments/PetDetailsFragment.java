@@ -28,6 +28,11 @@ public class PetDetailsFragment extends Fragment {
     @Bind(R.id.text_pet_gender) TextView mPetGender;
     @Bind(R.id.text_pet_name) TextView mPetName;
     @Bind(R.id.image_pet) ImageView mPetImage;
+    @Bind(R.id.text_shelter_contact_name) TextView mShelterContactName;
+    @Bind(R.id.text_shelter_contact_phone) TextView mShelterContactPhone;
+    @Bind(R.id.text_shelter_state) TextView mShelterContactState;
+    @Bind(R.id.text_shelter_city) TextView mShelterCity;
+    @Bind(R.id.text_shelter_email) TextView mShelterEmail;
 
     private PetModel mPet;
 
@@ -61,5 +66,11 @@ public class PetDetailsFragment extends Fragment {
                 //resize(DeviceDimensionsHelper.getDisplayWidth(getContext()), 0).
                 into(mPetImage);
         mPetDescription.setText(mPet.getDescription());
+        mShelterContactName.setText(mPet.getContactName());
+        mShelterContactPhone.setText(mPet.getContactPhone());
+        mShelterContactState.setText(", "+mPet.getContactState());
+        mShelterCity.setText(mPet.getContactCity());
+        mShelterEmail.setText(mPet.getContactEmail());
+
     }
 }
