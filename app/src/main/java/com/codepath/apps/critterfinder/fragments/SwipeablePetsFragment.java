@@ -1,5 +1,6 @@
 package com.codepath.apps.critterfinder.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -30,13 +31,15 @@ import butterknife.OnClick;
  * Our tinder-like pet browser
  */
 public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSearchCallbackInterface,
-        SwipeFlingAdapterView.onFlingListener {
+        SwipeFlingAdapterView.onFlingListener,
+        SwipeFlingAdapterView.OnItemClickListener {
 
     private static final String ARGUMENT_SEARCH_FILTER = "ARGUMENT_SEARCH_FILTER";
 
     private PetSearch petSearch;
     private LinearLayout loadingProgress;
     private SearchFilter mSearchFilter;
+    private OnSwipeablePetsFragmentListener mFragmentListener;
 
     @Bind(R.id.card_view) SwipeFlingAdapterView mCardContainer;
 
@@ -66,6 +69,16 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnSwipeablePetsFragmentListener) {
+            mFragmentListener = (OnSwipeablePetsFragmentListener)context;
+        } else {
+            throw new RuntimeException(context.toString());
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View currentView = inflater.inflate(R.layout.fragment_swipeable_pets, container, false);
@@ -74,6 +87,7 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
 
         mCardContainer.setAdapter(mCardAdapter);
         mCardContainer.setFlingListener(this);
+        mCardContainer.setOnItemClickListener(this);
         doPetSearch(mSearchFilter);
         return currentView;
     }
@@ -107,6 +121,12 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
         View view = mCardContainer.getSelectedView();
         view.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
         view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
+    }
+
+    @Override
+    public void onItemClicked(int i, Object o) {
+        View view = mCardContainer.getSelectedView();
+        mFragmentListener.onPetSelected((PetModel) o, view.findViewById(R.id.image_pet));
     }
 
     @OnClick(R.id.button_like)
@@ -145,5 +165,9 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
     public void onPetSearchError(String result) {
  //       loadingProgress.setVisibility(View.GONE);
         Log.d("FindActivity", "ERROR");
+    }
+
+    public interface OnSwipeablePetsFragmentListener {
+        void onPetSelected(PetModel pet, View transitionView);
     }
 }
