@@ -35,6 +35,9 @@ public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapte
         public TextView tvPetFavName;
         public TextView tvPetFavSex;
         public ImageView ivPetFavImage;
+        public TextView tvPetFavSize;
+        public TextView tvPetFavAge;
+        public TextView tvPetFavBreeds;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -46,6 +49,9 @@ public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapte
             tvPetFavName = (TextView) itemView.findViewById(R.id.petFavName);
             tvPetFavSex = (TextView) itemView.findViewById(R.id.petFavSex);
             ivPetFavImage = (ImageView) itemView.findViewById(R.id.petFavImage);
+            tvPetFavSize = (TextView) itemView.findViewById(R.id.petFavSize);
+            tvPetFavAge = (TextView) itemView.findViewById(R.id.petFavAge);
+            tvPetFavBreeds = (TextView) itemView.findViewById(R.id.petFavBreeds);
             itemView.setOnClickListener(this);
         }
 
@@ -82,12 +88,24 @@ public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapte
         TextView tvSex = viewHolder.tvPetFavSex;
         tvSex.setText(petModel.getSexFullName());
 
-        //
+        // Set item views based on the data model
         ImageView ivImage = viewHolder.ivPetFavImage;
         Picasso.with(ivImage.getContext())
                 .load(petModel.getImageUrl())
                 .into(viewHolder.ivPetFavImage);
         viewHolder.ivPetFavImage.setTag(position);
+
+        // Set item views based on the data model
+        TextView tvSize = viewHolder.tvPetFavSize;
+        tvSize.setText(petModel.getSize());
+
+        //Set item views based on the data model
+        TextView tvAge = viewHolder.tvPetFavAge;
+        tvAge.setText(petModel.getAge());
+
+        //Set item views based on the data model
+        TextView tvBreeds = viewHolder.tvPetFavBreeds;
+        //tvBreeds.setText(petModel.getBreeds());
     }
 
     // Return the total count of items
