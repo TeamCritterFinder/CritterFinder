@@ -5,13 +5,15 @@
     android:padding="8dp"
     android:layout_height="wrap_content">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:transitionName="details"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:scaleType="fitCenter"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:scaleType="centerCrop"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
         android:id="@+id/petFavImage"/>
 
     <TextView

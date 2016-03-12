@@ -59,6 +59,7 @@ public class PetDetailsFragment extends Fragment {
         mPetGender.setText(mPet.getSexFullName());
         Picasso.with(mPetImage.getContext()).
                 load(mPet.getImageUrl()).
+                //resize(DeviceDimensionsHelper.getDisplayWidth(getContext()), 0).
                 into(mPetImage);
         mPetDescription.setText(mPet.getDescription());
     }

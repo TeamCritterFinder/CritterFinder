@@ -14,6 +14,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by carlybaja on 3/2/16.
  */
@@ -34,7 +36,7 @@ public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapte
         // for any view that will be set as you render a row
         public TextView tvPetFavName;
         public TextView tvPetFavSex;
-        public ImageView ivPetFavImage;
+        public CircleImageView ivPetFavImage;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -45,14 +47,14 @@ public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapte
 
             tvPetFavName = (TextView) itemView.findViewById(R.id.petFavName);
             tvPetFavSex = (TextView) itemView.findViewById(R.id.petFavSex);
-            ivPetFavImage = (ImageView) itemView.findViewById(R.id.petFavImage);
+            ivPetFavImage = (CircleImageView) itemView.findViewById(R.id.petFavImage);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             if (mOnItemClickListener != null) {
-                mOnItemClickListener.onItemClick(v, getAdapterPosition());
+                mOnItemClickListener.onItemClick(v, ivPetFavImage, getAdapterPosition());
             }
         }
     }
@@ -102,7 +104,7 @@ public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapte
          * @param view
          * @param position
          */
-        void onItemClick(View view, int position);
+        void onItemClick(View view, View transitionSourceView, int position);
     }
 
     /**

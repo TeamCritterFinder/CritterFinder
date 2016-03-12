@@ -2,6 +2,7 @@ package com.codepath.apps.critterfinder.fragments;
 
 
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -54,9 +55,9 @@ public class PetFavoritesFragment extends Fragment {
 
         adapter.setOnItemClickListener(new PetFavoritesAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
-                startActivity(PetDetailsActivity.getStartIntent(getContext(),pets.get(position)));
-                getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
+            public void onItemClick(View view, View transitionSourceView,  int position) {
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), transitionSourceView, "details");
+                startActivity(PetDetailsActivity.getStartIntent(getContext(), pets.get(position)), options.toBundle());
             }
         });
         // Attach the adapter to the recyclerview to populate items
