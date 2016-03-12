@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,7 +24,6 @@ import butterknife.ButterKnife;
 public class SwipeableCardAdapter extends ArrayAdapter<PetModel> {
 
     static class SwipeCardViewHolder {
-        public static FrameLayout mBackground;
         @Bind(R.id.image_pet) ImageView mCardImage;
         @Bind(R.id.text_pet_name) TextView mCardText;
         @Bind(R.id.text_pet_gender) TextView mGenderText;
