@@ -26,16 +26,10 @@ import butterknife.ButterKnife;
  */
 public class PetFavoritesFragment extends Fragment {
 
-    private static final String ARGUMENT_PET = "ARGUMENT_PET";
     @Bind (R.id.rvPetFavorites) RecyclerView mrvPetFavorites;
 
-    public static PetFavoritesFragment newInstance(PetModel pet) {
+    public static PetFavoritesFragment newInstance() {
         PetFavoritesFragment petFavoritesFragment = new PetFavoritesFragment();
-        Bundle args = new Bundle();
-
-        // TODO - once our pet model is parcelable wire it up
-        args.putString(ARGUMENT_PET, "");
-        petFavoritesFragment.setArguments(args);
         return petFavoritesFragment;
     }
 
@@ -62,6 +56,7 @@ public class PetFavoritesFragment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 startActivity(PetDetailsActivity.getStartIntent(getContext(),pets.get(position)));
+                getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
             }
         });
         // Attach the adapter to the recyclerview to populate items

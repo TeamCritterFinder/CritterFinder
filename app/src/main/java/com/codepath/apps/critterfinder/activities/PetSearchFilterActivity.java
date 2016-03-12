@@ -147,6 +147,7 @@ public class PetSearchFilterActivity extends AppCompatActivity implements
         data.putExtra(EXTRA_SEARCH_FILTER, Parcels.wrap(mSearchFilter));
         setResult(RESULT_OK, data);
         finish();
+        overridePendingTransition(R.anim.left_in, R.anim.right_out);
     }
 
     private void setupSearchCriteriaView() {

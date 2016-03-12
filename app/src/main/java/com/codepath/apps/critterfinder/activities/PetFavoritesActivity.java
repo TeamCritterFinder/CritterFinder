@@ -35,7 +35,7 @@ public class PetFavoritesActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (savedInstanceState == null) {
-            PetFavoritesFragment petFavoritesFragment = PetFavoritesFragment.newInstance(null);
+            PetFavoritesFragment petFavoritesFragment = PetFavoritesFragment.newInstance();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.layout_favorites_fragment_placeholder, petFavoritesFragment);
             fragmentTransaction.commit();
@@ -47,6 +47,7 @@ public class PetFavoritesActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             // for now the back button will save the results
             finish();
+            overridePendingTransition(R.anim.left_in, R.anim.right_out);
             return true;
         } else {
             return super.onOptionsItemSelected(item);
