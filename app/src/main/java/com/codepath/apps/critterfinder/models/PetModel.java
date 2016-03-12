@@ -18,6 +18,14 @@ public class PetModel {
     String age;
     String size;
     String description;
+    String contactName;
+    String contactPhone;
+    String contactEmail;
+    String contactState;
+    String contactCity;
+    String contactZip;
+    String contactAdress1;
+    String contactAdress2;
     long serverId;
 
     private static String weirdNameSpace = "$t";
@@ -61,6 +69,38 @@ public class PetModel {
         return size;
     }
 
+    public String getContactName() {
+        return contactName;
+    }
+
+    public String getContactPhone() {
+        return contactPhone;
+    }
+
+    public String getContactEmail(){
+        return  contactEmail;
+    }
+
+    public String getContactState() {
+        return contactState;
+    }
+
+    public String getContactCity() {
+        return contactCity;
+    }
+
+    public String getContactZip() {
+        return contactZip;
+    }
+
+    public String getContactAdress1() {
+        return contactAdress1;
+    }
+
+    public String getcontactAdress2() {
+        return contactAdress2;
+    }
+
     public PetModel(String name, String sex, String image){
         this.name = name;
         this.sex = sex;
@@ -85,6 +125,17 @@ public class PetModel {
                     imageUrl.replace("\\/","/");
                 }
             }
+
+
+            this.contactName = petJson.getJSONObject("contact").getJSONObject("name").getString(weirdNameSpace);
+            this.contactPhone = petJson.getJSONObject("contact").getJSONObject("phone").getString(weirdNameSpace);
+            this.contactEmail = petJson.getJSONObject("contact").getJSONObject("email").getString(weirdNameSpace);
+            this.contactState = petJson.getJSONObject("contact").getJSONObject("state").getString(weirdNameSpace);
+            this.contactCity = petJson.getJSONObject("contact").getJSONObject("city").getString(weirdNameSpace);
+            this.contactZip = petJson.getJSONObject("contact").getJSONObject("zip").getString(weirdNameSpace);
+            this.contactAdress1 = petJson.getJSONObject("contact").getJSONObject("address1").getString(weirdNameSpace);
+            this.contactAdress2 = petJson.getJSONObject("contact").getJSONObject("address2").getString(weirdNameSpace);
+
 
         } catch (Exception e) {
             e.printStackTrace();
