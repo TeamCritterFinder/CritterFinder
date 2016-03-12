@@ -4,13 +4,16 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.codepath.apps.critterfinder.R;
 import com.codepath.apps.critterfinder.fragments.SwipeablePetsFragment;
+import com.codepath.apps.critterfinder.models.PetModel;
 import com.codepath.apps.critterfinder.models.SearchFilter;
 import com.codepath.apps.critterfinder.services.LocationService;
 
@@ -22,7 +25,8 @@ import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
 public class PetBrowserActivity extends AppCompatActivity implements
-        LocationService.OnLocationListener {
+        LocationService.OnLocationListener,
+        SwipeablePetsFragment.OnSwipeablePetsFragmentListener {
 
     private final int SEARCH_FILTER_REQUEST_CODE = 20;
 
@@ -105,6 +109,14 @@ public class PetBrowserActivity extends AppCompatActivity implements
             mSearchFilter = Parcels.unwrap(data.getParcelableExtra(PetSearchFilterActivity.EXTRA_SEARCH_FILTER));
             mSwipeablePetsFragment.doPetSearch(mSearchFilter);
         }
+    }
+
+    @Override
+    public void onPetSelected(PetModel pet, View transitionView) {
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, transitionView, "details");
+        Intent intent = PetDetailsActivity.getStartIntent(this, pet);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent, options.toBundle());
     }
 
     private void showSearchFilterDialog() {
