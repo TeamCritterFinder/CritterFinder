@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.codepath.apps.critterfinder.R;
 import com.codepath.apps.critterfinder.adapters.ImageGalleryAdapter;
 import com.codepath.apps.critterfinder.models.PetModel;
+import com.viewpagerindicator.CirclePageIndicator;
 
 import org.parceler.Parcels;
 
@@ -31,6 +32,7 @@ public class PetDetailsFragment extends Fragment {
     @Bind(R.id.text_pet_gender) TextView mPetGender;
     @Bind(R.id.text_pet_name) TextView mPetName;
     @Bind(R.id.pet_image_gallery) ViewPager mImageGallery;
+    @Bind(R.id.image_gallery_page_indicator) CirclePageIndicator mPageIndicator;
     private ImageGalleryAdapter mImageGalleryAdapter;
 
     private PetModel mPet;
@@ -73,5 +75,7 @@ public class PetDetailsFragment extends Fragment {
         images.add("https://scontent.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/12071062_736784449785114_1231793951_n.jpg");
         mImageGalleryAdapter = new ImageGalleryAdapter(getContext(), images);
         mImageGallery.setAdapter(mImageGalleryAdapter);
+        mPageIndicator.setSnap(true);
+        mPageIndicator.setViewPager(mImageGallery);
     }
 }
