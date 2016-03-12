@@ -60,9 +60,7 @@ public class PetDetailsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            // for now the back button will save the results
-            finish();
-            overridePendingTransition(R.anim.left_in, R.anim.right_out);
+            supportFinishAfterTransition();
             return true;
         } else {
             return super.onOptionsItemSelected(item);

@@ -38,7 +38,7 @@ public class PetBrowserActivity extends AppCompatActivity implements
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        
         mSearchFilter = new SearchFilter();
 
         if (savedInstanceState == null) {
