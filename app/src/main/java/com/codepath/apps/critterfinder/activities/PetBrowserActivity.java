@@ -106,8 +106,11 @@ public class PetBrowserActivity extends AppCompatActivity implements
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == SEARCH_FILTER_REQUEST_CODE) {
-            mSearchFilter = Parcels.unwrap(data.getParcelableExtra(PetSearchFilterActivity.EXTRA_SEARCH_FILTER));
-            mSwipeablePetsFragment.doPetSearch(mSearchFilter);
+            if (resultCode == RESULT_OK) {
+                mSearchFilter = Parcels.unwrap(data.getParcelableExtra(PetSearchFilterActivity.EXTRA_SEARCH_FILTER));
+                if (mSearchFilter != null)
+                    mSwipeablePetsFragment.doPetSearch(mSearchFilter);
+            }
         }
     }
 
