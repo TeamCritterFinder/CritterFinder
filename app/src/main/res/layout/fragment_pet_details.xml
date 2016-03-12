@@ -9,19 +9,16 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:scaleType="centerCrop"
-                android:transitionName="details"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:id="@+id/image_pet"/>
+
+        <android.support.v4.view.ViewPager
+            android:transitionName="details"
+            android:id="@+id/pet_image_gallery"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/pet_details_image_height"/>
         
         <View
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="@dimen/pet_details_image_height"
             android:background="@drawable/actionbar_gradient_dark"/>
         
     </FrameLayout>
@@ -33,7 +30,7 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
         android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"
