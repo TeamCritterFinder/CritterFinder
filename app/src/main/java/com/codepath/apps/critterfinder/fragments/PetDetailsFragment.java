@@ -68,7 +68,7 @@ public class PetDetailsFragment extends Fragment {
         mPetDescription.setText(mPet.getDescription());
         mShelterContactName.setText(mPet.getContactName());
         mShelterContactPhone.setText(mPet.getContactPhone());
-        mShelterContactState.setText(", "+mPet.getContactState());
+        mShelterContactState.setText(mPet.getContactState()+", ");
         mShelterCity.setText(mPet.getContactCity());
         mShelterEmail.setText(mPet.getContactEmail());
 
