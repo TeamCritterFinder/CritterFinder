@@ -28,7 +28,6 @@
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -51,6 +50,7 @@
                 android:layout_below="@id/text_pet_gender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:scrollbars = "vertical"
                 android:maxLines="8"
                 android:ellipsize="end" />
     </RelativeLayout>
@@ -61,23 +61,24 @@
             android:paddingTop="@dimen/activity_vertical_margin"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+       <TextView
+            android:id="@+id/text_shelter_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Shelter City"
 
-            <TextView
-                android:id="@+id/text_shelter_state"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Shelter State"/>
+            />
 
-            <TextView
-                android:id="@+id/text_shelter_city"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Shelter Country"
-                android:layout_toRightOf="@+id/text_shelter_state"
-                android:paddingLeft="5sp"/>
+        <TextView
+            android:id="@+id/text_shelter_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/text_shelter_city"
+            android:paddingLeft="5sp"
+            android:text="Shelter State" />
 
 
-            <TextView
+        <TextView
                 android:id="@+id/text_shelter_contact_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -90,7 +91,7 @@
                 android:layout_toRightOf="@+id/text_shelter_contact_name"
                 android:layout_below="@+id/text_shelter_state"
                 android:text="Contact Phone"
-                android:paddingLeft="5sp"/>
+                />
             <TextView
                 android:id="@+id/text_shelter_email"
                 android:layout_width="wrap_content"
