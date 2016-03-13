@@ -3,6 +3,7 @@ package com.codepath.apps.critterfinder.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,10 +68,11 @@ public class PetDetailsFragment extends Fragment {
         mPetName.setText(mPet.getName());
         mPetGender.setText(mPet.getSexFullName());
         mPetDescription.setText(mPet.getDescription());
+        mPetDescription.setMovementMethod(new ScrollingMovementMethod());
         mShelterContactName.setText(mPet.getContactName());
         mShelterContactPhone.setText(mPet.getContactPhone());
-        mShelterContactState.setText(", "+mPet.getContactState());
-        mShelterCity.setText(mPet.getContactCity());
+        mShelterContactState.setText(mPet.getContactState());
+        mShelterCity.setText(mPet.getContactCity()+", ");
         mShelterEmail.setText(mPet.getContactEmail());
     }
 
