@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import org.parceler.Parcel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by srichard on 2/26/16.
@@ -13,7 +14,8 @@ import java.util.ArrayList;
 @Parcel
 public class PetModel {
     String name;
-    String imageUrl;
+    String imageUrl;        // the image used for the main Tinder view
+    List<String> detailImageUrls;   // list of all images used for the details View
     String sex;
     String age;
     String size;
@@ -42,6 +44,11 @@ public class PetModel {
 
     public String getSex() {
         return sex;
+    }
+
+    // list of all images used for the details View
+    public List<String> getDetailImageUrls() {
+        return detailImageUrls;
     }
 
     public String getSexFullName() {
@@ -130,9 +137,11 @@ public class PetModel {
                 if (photosArray != null & photosArray.length() > 0) {
 //                    JSONObject photoObject = (JSONObject)photosArray.get(0);
                     JSONObject photoObject = findObjectWithNameValuePair(photosArray,"@size","pn");
+
                     imageUrl = photoObject.getString(weirdNameSpace);
                     imageUrl.replace("\\/","/");
                 }
+                detailImageUrls = findUrlsToImages(photosArray,"@size","pn");
             }
 
             if (petJson.getJSONObject("contact").has("name")){
@@ -181,6 +190,32 @@ public class PetModel {
             }
         }
         return null;
+    }
+
+    // look up all the images that have property name with specified size
+    public static List<String> findUrlsToImages(JSONArray jsonArray,String name, String size) {
+        List<String> matchingObjects = null;
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject currentObject = null;
+            try {
+                currentObject = (JSONObject)jsonArray.get(i);
+                String objectValue = currentObject.getString(name);
+                if (objectValue.length() > 0) {
+                    if (objectValue.compareTo(size) == 0) {
+                        String imageUrl = currentObject.getString(weirdNameSpace);
+                        imageUrl.replace("\\/","/");
+                        if (matchingObjects == null) {
+                            matchingObjects = new ArrayList<String>();
+                        }
+                        matchingObjects.add(imageUrl);
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return matchingObjects;
     }
 
     // converts the JSONArray to an ArrayList of pets appending to existing petList
