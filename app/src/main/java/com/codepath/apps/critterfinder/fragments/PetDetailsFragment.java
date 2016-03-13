@@ -30,6 +30,11 @@ public class PetDetailsFragment extends Fragment {
     @Bind(R.id.text_pet_description) TextView mPetDescription;
     @Bind(R.id.text_pet_gender) TextView mPetGender;
     @Bind(R.id.text_pet_name) TextView mPetName;
+    @Bind(R.id.text_shelter_contact_name) TextView mShelterContactName;
+    @Bind(R.id.text_shelter_contact_phone) TextView mShelterContactPhone;
+    @Bind(R.id.text_shelter_state) TextView mShelterContactState;
+    @Bind(R.id.text_shelter_city) TextView mShelterCity;
+    @Bind(R.id.text_shelter_email) TextView mShelterEmail;
     @Bind(R.id.pet_image_gallery) ViewPager mImageGallery;
     private ImageGalleryAdapter mImageGalleryAdapter;
 
@@ -62,6 +67,11 @@ public class PetDetailsFragment extends Fragment {
         mPetName.setText(mPet.getName());
         mPetGender.setText(mPet.getSexFullName());
         mPetDescription.setText(mPet.getDescription());
+        mShelterContactName.setText(mPet.getContactName());
+        mShelterContactPhone.setText(mPet.getContactPhone());
+        mShelterContactState.setText(", "+mPet.getContactState());
+        mShelterCity.setText(mPet.getContactCity());
+        mShelterEmail.setText(mPet.getContactEmail());
     }
 
     private void setupPetImageGallery() {

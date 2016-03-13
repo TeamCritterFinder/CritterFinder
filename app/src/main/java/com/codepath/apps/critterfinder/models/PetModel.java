@@ -126,16 +126,30 @@ public class PetModel {
                 }
             }
 
-
-            this.contactName = petJson.getJSONObject("contact").getJSONObject("name").getString(weirdNameSpace);
-            this.contactPhone = petJson.getJSONObject("contact").getJSONObject("phone").getString(weirdNameSpace);
-            this.contactEmail = petJson.getJSONObject("contact").getJSONObject("email").getString(weirdNameSpace);
-            this.contactState = petJson.getJSONObject("contact").getJSONObject("state").getString(weirdNameSpace);
-            this.contactCity = petJson.getJSONObject("contact").getJSONObject("city").getString(weirdNameSpace);
-            this.contactZip = petJson.getJSONObject("contact").getJSONObject("zip").getString(weirdNameSpace);
-            this.contactAdress1 = petJson.getJSONObject("contact").getJSONObject("address1").getString(weirdNameSpace);
-            this.contactAdress2 = petJson.getJSONObject("contact").getJSONObject("address2").getString(weirdNameSpace);
-
+            if (petJson.getJSONObject("contact").has("name")){
+                this.contactName = petJson.getJSONObject("contact").getJSONObject("name").getString(weirdNameSpace);
+            }
+            if (petJson.getJSONObject("contact").has("phone")){
+                this.contactPhone = petJson.getJSONObject("contact").getJSONObject("phone").getString(weirdNameSpace);
+            }
+            if (petJson.getJSONObject("contact").has("email")) {
+                this.contactEmail = petJson.getJSONObject("contact").getJSONObject("email").getString(weirdNameSpace);
+            }
+            if (petJson.getJSONObject("contact").has("state")) {
+                this.contactState = petJson.getJSONObject("contact").getJSONObject("state").getString(weirdNameSpace);
+            }
+            if (petJson.getJSONObject("contact").has("city")){
+                this.contactCity = petJson.getJSONObject("contact").getJSONObject("city").getString(weirdNameSpace);
+            }
+            if(petJson.getJSONObject("contact").has("zip")) {
+                this.contactZip = petJson.getJSONObject("contact").getJSONObject("zip").getString(weirdNameSpace);
+            }
+            if (petJson.getJSONObject("contact").has("address1")){
+                this.contactAdress1 = petJson.getJSONObject("contact").getJSONObject("address1").getString(weirdNameSpace);
+            }
+            if (petJson.getJSONObject("contact").has("address2")) {
+                this.contactAdress2 = petJson.getJSONObject("contact").getJSONObject("address2").getString(weirdNameSpace);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
