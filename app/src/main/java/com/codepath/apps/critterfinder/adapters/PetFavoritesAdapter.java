@@ -99,7 +99,7 @@ public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapte
 
         // Set item views based on the data model
         TextView tvSize = viewHolder.tvPetFavSize;
-        tvSize.setText(petModel.getSize());
+        tvSize.setText(petModel.getSizeFullName());
 
         //Set item views based on the data model
         TextView tvAge = viewHolder.tvPetFavAge;

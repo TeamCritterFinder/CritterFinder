@@ -69,6 +69,15 @@ public class PetModel {
         return size;
     }
 
+    public String getSizeFullName(){
+        switch (size){
+            case "S": return "Small";
+            case "M": return "Medium";
+            case "L": return "large";
+        }
+        return "";
+    }
+
     public String getContactName() {
         return contactName;
     }
