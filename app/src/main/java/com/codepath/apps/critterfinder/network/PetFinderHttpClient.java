@@ -1,5 +1,6 @@
 package com.codepath.apps.critterfinder.network;
 
+import com.codepath.apps.critterfinder.models.Breed;
 import com.codepath.apps.critterfinder.models.SearchFilter;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -39,6 +40,12 @@ public class PetFinderHttpClient  {
             params.put("location","94140");
         if (searchFilter.getSpecies() != null)
             params.put("animal", searchFilter.getSpecies());
+        List<Breed> breeds = searchFilter.getBreeds();
+        if (breeds != null) {   // Add the breeds to the parameter list
+            for (int x = 0; x < breeds.size(); x++) {
+                params.add("breed", breeds.get(x).toString());
+            }
+        }
         List<SearchFilter.Age> ages = searchFilter.getAges();
         if (ages != null) {
             for (int x = 0; x < ages.size(); x++) {

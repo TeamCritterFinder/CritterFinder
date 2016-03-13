@@ -2,6 +2,8 @@ package com.codepath.apps.critterfinder.utils;
 
 import android.text.TextUtils;
 
+import com.codepath.apps.critterfinder.models.Breed;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +55,19 @@ public class SearchFilterHelpers {
             selectedIndices = new Integer[list.size()];
             for (int index = 0; index < list.size(); index++) {
                 selectedIndices[index] = list.get(index).ordinal();
+            }
+        }
+        return selectedIndices;
+    }
+
+    // Look up the breeds from the selected list and create an array mapping to the offset in the list of all the Breeds
+    public static <T extends Enum<T>> Integer[] getIndicesForBreeds(List<Breed> list,List<Breed> allBreeds) {
+        Integer[] selectedIndices = null;
+        if (list != null) {
+            selectedIndices = new Integer[list.size()];
+            for (int index = 0; index < list.size(); index++) {
+                Breed comparisonBreed = new Breed(list.get(index).toString());  // create a Breed to lookup in the list
+                selectedIndices[index] = allBreeds.indexOf(comparisonBreed);    // find the offset in the list off breeds
             }
         }
         return selectedIndices;

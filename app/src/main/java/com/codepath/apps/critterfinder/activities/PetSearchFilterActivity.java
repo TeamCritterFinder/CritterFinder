@@ -308,11 +308,12 @@ public class PetSearchFilterActivity extends AppCompatActivity implements
     }
 
     private void changeBreed(final SearchCriteria searchCriteria, final int position) {
-        // TODO - figure out how to pass in the selected breeds into the dialog
+        List<Breed> breeds = mSearchFilter.getBreeds();
+        Integer[] selectedBreedIndices = SearchFilterHelpers.getIndicesForBreeds(breeds,mBreeds.get(mSearchFilter.getSpecies()));
         new MaterialDialog.Builder(this)
                 .title(searchCriteria.title)
                 .items(mBreeds.get(mSearchFilter.getSpecies()))
-                .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMultiChoice() {
+                .itemsCallbackMultiChoice(selectedBreedIndices, new MaterialDialog.ListCallbackMultiChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
                         List<Breed> breedsToSearch = SearchFilterHelpers.generateSubsetFromList(mBreeds.get(mSearchFilter.getSpecies()), which);

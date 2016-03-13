@@ -27,4 +27,19 @@ public class Breed {
     public String toString() {
         return getName();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Breed other = (Breed) obj;
+        if (getName().matches(other.getName()) )
+            return true;
+        else
+            return false;
+    }
 }
