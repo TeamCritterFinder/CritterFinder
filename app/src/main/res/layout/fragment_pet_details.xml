@@ -16,6 +16,14 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/pet_details_image_height"/>
         
+        <com.viewpagerindicator.CirclePageIndicator
+            android:id="@+id/image_gallery_page_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/CustomCirclePageIndicator"
+            android:background="@android:color/transparent"
+            android:layout_gravity="bottom"/>
+        
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/pet_details_image_height"
