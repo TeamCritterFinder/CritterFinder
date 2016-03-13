@@ -10,7 +10,40 @@ The problem
 
 The app utilizes [PetFinder REST API](https://www.petfinder.com/developers/api-docs).
 
-## User Stories
+## User Stories - Sprint 2
+
+The following **required** functionality is completed:
+
+* [X] All of the Sprint 1 User Stories
+* [X] A user should be able to use a swipe mechanic to swipe through a list of pets looking for a home. Swiping right marks the pet as a favorite. Swiping left marks a pet as not a good fit.
+* [X] A user should be able to tap on a swipe card from the pet browser view and be shown more details about the pet
+* [X] A user should be able to mark pets she is interested in learning more about as favorites and then view her list of favorite pets
+* [ ] A user should be able to search by breed
+* [ ] A user should see a Pet's breed on the swipe card, favorites view and details view
+* [ ] Don't resurface pets the user is not interested in seeing
+* [ ] A user should be able to see contact information about the shelter for a pet
+* [ ] A user should be able to reach out to the shelter via e-mail from the details activity
+* [ ] The information design should be complete for the swipe card view (a user should be able to see name, age, breed, and size).
+* [ ] The information design should be complete for the favorites view (a user should be able to see name, age, breed, and size).
+* [ ] The information design should be complete for the details view (a user should be able to see name, age, breed, size, description, contact info)
+* [ ] A user should be able to see multiple images of the pet from the details screen
+
+The following **optional** features are implemented:
+* [X] Allow the user to browse a gallery of pet images for the selected pet from the details screen
+* [X] Indicate how many images are available for browsing in the image gallery using a circular view page indicator
+* [X] Use scene transitions to animate the transition from a pet in the favorites list to the pet details screen. And from the the swipe card screen to the details screen.
+* [X] Give the details screen a transparent action bar and load the first pet image underneath the action bar
+* [X] Add a custom slide in from the right and out from the left animation when opening the search filter activity from the swipe card screen and back again.
+* [X] We have an app icon!
+* [X] First pass at a material color palette / theme
+
+## Video Walkthrough 
+
+Here's a walkthrough of the implemented user stories:
+
+<img src='https://cloud.githubusercontent.com/assets/1521460/13561218/36c67498-e3df-11e5-8c57-da1fad2bec0b.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+## User Stories - Sprint 1
 
 The following **required** functionality is completed:
 
@@ -25,10 +58,6 @@ The following **optional** features are implemented:
 * [X] On first launch, the application uses the GPS to determine the current users location, turns that lat and longitude into a zip code and presents a set of pet results near the user. This was done as an AsyncTask.
 * [X] User should be able to see a list of breeds for a particular animal. This list should come from PetFinder
 * [X] User should be able to select multiple breeds, ages and sizes and see results that meet that advanced criteria
-* [ ] A user should be able to mark pets she is interested in learning more about
-* [ ] I should be able to launch the app again and filter based on previous search criteria
-* [ ] Don't resurface pets the user is not interested in seeing
-* [ ] A user should be able to see contact information about the shelter for a pet and reach out to the shelter via e-mail
 
 ## Video Walkthrough 
 
@@ -54,7 +83,10 @@ Wireframe created with [pencils](http://pencil.evolus.vn).
 - [Gson](https://github.com/google/gson) - streamline JSON parsing into models
 - [Parceler](https://github.com/johncarl81/parceler) - Remove boilerplate around making model objects parcelable
 - [SDK Plugin Manager](https://github.com/JakeWharton/sdk-manager-plugin) - Jake Wharton's SDK plugin manager.
-
+- [View Pager Indicator](http://viewpagerindicator.com/) - Jake Wharton's View pager indicator library for our image gallery
+- [Circle Image View](https://github.com/hdodenhof/CircleImageView) - A fast ciruclar image view
+- [Swipe Cards](https://github.com/Diolor/Swipecards) - A framework to assist with the swipe / fling animation for pet cards
+- 
 ## License
 
     Copyright 2016 Carly Baja, Scott Richards, and Scott MacGregor
