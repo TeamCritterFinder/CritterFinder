@@ -1,11 +1,15 @@
 package com.codepath.apps.critterfinder.activities;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.codepath.apps.critterfinder.R;
 import com.codepath.apps.critterfinder.fragments.PetDetailsFragment;
@@ -13,12 +17,14 @@ import com.codepath.apps.critterfinder.models.PetModel;
 
 import org.parceler.Parcels;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class PetDetailsActivity extends AppCompatActivity {
+public class PetDetailsActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener {
 
     private static String EXTRA_PET = "com.codepath.apps.critterfinder.activities.details.pet";
     private PetModel mPet;
+    @Bind(R.id.pet_details_fab) FloatingActionButton mFloatingActionButton;
 
     /**
      * Create an intent which will start the pet details activity
@@ -40,6 +46,9 @@ public class PetDetailsActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mFloatingActionButton.setOnClickListener(this);
+
         // add a back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -50,11 +59,9 @@ public class PetDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private void setupPetDetails(PetModel pet) {
-        PetDetailsFragment petDetailsFragment = PetDetailsFragment.newInstance(pet);
-        getSupportFragmentManager().beginTransaction().
-                replace(R.id.layout_details_fragment_placeholder, petDetailsFragment).
-                commit();
+    @Override
+    public void onClick(View v) {
+        contactShelter(mPet);
     }
 
     @Override
@@ -64,6 +71,38 @@ public class PetDetailsActivity extends AppCompatActivity {
             return true;
         } else {
             return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //stub to ensure the implicit intent for contacting a shelter returns control to our app
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void setupPetDetails(PetModel pet) {
+        PetDetailsFragment petDetailsFragment = PetDetailsFragment.newInstance(pet);
+        getSupportFragmentManager().beginTransaction().
+                replace(R.id.layout_details_fragment_placeholder, petDetailsFragment).
+                commit();
+    }
+
+    private void contactShelter(PetModel mPet) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("plain/text");
+
+        final String subject = getString(R.string.contact_pet_subject, mPet.getName());
+        final String body = getString(R.string.contact_pet_body, mPet.getName());
+
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{mPet.getContactEmail()});
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(Intent.EXTRA_TEXT, body);
+
+        try {
+            startActivityForResult(intent, 0);
+        } catch (ActivityNotFoundException e) {
+            Snackbar.make(findViewById(android.R.id.content), getString(R.string.contact_no_email_client), Snackbar.LENGTH_LONG).show();
+
         }
     }
 }
