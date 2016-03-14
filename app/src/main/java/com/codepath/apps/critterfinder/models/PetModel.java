@@ -30,7 +30,7 @@ public class PetModel {
     String contactZip;
     String contactAdress1;
     String contactAdress2;
-    List<String> breeds;   // list of all the breeds the animal may be part of
+    List<Breed> breeds;   // list of all the breeds the animal may be part of
     long serverId;
 
     private static String weirdNameSpace = "$t";
@@ -180,8 +180,8 @@ public class PetModel {
                     JSONObject jsonObject = petJson.getJSONObject("breeds").getJSONObject("breed");
                     if (jsonObject instanceof JSONObject) {
                         String breedName = jsonObject.getString(weirdNameSpace);
-                        this.breeds = new ArrayList<String>();
-                        this.breeds.add(breedName);
+                        this.breeds = new ArrayList<Breed>();
+                        this.breeds.add(new Breed(breedName));
                         Log.d("PetModel", "JSONObject breed");
                     } else {
                         Log.d("PetModel", "NOT a JSONObject");
@@ -190,11 +190,11 @@ public class PetModel {
                     JSONArray jsonArray = petJson.getJSONObject("breeds").getJSONArray("breed");
                     if (jsonArray instanceof JSONArray) {
                         Log.d("PetModel", "Is a JSONArray");
-                        this.breeds = new ArrayList<String>();
+                        this.breeds = new ArrayList<Breed>();
                         for (int x=0; x< jsonArray.length();x++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(x);
                             if (jsonObject != null && jsonObject.has(weirdNameSpace)) {
-                                this.breeds.add(jsonObject.getString(weirdNameSpace));
+                                this.breeds.add(new Breed(jsonObject.getString(weirdNameSpace)));
                             }
                         }
                     }
