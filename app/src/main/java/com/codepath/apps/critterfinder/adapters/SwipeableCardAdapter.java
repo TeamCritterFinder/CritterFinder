@@ -64,7 +64,7 @@ public class SwipeableCardAdapter extends ArrayAdapter<PetModel> {
         viewHolder.mGenderText.setText(pet.getSexFullName());
         Picasso.with(getContext())
                 .load(pet.getImageUrl())
-                //.placeholder(R.drawable.photo_placeholder)
+                .placeholder(R.drawable.ic_launcher)
                 //.resize(viewHolder.imageWidth, 0)
                 .into(viewHolder.mCardImage);
 

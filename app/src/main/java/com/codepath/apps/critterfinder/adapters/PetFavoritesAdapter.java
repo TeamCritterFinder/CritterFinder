@@ -94,6 +94,7 @@ public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapte
         ImageView ivImage = viewHolder.ivPetFavImage;
         Picasso.with(ivImage.getContext())
                 .load(petModel.getImageUrl())
+                .placeholder(R.drawable.ic_launcher)
                 .into(viewHolder.ivPetFavImage);
         viewHolder.ivPetFavImage.setTag(position);
 
