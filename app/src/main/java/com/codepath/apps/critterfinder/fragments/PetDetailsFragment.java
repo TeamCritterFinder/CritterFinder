@@ -79,12 +79,6 @@ public class PetDetailsFragment extends Fragment {
     }
 
     private void setupPetImageGallery() {
-        // TODO - once our pet models has an array of pet images we can use that
-        List<String> images = new ArrayList<>();
-        images.add(mPet.getImageUrl());
-        images.add("https://scontent.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/12729479_184511348589610_36145994_n.jpg");
-        images.add("https://scontent.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/12750125_1667429310176636_4996515_n.jpg");
-        images.add("https://scontent.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/12071062_736784449785114_1231793951_n.jpg");
         mImageGalleryAdapter = new ImageGalleryAdapter(getContext(), mPet.getDetailImageUrls());
         mImageGallery.setAdapter(mImageGalleryAdapter);
         mPageIndicator.setSnap(true);
