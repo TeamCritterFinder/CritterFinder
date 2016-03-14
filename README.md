@@ -18,15 +18,15 @@ The following **required** functionality is completed:
 * [X] A user should be able to use a swipe mechanic to swipe through a list of pets looking for a home. Swiping right marks the pet as a favorite. Swiping left marks a pet as not a good fit.
 * [X] A user should be able to tap on a swipe card from the pet browser view and be shown more details about the pet
 * [X] A user should be able to mark pets she is interested in learning more about as favorites and then view her list of favorite pets
-* [ ] A user should be able to search by breed
+* [X] A user should be able to search by breed
 * [ ] A user should see a Pet's breed on the swipe card, favorites view and details view
 * [ ] Don't resurface pets the user is not interested in seeing
-* [ ] A user should be able to see contact information about the shelter for a pet
+* [X] A user should be able to see contact information about the shelter for a pet
 * [ ] A user should be able to reach out to the shelter via e-mail from the details activity
 * [ ] The information design should be complete for the swipe card view (a user should be able to see name, age, breed, and size).
 * [ ] The information design should be complete for the favorites view (a user should be able to see name, age, breed, and size).
 * [ ] The information design should be complete for the details view (a user should be able to see name, age, breed, size, description, contact info)
-* [ ] A user should be able to see multiple images of the pet from the details screen
+* [X] A user should be able to see multiple images of the pet from the details screen
 
 The following **optional** features are implemented:
 * [X] Allow the user to browse a gallery of pet images for the selected pet from the details screen
