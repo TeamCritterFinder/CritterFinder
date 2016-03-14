@@ -38,11 +38,11 @@ The following **optional** features are implemented:
 * [ ] The information design should be complete for the favorites view (a user should be able to see name, age, breed).
 * [ ] The information design should be complete for the details view (a user should be able to see name, age, breed, size, description, contact info)
 
-## Video Walkthrough 
+## Sprint 2 - Video Walkthrough 
 
 Here's a walkthrough of the implemented user stories:
 
-<img src='https://cloud.githubusercontent.com/assets/1521460/13561218/36c67498-e3df-11e5-8c57-da1fad2bec0b.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://github.com/TeamCritterFinder/CritterFinder/blob/master/CritterFinderSprint2.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 ## User Stories - Sprint 1
 
