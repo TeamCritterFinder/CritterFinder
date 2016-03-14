@@ -22,7 +22,7 @@ The following **required** functionality is completed:
 * [ ] A user should see a Pet's breed on the swipe card, favorites view and details view
 * [ ] Don't resurface pets the user is not interested in seeing
 * [X] A user should be able to see contact information about the shelter for a pet
-* [ ] A user should be able to reach out to the shelter via e-mail from the details activity
+* [X] A user should be able to reach out to the shelter via e-mail from the details activity
 * [ ] The information design should be complete for the swipe card view (a user should be able to see name, age, breed, and size).
 * [ ] The information design should be complete for the favorites view (a user should be able to see name, age, breed, and size).
 * [ ] The information design should be complete for the details view (a user should be able to see name, age, breed, size, description, contact info)
@@ -86,7 +86,7 @@ Wireframe created with [pencils](http://pencil.evolus.vn).
 - [View Pager Indicator](http://viewpagerindicator.com/) - Jake Wharton's View pager indicator library for our image gallery
 - [Circle Image View](https://github.com/hdodenhof/CircleImageView) - A fast ciruclar image view
 - [Swipe Cards](https://github.com/Diolor/Swipecards) - A framework to assist with the swipe / fling animation for pet cards
-- 
+
 ## License
 
     Copyright 2016 Carly Baja, Scott Richards, and Scott MacGregor
