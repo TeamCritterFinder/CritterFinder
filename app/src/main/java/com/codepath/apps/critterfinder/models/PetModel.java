@@ -1,5 +1,7 @@
 package com.codepath.apps.critterfinder.models;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,6 +30,7 @@ public class PetModel {
     String contactZip;
     String contactAdress1;
     String contactAdress2;
+    List<Breed> breeds;   // list of all the breeds the animal may be part of
     long serverId;
 
     private static String weirdNameSpace = "$t";
@@ -58,6 +61,16 @@ public class PetModel {
             case "F" : return "Female";
         }
         return "";
+    }
+
+    public String getBreedFullName() {
+        String breedName = "";
+       for (int x=0;x<breeds.size();x++) {
+           if (x > 0)
+               breedName += ", ";
+           breedName += breeds.get(x);
+       }
+        return breedName;
     }
 
     public String getDescription() {
@@ -162,12 +175,38 @@ public class PetModel {
             if(petJson.getJSONObject("contact").has("zip")) {
                 this.contactZip = petJson.getJSONObject("contact").getJSONObject("zip").getString(weirdNameSpace);
             }
+            if (petJson.getJSONObject("breeds").has("breed")) {
+                try {
+                    JSONObject jsonObject = petJson.getJSONObject("breeds").getJSONObject("breed");
+                    if (jsonObject instanceof JSONObject) {
+                        String breedName = jsonObject.getString(weirdNameSpace);
+                        this.breeds = new ArrayList<Breed>();
+                        this.breeds.add(new Breed(breedName));
+                        Log.d("PetModel", "JSONObject breed");
+                    } else {
+                        Log.d("PetModel", "NOT a JSONObject");
+                    }
+                } catch (Exception e) {
+                    JSONArray jsonArray = petJson.getJSONObject("breeds").getJSONArray("breed");
+                    if (jsonArray instanceof JSONArray) {
+                        Log.d("PetModel", "Is a JSONArray");
+                        this.breeds = new ArrayList<Breed>();
+                        for (int x=0; x< jsonArray.length();x++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(x);
+                            if (jsonObject != null && jsonObject.has(weirdNameSpace)) {
+                                this.breeds.add(new Breed(jsonObject.getString(weirdNameSpace)));
+                            }
+                        }
+                    }
+                }
+            }
             if (petJson.getJSONObject("contact").has("address1")){
                 this.contactAdress1 = petJson.getJSONObject("contact").getJSONObject("address1").getString(weirdNameSpace);
             }
             if (petJson.getJSONObject("contact").has("address2")) {
                 this.contactAdress2 = petJson.getJSONObject("contact").getJSONObject("address2").getString(weirdNameSpace);
             }
+
 
         } catch (Exception e) {
             e.printStackTrace();
