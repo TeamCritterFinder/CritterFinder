@@ -6,5 +6,6 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="name_font_size">16sp</dimen>
     <dimen name="pet_details_image_height">340dp</dimen>
+    <dimen name="pet_detail_title_bottom_padding">10dip</dimen>
 
 </resources>
