@@ -2,22 +2,15 @@ package com.codepath.apps.critterfinder.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.codepath.apps.critterfinder.R;
-import com.codepath.apps.critterfinder.adapters.ImageGalleryAdapter;
 import com.codepath.apps.critterfinder.models.PetModel;
-import com.viewpagerindicator.CirclePageIndicator;
 
 import org.parceler.Parcels;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -38,9 +31,6 @@ public class PetDetailsFragment extends Fragment {
     @Bind(R.id.text_shelter_state) TextView mShelterContactState;
     @Bind(R.id.text_shelter_city) TextView mShelterCity;
     @Bind(R.id.text_shelter_email) TextView mShelterEmail;
-    @Bind(R.id.pet_image_gallery) ViewPager mImageGallery;
-    @Bind(R.id.image_gallery_page_indicator) CirclePageIndicator mPageIndicator;
-    private ImageGalleryAdapter mImageGalleryAdapter;
 
     private PetModel mPet;
 
@@ -63,7 +53,6 @@ public class PetDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_pet_details, container, false);
         ButterKnife.bind(this, view);
         setupPetDetailsView();
-        setupPetImageGallery();
         return view;
     }
 
@@ -72,18 +61,10 @@ public class PetDetailsFragment extends Fragment {
         mPetGender.setText(mPet.getSexFullName());
         mPetBreed.setText(mPet.getBreedFullName());
         mPetDescription.setText(mPet.getDescription());
-        mPetDescription.setMovementMethod(new ScrollingMovementMethod());
         mShelterContactName.setText(mPet.getContactName());
         mShelterContactPhone.setText(mPet.getContactPhone());
         mShelterContactState.setText(mPet.getContactState());
         mShelterCity.setText(mPet.getContactCity()+", ");
         mShelterEmail.setText(mPet.getContactEmail());
-    }
-
-    private void setupPetImageGallery() {
-        mImageGalleryAdapter = new ImageGalleryAdapter(getContext(), mPet.getDetailImageUrls());
-        mImageGallery.setAdapter(mImageGalleryAdapter);
-        mPageIndicator.setSnap(true);
-        mPageIndicator.setViewPager(mImageGallery);
     }
 }
