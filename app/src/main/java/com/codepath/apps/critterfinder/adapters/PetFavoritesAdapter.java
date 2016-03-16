@@ -107,7 +107,7 @@ public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapte
 
         //Set item views based on the data model
         TextView tvBreeds = viewHolder.tvPetFavBreeds;
-        //tvBreeds.setText(petModel.getBreeds());
+        tvBreeds.setText(petModel.getBreedFullName());
     }
 
     // Return the total count of items
