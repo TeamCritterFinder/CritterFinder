@@ -81,7 +81,13 @@ public class PetSearch {
                 Log.d("DEBUG", "SUCCESS loading: " + jsonString);
                 try {
                     JSONObject petFinderObject = json.getJSONObject("petfinder");
-                    mOffsetForNextSearch = petFinderObject.getJSONObject("lastOffset").getLong(weirdNameSpace);
+                    JSONObject offsetObject = petFinderObject.getJSONObject("lastOffset");
+                    if (offsetObject != null) {
+                        String offsetString = offsetObject.getString(weirdNameSpace);
+                        if (offsetObject.length() > 0) {
+                            mOffsetForNextSearch = Integer.parseInt(offsetString);
+                        }
+                    }
 
                     JSONObject petsJsonObject = petFinderObject.getJSONObject("pets");
                     if (petsJsonObject != null) {

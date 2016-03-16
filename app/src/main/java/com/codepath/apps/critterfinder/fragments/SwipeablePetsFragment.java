@@ -88,7 +88,6 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
         mCardContainer.setAdapter(mCardAdapter);
         mCardContainer.setFlingListener(this);
         mCardContainer.setOnItemClickListener(this);
-        doPetSearch(mSearchFilter);
         if (mSearchFilter != null)
             doPetSearch(mSearchFilter);
         return currentView;
