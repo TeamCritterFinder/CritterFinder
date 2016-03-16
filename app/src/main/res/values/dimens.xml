@@ -5,7 +5,16 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="name_font_size">16sp</dimen>
+
+    <dimen name="pet_favorites_profile_pic_width">96dp</dimen>
+    <dimen name="pet_favorites_profile_pic_height">96dp</dimen>
+
     <dimen name="pet_details_image_height">340dp</dimen>
     <dimen name="pet_detail_title_bottom_padding">10dip</dimen>
 
+    <!-- Swipe Card Dimensions -->
+    <dimen name="pet_swipecard_image_height">400dp</dimen>
+    <dimen name="pet_swipecard_height">450dp</dimen>
+    <dimen name="pet_swipecard_frame_height">470dp</dimen>
+    
 </resources>

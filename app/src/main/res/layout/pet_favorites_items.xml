@@ -5,15 +5,20 @@
     android:padding="8dp"
     android:layout_height="wrap_content">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <com.makeramen.roundedimageview.RoundedImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:riv_corner_radius="30dp"
+        app:riv_border_width="0dp"
+        app:riv_oval="true"
         android:transitionName="details"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:scaleType="centerCrop"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
+        android:minHeight="@dimen/pet_favorites_profile_pic_height"
+        android:minWidth="@dimen/pet_favorites_profile_pic_width"
+        android:layout_width="@dimen/pet_favorites_profile_pic_width"
+        android:layout_height="@dimen/pet_favorites_profile_pic_height"
         android:id="@+id/petFavImage"/>
 
     <TextView
