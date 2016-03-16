@@ -10,5 +10,5 @@
     <color name="icons">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>
 
-    <item name="blue" type="color">#FF33B5E5</item>
+    <color name="swipe_card_border_color">#EFEFEF</color>
 </resources>

@@ -121,6 +121,7 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
     @Override
     public void onScroll(float scrollProgressPercent) {
         View view = mCardContainer.getSelectedView();
+        view.findViewById(R.id.swipe_card_background).setAlpha(0); // hide the background frame on the card
         view.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
         view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
     }
@@ -128,18 +129,22 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
     @Override
     public void onItemClicked(int i, Object o) {
         View view = mCardContainer.getSelectedView();
+        view.findViewById(R.id.swipe_card_background).setAlpha(0);
         mFragmentListener.onPetSelected((PetModel) o, view.findViewById(R.id.image_pet));
     }
 
     @OnClick(R.id.button_like)
     public void onLikeButtonClicked(Button button) {
+        // hide the frame on the card being dismissed
+        mCardContainer.getSelectedView().findViewById(R.id.swipe_card_background).setAlpha(0);
         // route the click through the card which understands which pet is currently selected
         mCardContainer.getTopCardListener().selectRight();
     }
 
     @OnClick(R.id.button_pass)
     public void onPassButtonClicked(Button button) {
-        // route the click through the card which understands which pet is currently selected
+        // hide the frame on the card being dismissed
+        mCardContainer.getSelectedView().findViewById(R.id.swipe_card_background).setAlpha(0);
         mCardContainer.getTopCardListener().selectLeft();
     }
 

@@ -10,11 +10,10 @@ import android.widget.TextView;
 
 import com.codepath.apps.critterfinder.R;
 import com.codepath.apps.critterfinder.models.PetModel;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by carlybaja on 3/2/16.
@@ -36,7 +35,7 @@ public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapte
         // for any view that will be set as you render a row
         public TextView tvPetFavName;
         public TextView tvPetFavSex;
-        public CircleImageView ivPetFavImage;
+        public RoundedImageView ivPetFavImage;
         public TextView tvPetFavSize;
         public TextView tvPetFavAge;
         public TextView tvPetFavBreeds;
@@ -50,7 +49,7 @@ public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapte
 
             tvPetFavName = (TextView) itemView.findViewById(R.id.petFavName);
             tvPetFavSex = (TextView) itemView.findViewById(R.id.petFavSex);
-            ivPetFavImage = (CircleImageView) itemView.findViewById(R.id.petFavImage);
+            ivPetFavImage = (RoundedImageView) itemView.findViewById(R.id.petFavImage);
             tvPetFavSize = (TextView) itemView.findViewById(R.id.petFavSize);
             tvPetFavAge = (TextView) itemView.findViewById(R.id.petFavAge);
             tvPetFavBreeds = (TextView) itemView.findViewById(R.id.petFavBreeds);
