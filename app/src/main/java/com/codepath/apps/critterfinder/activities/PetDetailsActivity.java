@@ -4,16 +4,20 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.codepath.apps.critterfinder.R;
+import com.codepath.apps.critterfinder.adapters.ImageGalleryAdapter;
 import com.codepath.apps.critterfinder.fragments.PetDetailsFragment;
 import com.codepath.apps.critterfinder.models.PetModel;
+import com.viewpagerindicator.CirclePageIndicator;
 
 import org.parceler.Parcels;
 
@@ -25,6 +29,9 @@ public class PetDetailsActivity extends AppCompatActivity implements FloatingAct
     private static String EXTRA_PET = "com.codepath.apps.critterfinder.activities.details.pet";
     private PetModel mPet;
     @Bind(R.id.pet_details_fab) FloatingActionButton mFloatingActionButton;
+    @Bind(R.id.pet_image_gallery) ViewPager mImageGallery;
+    @Bind(R.id.image_gallery_page_indicator) CirclePageIndicator mPageIndicator;
+    private ImageGalleryAdapter mImageGalleryAdapter;
 
     /**
      * Create an intent which will start the pet details activity
@@ -57,6 +64,11 @@ public class PetDetailsActivity extends AppCompatActivity implements FloatingAct
         if (savedInstanceState == null) {
             setupPetDetails(mPet);
         }
+
+        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.details_collapsing_toolbar);
+        collapsingToolbarLayout.setTitle(mPet.getName());
+
+        setupPetImageGallery();
     }
 
     @Override
@@ -104,5 +116,12 @@ public class PetDetailsActivity extends AppCompatActivity implements FloatingAct
             Snackbar.make(findViewById(android.R.id.content), getString(R.string.contact_no_email_client), Snackbar.LENGTH_LONG).show();
 
         }
+    }
+
+    private void setupPetImageGallery() {
+        mImageGalleryAdapter = new ImageGalleryAdapter(this, mPet.getDetailImageUrls());
+        mImageGallery.setAdapter(mImageGalleryAdapter);
+        mPageIndicator.setSnap(true);
+        mPageIndicator.setViewPager(mImageGallery);
     }
 }
