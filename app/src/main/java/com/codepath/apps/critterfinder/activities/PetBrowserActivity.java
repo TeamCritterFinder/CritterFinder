@@ -30,9 +30,9 @@ public class PetBrowserActivity extends AppCompatActivity implements
 
     private final int SEARCH_FILTER_REQUEST_CODE = 20;
 
-    SwipeablePetsFragment mSwipeablePetsFragment;
-    SearchFilter mSearchFilter;
-    LocationService mLocationService;
+    private SwipeablePetsFragment mSwipeablePetsFragment;
+    private SearchFilter mSearchFilter;
+    private LocationService mLocationService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

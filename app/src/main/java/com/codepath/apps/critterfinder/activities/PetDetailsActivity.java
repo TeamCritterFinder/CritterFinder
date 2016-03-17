@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Transition;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -17,6 +18,7 @@ import com.codepath.apps.critterfinder.R;
 import com.codepath.apps.critterfinder.adapters.ImageGalleryAdapter;
 import com.codepath.apps.critterfinder.fragments.PetDetailsFragment;
 import com.codepath.apps.critterfinder.models.PetModel;
+import com.codepath.apps.critterfinder.utils.CircularRevealHelper;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import org.parceler.Parcels;
@@ -28,9 +30,12 @@ public class PetDetailsActivity extends AppCompatActivity implements FloatingAct
 
     private static String EXTRA_PET = "com.codepath.apps.critterfinder.activities.details.pet";
     private PetModel mPet;
+
     @Bind(R.id.pet_details_fab) FloatingActionButton mFloatingActionButton;
     @Bind(R.id.pet_image_gallery) ViewPager mImageGallery;
     @Bind(R.id.image_gallery_page_indicator) CirclePageIndicator mPageIndicator;
+
+    private Transition.TransitionListener mEnterTransitionListener;
     private ImageGalleryAdapter mImageGalleryAdapter;
 
     /**
@@ -69,6 +74,7 @@ public class PetDetailsActivity extends AppCompatActivity implements FloatingAct
         collapsingToolbarLayout.setTitle(mPet.getName());
 
         setupPetImageGallery();
+        setupTransitionListener();
     }
 
     @Override
@@ -79,11 +85,16 @@ public class PetDetailsActivity extends AppCompatActivity implements FloatingAct
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            supportFinishAfterTransition();
+            CircularRevealHelper.exitReveal(mFloatingActionButton, this);
             return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        CircularRevealHelper.exitReveal(mFloatingActionButton, this);
     }
 
     @Override
@@ -124,4 +135,28 @@ public class PetDetailsActivity extends AppCompatActivity implements FloatingAct
         mPageIndicator.setSnap(true);
         mPageIndicator.setViewPager(mImageGallery);
     }
+
+    private void setupTransitionListener() {
+        mEnterTransitionListener = new Transition.TransitionListener() {
+            @Override
+            public void onTransitionStart(Transition transition) {}
+
+            @Override
+            public void onTransitionEnd(Transition transition) {
+                CircularRevealHelper.enterReveal(mFloatingActionButton, PetDetailsActivity.this, mEnterTransitionListener);
+            }
+
+            @Override
+            public void onTransitionCancel(Transition transition) {}
+
+            @Override
+            public void onTransitionPause(Transition transition) {}
+
+            @Override
+            public void onTransitionResume(Transition transition) {}
+        };
+
+        getWindow().getEnterTransition().addListener(mEnterTransitionListener);
+    }
 }
+
