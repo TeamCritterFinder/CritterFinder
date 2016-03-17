@@ -36,6 +36,7 @@
         <activity
             android:name=".activities.PetBrowserActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -45,15 +46,18 @@
         <activity
             android:name=".activities.PetDetailsActivity"
             android:label=""
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".activities.PetFavoritesActivity"
             android:label="@string/title_activity_pet_favorites"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".activities.PetSearchFilterActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_pet_search_filter"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
