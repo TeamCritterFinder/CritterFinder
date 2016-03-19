@@ -12,28 +12,29 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
+
+
             <TextView
+                android:layout_marginTop="@dimen/pet_details_vertical_margin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:text="Pet Name"
-                android:id="@+id/text_pet_name"/>
+                style="@style/SubHeaderColor"
+                android:id="@+id/text_pet_info"/>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:id="@+id/text_pet_gender"/>
-
-            <TextView
-                android:layout_below="@id/text_pet_name"
+                android:layout_marginTop="@dimen/pet_details_vertical_margin"
+                android:layout_below="@id/text_pet_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                style="@style/SubHeaderColor"
                 android:id="@+id/text_pet_breed"/>
 
             <TextView
+                android:layout_marginTop="@dimen/pet_details_vertical_margin"
                 android:id="@+id/text_pet_description"
                 android:layout_below="@id/text_pet_breed"
                 android:layout_width="wrap_content"
@@ -48,12 +49,15 @@
             android:paddingTop="@dimen/activity_vertical_margin"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+
+
        <TextView
             android:id="@+id/text_shelter_city"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Shelter City"
-
+            style="@style/SubHeaderColor"
             />
 
         <TextView
@@ -62,6 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/text_shelter_city"
             android:paddingLeft="5sp"
+            style="@style/SubHeaderColor"
             android:text="Shelter State" />
 
 
@@ -69,24 +74,68 @@
                 android:id="@+id/text_shelter_contact_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
                 android:text="Contact Name"
                 android:layout_below="@+id/text_shelter_state"/>
+
+
+        <LinearLayout
+            android:id="@+id/phone_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_below="@id/text_shelter_contact_name">
+
+            <ImageView
+            android:id="@+id/phone_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_phone"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="center_vertical"
+            android:layout_below="@+id/text_shelter_contact_name"
+            android:layout_marginTop="@dimen/pet_details_vertical_margin"/>
+
+
             <TextView
                 android:id="@+id/text_shelter_contact_phone"
+                android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/text_shelter_contact_name"
-                android:layout_below="@+id/text_shelter_state"
+                android:layout_toRightOf="@+id/phone_icon"
+                android:layout_below="@+id/text_shelter_contact_name"
                 android:text="Contact Phone"
                 />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_below="@+id/phone_layout"
+            >
+
+            <ImageView
+            android:id="@+id/email_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_email2"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/phone_layout"
+            android:layout_marginTop="@dimen/pet_details_vertical_margin"
+            android:layout_gravity="center_vertical"
+            />
+
             <TextView
                 android:id="@+id/text_shelter_email"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/pet_details_vertical_margin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/text_shelter_state"
-                android:layout_toRightOf="@id/text_shelter_contact_phone"
+                android:layout_below="@+id/phone_layout"
+                android:layout_toRightOf="@id/email_icon"
                 android:paddingLeft="5sp"/>
 
-
+        </LinearLayout>
 </RelativeLayout>
 </LinearLayout>

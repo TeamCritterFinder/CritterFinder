@@ -22,9 +22,8 @@ public class PetDetailsFragment extends Fragment {
 
     private static final String ARGUMENT_PET = "ARGUMENT_PET";
 
+    @Bind(R.id.text_pet_info) TextView mPetGender;
     @Bind(R.id.text_pet_description) TextView mPetDescription;
-    @Bind(R.id.text_pet_gender) TextView mPetGender;
-    @Bind(R.id.text_pet_name) TextView mPetName;
     @Bind(R.id.text_pet_breed) TextView mPetBreed;
     @Bind(R.id.text_shelter_contact_name) TextView mShelterContactName;
     @Bind(R.id.text_shelter_contact_phone) TextView mShelterContactPhone;
@@ -57,8 +56,7 @@ public class PetDetailsFragment extends Fragment {
     }
 
     private void setupPetDetailsView() {
-        mPetName.setText(mPet.getName());
-        mPetGender.setText(mPet.getSexFullName());
+        mPetGender.setText(mPet.getSizeSexAge());
         mPetBreed.setText(mPet.getBreedFullName());
         mPetDescription.setText(mPet.getDescription());
         mShelterContactName.setText(mPet.getContactName());

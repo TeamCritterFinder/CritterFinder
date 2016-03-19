@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.codepath.apps.critterfinder.R;
 import com.codepath.apps.critterfinder.adapters.SwipeableCardAdapter;
@@ -37,9 +40,11 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
     private static final String ARGUMENT_SEARCH_FILTER = "ARGUMENT_SEARCH_FILTER";
 
     private PetSearch petSearch;
-    private LinearLayout loadingProgress;
+    private LinearLayout loadingProgressLayout;
+    private TextView loadingMessageView;
     private SearchFilter mSearchFilter;
     private OnSwipeablePetsFragmentListener mFragmentListener;
+    private ProgressBar progressBar;
 
     @Bind(R.id.card_view) SwipeFlingAdapterView mCardContainer;
 
@@ -83,8 +88,10 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
                              Bundle savedInstanceState) {
         View currentView = inflater.inflate(R.layout.fragment_swipeable_pets, container, false);
         ButterKnife.bind(this, currentView);
-        loadingProgress = (LinearLayout)getActivity().findViewById(R.id.loadingProgress);
-
+        loadingProgressLayout = (LinearLayout)currentView.findViewById(R.id.loadingProgress);
+        loadingMessageView = (TextView)currentView.findViewById(R.id.loadingMessage);
+        progressBar = (ProgressBar)currentView.findViewById(R.id.pb);
+        loadingProgressLayout.setVisibility(View.VISIBLE);
         mCardContainer.setAdapter(mCardAdapter);
         mCardContainer.setFlingListener(this);
         mCardContainer.setOnItemClickListener(this);
@@ -157,7 +164,7 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
 
     // start a pet search call
     public void doPetSearch(SearchFilter searchFilter) {
- //       loadingProgress.setVisibility(View.VISIBLE);
+        loadingProgressLayout.setVisibility(View.VISIBLE);
         // when performing a new search, clear out all existing
         // search results
         mCardAdapter.clear();
@@ -165,12 +172,13 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
     }
     public void onPetSearchSuccess(List<PetModel> pets) {
         mCardAdapter.addAll(pets);
- //       loadingProgress.setVisibility(View.GONE);
-        Log.d("FindActivity", "SUCCESS");
+        loadingProgressLayout.setVisibility(View.GONE);
+        Log.d("FindActivity", "SUCCESS Finding Pets");
     }
     public void onPetSearchError(String result) {
- //       loadingProgress.setVisibility(View.GONE);
-        Log.d("FindActivity", "ERROR");
+        Log.d("FindActivity", "ERROR FINDING PETS");
+        loadingMessageView.setText("Error finding pets, make sure you have an internet connection");
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     public interface OnSwipeablePetsFragmentListener {

@@ -105,8 +105,8 @@ public class PetSearch {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d("DEBUG", "ERROR loading: " + errorResponse.toString());
-                callbackInterface.onPetSearchError(errorResponse.toString());
+                Log.d("DEBUG", "ERROR loading: ");
+                callbackInterface.onPetSearchError("ERROR loading pets");
             }
         }, searchFilter, mOffsetForNextSearch);
     }
