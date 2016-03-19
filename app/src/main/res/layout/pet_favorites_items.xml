@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/petFavName"
         android:textStyle="bold"
-        android:textSize="@dimen/name_font_size"
+        android:textSize="@dimen/pet_favorites_name_font_size"
         android:textIsSelectable="false" />
 
     <TextView
@@ -50,16 +50,22 @@
         android:layout_toRightOf="@id/petFavImage"
         android:layout_below="@id/petFavName"
         android:text="Pet Size"
+        android:textSize="@dimen/pet_favorites_others_font_size"
         android:id="@+id/petFavSize"/>
+
+
 
     <TextView
         android:paddingLeft="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
         android:layout_toRightOf="@id/petFavSize"
         android:layout_below="@id/petFavName"
         android:text="Pet Sex"
+        android:textSize="@dimen/pet_favorites_others_font_size"
         android:id="@+id/petFavSex"/>
+
 
     <TextView
         android:paddingLeft="5dp"
@@ -68,7 +74,10 @@
         android:layout_toRightOf="@id/petFavSex"
         android:layout_below="@id/petFavName"
         android:text="Pet Age"
+        android:textSize="@dimen/pet_favorites_others_font_size"
         android:id="@+id/petFavAge"/>
+
+
 
 
     <TextView
@@ -78,6 +87,7 @@
         android:layout_toRightOf="@id/petFavImage"
         android:layout_below="@id/petFavSize"
         android:text="Pet Breeds"
+        android:textSize="@dimen/pet_favorites_others_font_size"
         android:id="@+id/petFavBreeds"/>
 
 

@@ -16,5 +16,8 @@
     <dimen name="pet_swipecard_image_height">400dp</dimen>
     <dimen name="pet_swipecard_height">450dp</dimen>
     <dimen name="pet_swipecard_frame_height">470dp</dimen>
-    
+
+    <dimen name="pet_favorites_name_font_size">25sp</dimen>
+    <dimen name="pet_favorites_others_font_size">16sp</dimen>
+    <dimen name="pet_favorites_bullet_font_size">50sp</dimen>
 </resources>
