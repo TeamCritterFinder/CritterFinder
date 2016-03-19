@@ -9,6 +9,7 @@
     <color name="secondary_text">#727272</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>
+    <color name="default_color_text">#333333</color>
     <color name="window_background">#FFF5F5F5</color>
 
     <color name="swipe_card_border_color">#EFEFEF</color>
