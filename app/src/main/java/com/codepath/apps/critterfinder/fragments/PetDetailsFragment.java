@@ -22,7 +22,7 @@ public class PetDetailsFragment extends Fragment {
 
     private static final String ARGUMENT_PET = "ARGUMENT_PET";
 
-    @Bind(R.id.text_pet_gender) TextView mPetGender;
+    @Bind(R.id.text_pet_info) TextView mPetGender;
     @Bind(R.id.text_pet_description) TextView mPetDescription;
     @Bind(R.id.text_pet_breed) TextView mPetBreed;
     @Bind(R.id.text_shelter_contact_name) TextView mShelterContactName;

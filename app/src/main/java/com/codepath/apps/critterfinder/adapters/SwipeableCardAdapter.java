@@ -61,7 +61,7 @@ public class SwipeableCardAdapter extends ArrayAdapter<PetModel> {
         viewHolder.mCardText.setText(pet.getName());
         Picasso.with(getContext())
                 .load(pet.getImageUrl())
-                .placeholder(R.drawable.ic_launcher)
+                .error(R.mipmap.ic_pet_background)
                 //.resize(viewHolder.imageWidth, 0)
                 .into(viewHolder.mCardImage);
 

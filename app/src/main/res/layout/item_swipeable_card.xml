@@ -48,6 +48,7 @@
             android:layout_height="@dimen/pet_swipecard_image_height"
             android:transitionName="details"
             android:scaleType="centerCrop"
+            android:src="@drawable/pet_background"
             android:id="@+id/image_pet"/>
 
         <TextView
