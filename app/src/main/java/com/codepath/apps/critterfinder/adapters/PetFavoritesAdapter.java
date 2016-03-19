@@ -116,6 +116,11 @@ public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapte
         return mPets.size();
     }
 
+    public void remove(int position){
+        mPets.remove(position);
+        notifyItemRemoved(position);
+    }
+
     public interface OnItemClickListener {
         /**
          * An item in the recycler view has been clicked
