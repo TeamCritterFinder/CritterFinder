@@ -34,6 +34,16 @@
         android:textIsSelectable="false" />
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:id="@+id/tvRemovePetFav"
+        android:layout_marginTop="5dp"
+        android:textColor="#363636"
+        android:drawableLeft="@drawable/ic_remove_petfav"
+        android:gravity="center_vertical"/>
+
+    <TextView
         android:paddingLeft="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -59,6 +69,7 @@
         android:layout_below="@id/petFavName"
         android:text="Pet Age"
         android:id="@+id/petFavAge"/>
+
 
     <TextView
         android:paddingLeft="8dp"
