@@ -52,6 +52,12 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+    <style name="LinkStyle">
+        <item name="android:textColor">@color/primary_dark</item>
+        <item name="android:textStyle"></item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
 
     <style name="HeaderColorFont">
         <item name="android:textColor">@color/primary_dark</item>

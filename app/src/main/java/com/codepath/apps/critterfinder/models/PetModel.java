@@ -123,6 +123,10 @@ public class PetModel {
         return contactCity;
     }
 
+    public String getLocation() {
+        return contactCity + ", " + contactState;
+    }
+
     public String getContactZip() {
         return contactZip;
     }

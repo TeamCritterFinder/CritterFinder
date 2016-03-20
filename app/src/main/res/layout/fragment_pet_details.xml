@@ -50,33 +50,43 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
-
-       <TextView
-            android:id="@+id/text_shelter_city"
+        <TextView
+            android:id="@+id/text_shelter_contact_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Shelter City"
-            style="@style/SubHeaderColor"
+            android:layout_alignParentLeft="true"
+            android:text="Contact Name"
             />
 
-        <TextView
-            android:id="@+id/text_shelter_state"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:id="@+id/shelter_location_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/text_shelter_city"
-            android:paddingLeft="5sp"
-            style="@style/SubHeaderColor"
-            android:text="Shelter State" />
+            android:layout_gravity="center_vertical"
+            android:layout_below="@id/text_shelter_contact_name">
 
-
-        <TextView
-                android:id="@+id/text_shelter_contact_name"
+            <ImageView
+                android:id="@+id/locate_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:src="@mipmap/ic_pinpoint"
                 android:layout_alignParentLeft="true"
-                android:text="Contact Name"
-                android:layout_below="@+id/text_shelter_state"/>
+                android:layout_gravity="center_vertical"
+                />
+
+            <TextView
+                android:id="@+id/text_shelter_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Location"
+                android:layout_gravity="center_vertical"
+                android:layout_toRightOf="@+id/locate_icon"
+                android:clickable="true"
+                />
+
+
+        </LinearLayout>
 
 
         <LinearLayout
@@ -84,7 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_below="@id/text_shelter_contact_name">
+            android:layout_below="@id/shelter_location_layout">
 
             <ImageView
             android:id="@+id/phone_icon"
@@ -105,6 +115,7 @@
                 android:layout_toRightOf="@+id/phone_icon"
                 android:layout_below="@+id/text_shelter_contact_name"
                 android:text="Contact Phone"
+                android:clickable="true"
                 />
         </LinearLayout>
 
@@ -134,7 +145,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/phone_layout"
                 android:layout_toRightOf="@id/email_icon"
-                android:paddingLeft="5sp"/>
+                android:paddingLeft="5sp"
+                android:clickable="true"
+                />
 
         </LinearLayout>
 </RelativeLayout>
