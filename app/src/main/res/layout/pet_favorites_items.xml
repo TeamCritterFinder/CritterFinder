@@ -30,10 +30,8 @@
         android:layout_toRightOf="@id/petFavImage"
         android:paddingLeft="8dp"
         android:text="Pet Name"
-        style="@style/HeaderFont"
-        android:textIsSelectable="false"
-        android:textSize="@dimen/name_font_size"
-        android:textStyle="bold" />
+        style="@style/HeaderColorFont"
+        android:textIsSelectable="false"/>
 
 
     <ImageButton
