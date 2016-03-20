@@ -26,7 +26,9 @@ import org.parceler.Parcels;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class PetDetailsActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener {
+public class PetDetailsActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener,
+    PetDetailsFragment.OnDetailsFragmentListener
+{
 
     private static String EXTRA_PET = "com.codepath.apps.critterfinder.activities.details.pet";
     private PetModel mPet;
@@ -158,5 +160,28 @@ public class PetDetailsActivity extends AppCompatActivity implements FloatingAct
 
         getWindow().getEnterTransition().addListener(mEnterTransitionListener);
     }
+
+    // ----  Pet Details Fragment Handler
+
+
+    public void onContactShelter(PetModel mPet,View transitionView) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("plain/text");
+
+        final String subject = getString(R.string.contact_pet_subject, mPet.getName());
+        final String body = getString(R.string.contact_pet_body, mPet.getName());
+
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{mPet.getContactEmail()});
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(Intent.EXTRA_TEXT, body);
+
+        try {
+            startActivityForResult(intent, 0);
+        } catch (ActivityNotFoundException e) {
+            Snackbar.make(findViewById(android.R.id.content), getString(R.string.contact_no_email_client), Snackbar.LENGTH_LONG).show();
+        }
+    }
+
+
 }
 

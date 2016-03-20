@@ -1,6 +1,7 @@
 package com.codepath.apps.critterfinder.activities;
 
 import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -26,7 +27,7 @@ import permissions.dispatcher.RuntimePermissions;
 @RuntimePermissions
 public class PetBrowserActivity extends AppCompatActivity implements
         LocationService.OnLocationListener,
-        SwipeablePetsFragment.OnSwipeablePetsFragmentListener {
+        SwipeablePetsFragment.OnSwipeablePetsFragmentListener{
 
     private final int SEARCH_FILTER_REQUEST_CODE = 20;
 
@@ -140,4 +141,6 @@ public class PetBrowserActivity extends AppCompatActivity implements
                 replace(R.id.layout_swipeable_pets_fragment_placeholder, mSwipeablePetsFragment).
                 commit();
     }
+
+
 }
