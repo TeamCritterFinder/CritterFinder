@@ -126,17 +126,18 @@ public class PetDetailsFragment extends Fragment {
 //        {
 //            address = mPet.getLocation();
 //        }
-        String uri = String.format(Locale.ENGLISH, "geo:0,0?q=%s", address);
-        Log.d("PetDetailsFragment", "Opening address in Google Maps: " + uri);
         String uriEncoded;
         try {
-            uriEncoded = URLEncoder.encode(uri, "UTF-8");
+            uriEncoded = URLEncoder.encode(address, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             return;
         }
+        String uri = String.format(Locale.ENGLISH, "google.navigation:q=%s", uriEncoded);
+        Log.d("PetDetailsFragment", "Opening address in Google Maps: " + uri);
+
         if (mDetailsFragmentListener != null) {
-            mDetailsFragmentListener.onMap(uriEncoded);
+            mDetailsFragmentListener.onMap(uri);
         }
 //        Intent mapIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uriEncoded));
 //        mapIntent.setPackage("com.google.android.apps.maps");
