@@ -119,7 +119,7 @@ public class PetDetailsFragment extends Fragment {
     public void onLocate() {
         String address = mPet.getLocation();
         // Looks like the address is always a PO Box # which won't help us to map the location !
-//        if (mPet.getContactAdress1().length() > 0) {
+//        if (mPet.getContactAdress2().length() > 0) {
 //            address = mPet.getContactAdress1();
 //            address += " " + mPet.getLocation();
 //        } else
@@ -133,15 +133,12 @@ public class PetDetailsFragment extends Fragment {
             e.printStackTrace();
             return;
         }
-        String uri = String.format(Locale.ENGLISH, "google.navigation:q=%s", uriEncoded);
+        String uri = String.format(Locale.ENGLISH, "geo:0,0?q=%s", uriEncoded);
         Log.d("PetDetailsFragment", "Opening address in Google Maps: " + uri);
 
         if (mDetailsFragmentListener != null) {
             mDetailsFragmentListener.onMap(uri);
         }
-//        Intent mapIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uriEncoded));
-//        mapIntent.setPackage("com.google.android.apps.maps");
-//        startActivity(mapIntent);
     }
 
     // Call the shelter
