@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,11 @@ import com.codepath.apps.critterfinder.models.PetModel;
 
 import org.parceler.Parcels;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
+import java.util.Locale;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -27,8 +33,8 @@ import butterknife.ButterKnife;
 public class PetDetailsFragment extends Fragment {
 
     private static final String ARGUMENT_PET = "ARGUMENT_PET";
-    private PetDetailsFragment.OnDetailsFragmentListener mDetailsFragmentListener;
     private View mFragmentView; // View for the inflated Fragment
+    private PetDetailsFragment.OnDetailsFragmentListener mDetailsFragmentListener;
 
     @Bind(R.id.text_pet_info) TextView mPetInfo;
     @Bind(R.id.text_pet_description) TextView mPetDescription;
@@ -39,6 +45,7 @@ public class PetDetailsFragment extends Fragment {
     @Bind(R.id.text_shelter_email) TextView mShelterEmail;
     @Bind(R.id.email_icon) ImageView mEmailIcon;
     @Bind(R.id.phone_icon) ImageView mPhoneIcon;
+    @Bind(R.id.locate_icon) ImageView mLocateIcon;
 
     private PetModel mPet;
 
@@ -79,6 +86,12 @@ public class PetDetailsFragment extends Fragment {
                 onEmail();
             }
         });
+        mLocateIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onLocate();
+            }
+        });
         return mFragmentView;
     }
 
@@ -100,6 +113,34 @@ public class PetDetailsFragment extends Fragment {
         mShelterContactPhone.setText(mPet.getContactPhone());
         mShelterLocation.setText(mPet.getLocation());
         mShelterEmail.setText(mPet.getContactEmail());
+    }
+
+    // open in map
+    public void onLocate() {
+        String address = mPet.getLocation();
+        // Looks like the address is always a PO Box # which won't help us to map the location !
+//        if (mPet.getContactAdress1().length() > 0) {
+//            address = mPet.getContactAdress1();
+//            address += " " + mPet.getLocation();
+//        } else
+//        {
+//            address = mPet.getLocation();
+//        }
+        String uri = String.format(Locale.ENGLISH, "geo:0,0?q=%s", address);
+        Log.d("PetDetailsFragment", "Opening address in Google Maps: " + uri);
+        String uriEncoded;
+        try {
+            uriEncoded = URLEncoder.encode(uri, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return;
+        }
+        if (mDetailsFragmentListener != null) {
+            mDetailsFragmentListener.onMap(uriEncoded);
+        }
+//        Intent mapIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uriEncoded));
+//        mapIntent.setPackage("com.google.android.apps.maps");
+//        startActivity(mapIntent);
     }
 
     // Call the shelter
@@ -128,7 +169,7 @@ public class PetDetailsFragment extends Fragment {
     }
 
     public interface OnDetailsFragmentListener {
-        void onContactShelter(PetModel pet, View transitionView);
+        void onMap(String url);
     }
 
 }

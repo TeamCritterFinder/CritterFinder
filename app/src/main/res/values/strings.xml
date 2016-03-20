@@ -8,6 +8,7 @@
     <string name="contact_pet_subject">A home for %s</string>
     <string name="contact_pet_body">Hi, I found %s on Critter Finder and wanted to learn more.</string>
     <string name="contact_no_email_client">No email client could be found on the device</string>
+    <string name="no_map_client">No map client could be found on the device</string>
 
     <!-- Pet Favorites -->
     <string name="title_activity_pet_favorites">Favorites</string>

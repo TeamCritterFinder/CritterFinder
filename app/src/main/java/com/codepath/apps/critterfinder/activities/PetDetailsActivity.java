@@ -3,6 +3,7 @@ package com.codepath.apps.critterfinder.activities;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -11,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.Transition;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -27,7 +29,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class PetDetailsActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener,
-    PetDetailsFragment.OnDetailsFragmentListener
+        PetDetailsFragment.OnDetailsFragmentListener
 {
 
     private static String EXTRA_PET = "com.codepath.apps.critterfinder.activities.details.pet";
@@ -161,25 +163,18 @@ public class PetDetailsActivity extends AppCompatActivity implements FloatingAct
         getWindow().getEnterTransition().addListener(mEnterTransitionListener);
     }
 
-    // ----  Pet Details Fragment Handler
-
-
-    public void onContactShelter(PetModel mPet,View transitionView) {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("plain/text");
-
-        final String subject = getString(R.string.contact_pet_subject, mPet.getName());
-        final String body = getString(R.string.contact_pet_body, mPet.getName());
-
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{mPet.getContactEmail()});
-        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
-        intent.putExtra(Intent.EXTRA_TEXT, body);
-
-        try {
-            startActivityForResult(intent, 0);
-        } catch (ActivityNotFoundException e) {
-            Snackbar.make(findViewById(android.R.id.content), getString(R.string.contact_no_email_client), Snackbar.LENGTH_LONG).show();
+    // Open the map in Google Maps if available
+    public void onMap(String uri) {
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        mapIntent.setPackage("com.google.android.apps.maps");
+        if (mapIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(mapIntent);
+        } else {
+            Log.d("PetDetailsActivity", "MAP Intent could not be fired");
+            Snackbar.make(findViewById(android.R.id.content), getString(R.string.no_map_client), Snackbar.LENGTH_LONG).show();
         }
+
+
     }
 
 
