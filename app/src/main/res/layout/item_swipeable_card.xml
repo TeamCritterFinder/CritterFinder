@@ -48,29 +48,24 @@
             android:layout_height="@dimen/pet_swipecard_image_height"
             android:transitionName="details"
             android:scaleType="centerCrop"
-            android:src="@drawable/pet_background"
             android:id="@+id/image_pet"/>
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/image_pet"
-            android:gravity="center_horizontal"
+            android:layout_alignParentLeft="true"
             android:text="Pet Name"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            style="@style/HeaderColorFont"
+            style="@style/HeaderFont"
             android:id="@+id/text_pet_name"/>
 
-    <!--    <TextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            style="@style/HeaderColorFont"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
+            style="@style/HeaderFont"
             android:layout_below="@id/image_pet"
-            android:id="@+id/text_pet_gender"/> -->
+            android:id="@+id/text_pet_gender"/>
     </RelativeLayout>
 
     <View

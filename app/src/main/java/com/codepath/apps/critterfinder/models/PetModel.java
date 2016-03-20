@@ -73,11 +73,6 @@ public class PetModel {
         return breedName;
     }
 
-    public String getSizeSexAge() {
-        String sizeSexAge = getSizeFullName() + " " + getSexFullName() + " " + age;
-        return sizeSexAge;
-    }
-
     public String getDescription() {
         return description;
     }

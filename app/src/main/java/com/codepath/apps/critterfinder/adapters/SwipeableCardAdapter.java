@@ -26,6 +26,8 @@ public class SwipeableCardAdapter extends ArrayAdapter<PetModel> {
     static class SwipeCardViewHolder {
         @Bind(R.id.image_pet) ImageView mCardImage;
         @Bind(R.id.text_pet_name) TextView mCardText;
+        @Bind(R.id.text_pet_gender) TextView mGenderText;
+
         public SwipeCardViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
@@ -59,9 +61,10 @@ public class SwipeableCardAdapter extends ArrayAdapter<PetModel> {
 
     private void setupView(SwipeCardViewHolder viewHolder, PetModel pet) {
         viewHolder.mCardText.setText(pet.getName());
+        viewHolder.mGenderText.setText(pet.getSexFullName());
         Picasso.with(getContext())
                 .load(pet.getImageUrl())
-                .error(R.mipmap.ic_pet_background)
+                .placeholder(R.drawable.ic_launcher)
                 //.resize(viewHolder.imageWidth, 0)
                 .into(viewHolder.mCardImage);
 

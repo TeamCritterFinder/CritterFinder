@@ -89,19 +89,18 @@ public class PetBrowserActivity extends AppCompatActivity implements
         // TODO - now that we have a postal code we can kick off the initial search for pets
         // with the users current location
         mSearchFilter.setPostalCode(postalCode);
-//      Don't display a snack bar when the postal code is found
-//        Snackbar.make(findViewById(android.R.id.content),
-//                "Location found: " + postalCode,
-//                Snackbar.LENGTH_LONG).
-//                show();
+        Snackbar.make(findViewById(android.R.id.content),
+                "Location found: " + postalCode,
+                Snackbar.LENGTH_LONG).
+                show();
     }
 
     @Override
     public void onLocationFailed() {
-//        Snackbar.make(findViewById(android.R.id.content),
-//                "Make sure you have google play services installed",
-//                Snackbar.LENGTH_LONG).
-//                show();
+        Snackbar.make(findViewById(android.R.id.content),
+                "Make sure you have google play services installed",
+                Snackbar.LENGTH_LONG).
+                show();
     }
 
     @Override
