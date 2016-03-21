@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.codepath.apps.critterfinder.R;
 import com.codepath.apps.critterfinder.models.PetModel;
@@ -66,9 +67,8 @@ public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapte
         @Override
         public void onClick(View v) {
             if (v instanceof ImageButton){
-                mOnItemClickListener.onButtonClicked((ImageButton)v,this,getAdapterPosition());
+                removePetAt(getAdapterPosition());
             }else {
-
                 if (mOnItemClickListener != null) {
                     mOnItemClickListener.onItemClick(v, ivPetFavImage, getAdapterPosition());
                 }
@@ -141,8 +141,6 @@ public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapte
          * @param position
          */
         void onItemClick(View view, View transitionSourceView, int position);
-        void onButtonClicked(ImageButton button,ViewHolder viewHolder, int position);
-
         }
 
     /**
@@ -151,6 +149,12 @@ public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapte
      */
     public void setOnItemClickListener(final OnItemClickListener mOnItemClickListener) {
         this.mOnItemClickListener = mOnItemClickListener;
+    }
+
+    public void removePetAt(int position){
+       mPets.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, mPets.size());
     }
 
 }

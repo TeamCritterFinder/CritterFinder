@@ -2,6 +2,7 @@ package com.codepath.apps.critterfinder.fragments;
 
 
 import android.os.Bundle;
+import android.support.annotation.BinderThread;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,7 +31,8 @@ import butterknife.ButterKnife;
  */
 public class PetFavoritesFragment extends Fragment {
 
-    @Bind (R.id.rvPetFavorites) RecyclerView mrvPetFavorites;
+    @Bind(R.id.rvPetFavorites)
+    RecyclerView mrvPetFavorites;
 
 
     public static PetFavoritesFragment newInstance() {
@@ -47,7 +49,7 @@ public class PetFavoritesFragment extends Fragment {
         return view;
     }
 
-    public void setupFavoritesPet(){
+    public void setupFavoritesPet() {
         // Create and Initialize pets
         final List<PetModel> pets = FavoritesService.getInstance().getFavoritePets();
 
@@ -59,15 +61,9 @@ public class PetFavoritesFragment extends Fragment {
 
         adapter.setOnItemClickListener(new PetFavoritesAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, View transitionSourceView,  int position) {
-                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), transitionSourceView, "details");
-                startActivity(PetDetailsActivity.getStartIntent(getContext(), pets.get(position)), options.toBundle());
-            }
-
-            @Override
-            public void onButtonClicked(ImageButton imageButton,PetFavoritesAdapter.ViewHolder viewHolder,int position ){
-                adapter.notifyItemRemoved(position);
-                Toast.makeText(getContext(),"Item removed succesfully",Toast.LENGTH_SHORT).show();
+            public void onItemClick(View view, View transitionSourceView, int position) {
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), transitionSourceView, "details");
+                    startActivity(PetDetailsActivity.getStartIntent(getContext(), pets.get(position)), options.toBundle());
             }
         });
         // Attach the adapter to the recyclerview to populate items
@@ -75,4 +71,5 @@ public class PetFavoritesFragment extends Fragment {
         // Set layout manager to position the items
         mrvPetFavorites.setLayoutManager(new LinearLayoutManager(getContext()));
     }
+
 }
