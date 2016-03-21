@@ -28,8 +28,8 @@ public class PetModel {
     String contactState;
     String contactCity;
     String contactZip;
-    String contactAdress1;
-    String contactAdress2;
+    String contactAddress1;
+    String contactAddress2;
     List<Breed> breeds;   // list of all the breeds the animal may be part of
     long serverId;
 
@@ -131,12 +131,12 @@ public class PetModel {
         return contactZip;
     }
 
-    public String getContactAdress1() {
-        return contactAdress1;
+    public String getContactAddress1() {
+        return contactAddress1;
     }
 
-    public String getcontactAdress2() {
-        return contactAdress2;
+    public String getContactAddress2() {
+        return contactAddress2;
     }
 
     public PetModel(String name, String sex, String image){
@@ -210,10 +210,10 @@ public class PetModel {
                 }
             }
             if (petJson.getJSONObject("contact").has("address1")){
-                this.contactAdress1 = petJson.getJSONObject("contact").getJSONObject("address1").getString(weirdNameSpace);
+                this.contactAddress1 = petJson.getJSONObject("contact").getJSONObject("address1").getString(weirdNameSpace);
             }
             if (petJson.getJSONObject("contact").has("address2")) {
-                this.contactAdress2 = petJson.getJSONObject("contact").getJSONObject("address2").getString(weirdNameSpace);
+                this.contactAddress2 = petJson.getJSONObject("contact").getJSONObject("address2").getString(weirdNameSpace);
             }
 
 

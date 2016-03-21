@@ -7,6 +7,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +23,6 @@ import org.parceler.Parcels;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.nio.charset.Charset;
 import java.util.Locale;
 
 import butterknife.Bind;
@@ -92,6 +93,19 @@ public class PetDetailsFragment extends Fragment {
                 onLocate();
             }
         });
+        mShelterContactPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onCall();
+            }
+        });
+        mShelterLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onLocate();
+            }
+        });
+
         return mFragmentView;
     }
 
@@ -110,22 +124,30 @@ public class PetDetailsFragment extends Fragment {
         mPetBreed.setText(mPet.getBreedFullName());
         mPetDescription.setText(mPet.getDescription());
         mShelterContactName.setText(mPet.getContactName());
-        mShelterContactPhone.setText(mPet.getContactPhone());
-        mShelterLocation.setText(mPet.getLocation());
-        mShelterEmail.setText(mPet.getContactEmail());
+  //      mShelterContactPhone.setText(mPet.getContactPhone());
+  //      mShelterLocation.setText(mPet.getLocation());
+        addUnderline(mShelterLocation,mPet.getLocation());
+        addUnderline(mShelterEmail, mPet.getContactEmail());
+        addUnderline(mShelterContactPhone,mPet.getContactPhone());
+//        mShelterEmail.setText(mPet.getContactEmail());
     }
 
+    private void addUnderline(TextView textView,String textString) {
+        SpannableString content = new SpannableString(textString);
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        textView.setText(content);
+    }
     // open in map
     public void onLocate() {
         String address = mPet.getLocation();
-        // Looks like the address is always a PO Box # which won't help us to map the location !
-//        if (mPet.getContactAdress2().length() > 0) {
-//            address = mPet.getContactAdress1();
-//            address += " " + mPet.getLocation();
-//        } else
-//        {
-//            address = mPet.getLocation();
-//        }
+        // Looks like the address1 is always a PO Box # which won't help us to map the location !
+        if (mPet.getContactAddress2() != null && mPet.getContactAddress2().length() > 0) {
+            address = mPet.getContactAddress2();
+            address += " " + mPet.getLocation();
+        } else
+        {
+            address = mPet.getLocation();
+        }
         String uriEncoded;
         try {
             uriEncoded = URLEncoder.encode(address, "UTF-8");
