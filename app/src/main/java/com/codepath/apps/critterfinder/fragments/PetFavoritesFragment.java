@@ -9,6 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.accessibility.AccessibilityManager;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.codepath.apps.critterfinder.R;
 import com.codepath.apps.critterfinder.activities.PetDetailsActivity;
@@ -29,6 +32,7 @@ public class PetFavoritesFragment extends Fragment {
 
     @Bind (R.id.rvPetFavorites) RecyclerView mrvPetFavorites;
 
+
     public static PetFavoritesFragment newInstance() {
         PetFavoritesFragment petFavoritesFragment = new PetFavoritesFragment();
         return petFavoritesFragment;
@@ -48,7 +52,7 @@ public class PetFavoritesFragment extends Fragment {
         final List<PetModel> pets = FavoritesService.getInstance().getFavoritePets();
 
         // Create adapter passing in the sample user data
-        PetFavoritesAdapter adapter = new PetFavoritesAdapter(pets);
+        final PetFavoritesAdapter adapter = new PetFavoritesAdapter(pets);
 
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST);
         mrvPetFavorites.addItemDecoration(itemDecoration);
@@ -58,6 +62,12 @@ public class PetFavoritesFragment extends Fragment {
             public void onItemClick(View view, View transitionSourceView,  int position) {
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), transitionSourceView, "details");
                 startActivity(PetDetailsActivity.getStartIntent(getContext(), pets.get(position)), options.toBundle());
+            }
+
+            @Override
+            public void onButtonClicked(ImageButton imageButton,PetFavoritesAdapter.ViewHolder viewHolder,int position ){
+                adapter.notifyItemRemoved(position);
+                Toast.makeText(getContext(),"Item removed succesfully",Toast.LENGTH_SHORT).show();
             }
         });
         // Attach the adapter to the recyclerview to populate items
