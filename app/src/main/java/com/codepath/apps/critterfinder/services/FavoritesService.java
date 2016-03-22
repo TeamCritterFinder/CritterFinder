@@ -30,7 +30,7 @@ public class FavoritesService {
      * @param pet
      */
     public void addFavoritePet(PetModel pet) {
-        mFavorites.add(pet);
+        mFavorites.add(0, pet);
     }
 
     /**
