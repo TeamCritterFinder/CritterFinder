@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -29,7 +30,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class PetDetailsActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener,
-        PetDetailsFragment.OnDetailsFragmentListener
+        PetDetailsFragment.OnDetailsFragmentListener, AppBarLayout.OnOffsetChangedListener
 {
 
     private static String EXTRA_PET = "com.codepath.apps.critterfinder.activities.details.pet";
@@ -38,6 +39,9 @@ public class PetDetailsActivity extends AppCompatActivity implements FloatingAct
     @Bind(R.id.pet_details_fab) FloatingActionButton mFloatingActionButton;
     @Bind(R.id.pet_image_gallery) ViewPager mImageGallery;
     @Bind(R.id.image_gallery_page_indicator) CirclePageIndicator mPageIndicator;
+    @Bind(R.id.appbar_layout) AppBarLayout mAppBarLayout;
+    @Bind(R.id.details_collapsing_toolbar) CollapsingToolbarLayout mCollapsingToolbarLayout;
+    @Bind(R.id.toolbar) Toolbar mToolbar;
 
     private Transition.TransitionListener mEnterTransitionListener;
     private ImageGalleryAdapter mImageGalleryAdapter;
@@ -60,10 +64,10 @@ public class PetDetailsActivity extends AppCompatActivity implements FloatingAct
         setContentView(R.layout.activity_pet_details);
         ButterKnife.bind(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(mToolbar);
 
         mFloatingActionButton.setOnClickListener(this);
+        mAppBarLayout.addOnOffsetChangedListener(this);
 
         // add a back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -74,9 +78,8 @@ public class PetDetailsActivity extends AppCompatActivity implements FloatingAct
             setupPetDetails(mPet);
         }
 
-        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.details_collapsing_toolbar);
-        collapsingToolbarLayout.setTitle(mPet.getName());
-        collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
+        mCollapsingToolbarLayout.setTitle(mPet.getName());
+        mCollapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
 
         setupPetImageGallery();
         setupTransitionListener();
@@ -106,6 +109,19 @@ public class PetDetailsActivity extends AppCompatActivity implements FloatingAct
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //stub to ensure the implicit intent for contacting a shelter returns control to our app
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+        // TODO - calculate the correct height of the toolbar in the collapsed state
+        // instead of hard coding this number
+        if (Math.abs(verticalOffset) >= 683) {
+            // collapsed
+            getSupportActionBar().setHomeAsUpIndicator(null);
+        } else {
+            // expanded
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_button_white);
+        }
     }
 
     private void setupPetDetails(PetModel pet) {
