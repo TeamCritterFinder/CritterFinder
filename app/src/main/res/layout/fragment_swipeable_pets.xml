@@ -45,14 +45,15 @@
 
             />
 
-        <Button
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onLike"
-            android:background="@drawable/heart_drawable"
+            android:src="@drawable/heart_button"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:id="@+id/button_like"
-            android:height="80dp"
-            android:width="80dp" />
+
+         />
 
     </LinearLayout>
 

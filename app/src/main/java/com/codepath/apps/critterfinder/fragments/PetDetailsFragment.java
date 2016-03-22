@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -44,9 +45,9 @@ public class PetDetailsFragment extends Fragment {
     @Bind(R.id.text_shelter_contact_phone) TextView mShelterContactPhone;
     @Bind(R.id.text_shelter_location) TextView mShelterLocation;
     @Bind(R.id.text_shelter_email) TextView mShelterEmail;
-    @Bind(R.id.email_icon) ImageView mEmailIcon;
-    @Bind(R.id.phone_icon) ImageView mPhoneIcon;
-    @Bind(R.id.locate_icon) ImageView mLocateIcon;
+    @Bind(R.id.email_icon) ImageButton mEmailIcon;
+    @Bind(R.id.phone_icon) ImageButton mPhoneIcon;
+    @Bind(R.id.locate_icon) ImageButton mLocateIcon;
 
     private PetModel mPet;
 
