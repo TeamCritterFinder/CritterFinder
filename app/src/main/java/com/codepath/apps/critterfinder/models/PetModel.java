@@ -98,7 +98,7 @@ public class PetModel {
         switch (size){
             case "S": return "Small";
             case "M": return "Medium";
-            case "L": return "large";
+            case "L": return "Large";
         }
         return "";
     }
