@@ -24,7 +24,7 @@
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginBottom="@dimen/pet_detail_title_bottom_padding"
-            app:expandedTitleMarginStart="48dp"
+            app:expandedTitleMarginStart="16dp"
             app:expandedTitleMarginEnd="64dp">
 
             <FrameLayout
