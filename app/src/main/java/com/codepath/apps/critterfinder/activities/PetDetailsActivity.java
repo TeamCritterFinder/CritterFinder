@@ -190,10 +190,6 @@ public class PetDetailsActivity extends AppCompatActivity implements FloatingAct
             Log.d("PetDetailsActivity", "MAP Intent could not be fired");
             Snackbar.make(findViewById(android.R.id.content), getString(R.string.no_map_client), Snackbar.LENGTH_LONG).show();
         }
-
-
     }
-
-
 }
 
