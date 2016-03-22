@@ -76,6 +76,7 @@ public class PetDetailsActivity extends AppCompatActivity implements FloatingAct
 
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.details_collapsing_toolbar);
         collapsingToolbarLayout.setTitle(mPet.getName());
+        collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
 
         setupPetImageGallery();
         setupTransitionListener();

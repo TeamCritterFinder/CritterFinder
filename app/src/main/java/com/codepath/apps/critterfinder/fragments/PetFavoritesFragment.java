@@ -50,6 +50,9 @@ public class PetFavoritesFragment extends Fragment {
         // Create adapter passing in the sample user data
         PetFavoritesAdapter adapter = new PetFavoritesAdapter(pets);
 
+//        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST);
+//        mrvPetFavorites.addItemDecoration(itemDecoration);
+
         adapter.setOnItemClickListener(new PetFavoritesAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, View transitionSourceView,  int position) {
