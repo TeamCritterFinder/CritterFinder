@@ -33,7 +33,8 @@ public class PetFavoritesFragment extends Fragment {
 
     @Bind(R.id.rvPetFavorites)
     RecyclerView mrvPetFavorites;
-
+    // Create and Initialize pets
+    final List<PetModel> pets = FavoritesService.getInstance().getFavoritePets();
 
     public static PetFavoritesFragment newInstance() {
         PetFavoritesFragment petFavoritesFragment = new PetFavoritesFragment();
@@ -51,7 +52,7 @@ public class PetFavoritesFragment extends Fragment {
 
     public void setupFavoritesPet() {
         // Create and Initialize pets
-        final List<PetModel> pets = FavoritesService.getInstance().getFavoritePets();
+       // final List<PetModel> pets = FavoritesService.getInstance().getFavoritePets();
 
         // Create adapter passing in the sample user data
         final PetFavoritesAdapter adapter = new PetFavoritesAdapter(pets);
@@ -60,11 +61,19 @@ public class PetFavoritesFragment extends Fragment {
         mrvPetFavorites.addItemDecoration(itemDecoration);
 
         adapter.setOnItemClickListener(new PetFavoritesAdapter.OnItemClickListener() {
+
             @Override
             public void onItemClick(View view, View transitionSourceView, int position) {
+
+                if (view.getId() == R.id.ibRemovePetFav) {
+                    pets.remove(position);
+                    adapter.notifyItemRemoved(position);
+                } else {
                     ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), transitionSourceView, "details");
                     startActivity(PetDetailsActivity.getStartIntent(getContext(), pets.get(position)), options.toBundle());
+                }
             }
+
         });
         // Attach the adapter to the recyclerview to populate items
         mrvPetFavorites.setAdapter(adapter);

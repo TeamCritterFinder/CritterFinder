@@ -66,13 +66,9 @@ public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapte
 
         @Override
         public void onClick(View v) {
-            if (v instanceof ImageButton){
-                removePetAt(getAdapterPosition());
-            }else {
                 if (mOnItemClickListener != null) {
                     mOnItemClickListener.onItemClick(v, ivPetFavImage, getAdapterPosition());
                 }
-            }
         }
 
         @OnClick({R.id.ibRemovePetFav})
@@ -149,12 +145,6 @@ public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapte
      */
     public void setOnItemClickListener(final OnItemClickListener mOnItemClickListener) {
         this.mOnItemClickListener = mOnItemClickListener;
-    }
-
-    public void removePetAt(int position){
-       mPets.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, mPets.size());
     }
 
 }
