@@ -7,12 +7,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.codepath.apps.critterfinder.R;
 import com.codepath.apps.critterfinder.adapters.SwipeableCardAdapter;
@@ -129,8 +127,8 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
     public void onScroll(float scrollProgressPercent) {
         View view = mCardContainer.getSelectedView();
         view.findViewById(R.id.swipe_card_background).setAlpha(0); // hide the background frame on the card
-        view.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
-        view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
+        view.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent < 0 ? (-1.f * .60f * scrollProgressPercent) : 0);
+        view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? (.60f * scrollProgressPercent) : 0);
     }
 
     @Override
