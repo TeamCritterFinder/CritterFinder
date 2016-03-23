@@ -2,6 +2,7 @@ package com.codepath.apps.critterfinder.fragments;
 
 
 import android.os.Bundle;
+import android.support.annotation.BinderThread;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.accessibility.AccessibilityManager;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.codepath.apps.critterfinder.R;
 import com.codepath.apps.critterfinder.activities.PetDetailsActivity;
@@ -26,7 +30,10 @@ import butterknife.ButterKnife;
  */
 public class PetFavoritesFragment extends Fragment {
 
-    @Bind (R.id.rvPetFavorites) RecyclerView mrvPetFavorites;
+    @Bind(R.id.rvPetFavorites)
+    RecyclerView mrvPetFavorites;
+    // Create and Initialize pets
+    final List<PetModel> pets = FavoritesService.getInstance().getFavoritePets();
 
     public static PetFavoritesFragment newInstance() {
         PetFavoritesFragment petFavoritesFragment = new PetFavoritesFragment();
@@ -42,27 +49,36 @@ public class PetFavoritesFragment extends Fragment {
         return view;
     }
 
-    public void setupFavoritesPet(){
+    public void setupFavoritesPet() {
         // Create and Initialize pets
-        final List<PetModel> pets = FavoritesService.getInstance().getFavoritePets();
+       // final List<PetModel> pets = FavoritesService.getInstance().getFavoritePets();
 
 
         // Create adapter passing in the sample user data
-        PetFavoritesAdapter adapter = new PetFavoritesAdapter(pets);
+        final PetFavoritesAdapter adapter = new PetFavoritesAdapter(pets);
 
 //        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST);
 //        mrvPetFavorites.addItemDecoration(itemDecoration);
 
         adapter.setOnItemClickListener(new PetFavoritesAdapter.OnItemClickListener() {
+
             @Override
-            public void onItemClick(View view, View transitionSourceView,  int position) {
-                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), transitionSourceView, "details");
-                startActivity(PetDetailsActivity.getStartIntent(getContext(), pets.get(position)), options.toBundle());
+            public void onItemClick(View view, View transitionSourceView, int position) {
+
+                if (view.getId() == R.id.ibRemovePetFav) {
+                    pets.remove(position);
+                    adapter.notifyItemRemoved(position);
+                } else {
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), transitionSourceView, "details");
+                    startActivity(PetDetailsActivity.getStartIntent(getContext(), pets.get(position)), options.toBundle());
+                }
             }
+
         });
         // Attach the adapter to the recyclerview to populate items
         mrvPetFavorites.setAdapter(adapter);
         // Set layout manager to position the items
         mrvPetFavorites.setLayoutManager(new LinearLayoutManager(getContext()));
     }
+
 }
