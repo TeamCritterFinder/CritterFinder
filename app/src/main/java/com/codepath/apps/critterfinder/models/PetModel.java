@@ -35,7 +35,10 @@ public class PetModel {
 
     private static String weirdNameSpace = "$t";
 
-    public PetModel() {}
+    public PetModel() {
+        this.breeds = new ArrayList<>();
+        this.detailImageUrls = new ArrayList<>();
+    }
 
     public String getName() {
         return name;
@@ -98,7 +101,7 @@ public class PetModel {
         switch (size){
             case "S": return "Small";
             case "M": return "Medium";
-            case "L": return "large";
+            case "L": return "Large";
         }
         return "";
     }
@@ -146,6 +149,8 @@ public class PetModel {
     }
 
     public PetModel(JSONObject petJson) {
+        this.breeds = new ArrayList<>();
+        this.detailImageUrls = new ArrayList<>();
         try {
             this.name = petJson.getJSONObject("name").getString(weirdNameSpace);
             this.sex = petJson.getJSONObject("sex").getString(weirdNameSpace);
@@ -189,7 +194,6 @@ public class PetModel {
                     JSONObject jsonObject = petJson.getJSONObject("breeds").getJSONObject("breed");
                     if (jsonObject instanceof JSONObject) {
                         String breedName = jsonObject.getString(weirdNameSpace);
-                        this.breeds = new ArrayList<Breed>();
                         this.breeds.add(new Breed(breedName));
                         Log.d("PetModel", "JSONObject breed");
                     } else {
@@ -199,7 +203,6 @@ public class PetModel {
                     JSONArray jsonArray = petJson.getJSONObject("breeds").getJSONArray("breed");
                     if (jsonArray instanceof JSONArray) {
                         Log.d("PetModel", "Is a JSONArray");
-                        this.breeds = new ArrayList<Breed>();
                         for (int x=0; x< jsonArray.length();x++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(x);
                             if (jsonObject != null && jsonObject.has(weirdNameSpace)) {
@@ -242,7 +245,7 @@ public class PetModel {
 
     // look up all the images that have property name with specified size
     public static List<String> findUrlsToImages(JSONArray jsonArray,String name, String size) {
-        List<String> matchingObjects = null;
+        List<String> matchingObjects = new ArrayList<>();;
 
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject currentObject = null;
@@ -253,9 +256,6 @@ public class PetModel {
                     if (objectValue.compareTo(size) == 0) {
                         String imageUrl = currentObject.getString(weirdNameSpace);
                         imageUrl.replace("\\/","/");
-                        if (matchingObjects == null) {
-                            matchingObjects = new ArrayList<String>();
-                        }
                         matchingObjects.add(imageUrl);
                     }
                 }
