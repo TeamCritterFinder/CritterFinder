@@ -149,7 +149,7 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
     }
 
     @OnClick(R.id.button_pass)
-    public void onPassButtonClicked(Button button) {
+    public void onPassButtonClicked(ImageButton button) {
         // hide the frame on the card being dismissed
         mCardContainer.getSelectedView().findViewById(R.id.swipe_card_background).setAlpha(0);
         mCardContainer.getTopCardListener().selectLeft();
