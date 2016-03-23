@@ -66,6 +66,7 @@ public class PetFavoritesFragment extends Fragment {
             public void onItemClick(View view, View transitionSourceView, int position) {
 
                 if (view.getId() == R.id.ibRemovePetFav) {
+                    view.findViewById(R.id.ibRemovePetFav).setAlpha(0);
                     pets.remove(position);
                     adapter.notifyItemRemoved(position);
                 } else {
