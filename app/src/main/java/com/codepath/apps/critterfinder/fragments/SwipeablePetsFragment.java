@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -140,7 +141,7 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
     }
 
     @OnClick(R.id.button_like)
-    public void onLikeButtonClicked(Button button) {
+    public void onLikeButtonClicked(ImageButton button) {
         // hide the frame on the card being dismissed
         mCardContainer.getSelectedView().findViewById(R.id.swipe_card_background).setAlpha(0);
         // route the click through the card which understands which pet is currently selected
@@ -148,7 +149,7 @@ public class SwipeablePetsFragment extends Fragment implements PetSearch.PetSear
     }
 
     @OnClick(R.id.button_pass)
-    public void onPassButtonClicked(Button button) {
+    public void onPassButtonClicked(ImageButton button) {
         // hide the frame on the card being dismissed
         mCardContainer.getSelectedView().findViewById(R.id.swipe_card_background).setAlpha(0);
         mCardContainer.getTopCardListener().selectLeft();

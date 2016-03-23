@@ -34,7 +34,7 @@ public class ImageGalleryAdapter extends PagerAdapter {
         ImageView imageView = (ImageView) layout.findViewById(R.id.image_pet);
         Picasso.with(mContext).
                 load(mImageUrls.get(position)).
-                placeholder(R.drawable.ic_launcher).
+                placeholder(R.drawable.pet_background).
                 //resize(DeviceDimensionsHelper.getDisplayWidth(getContext()), 0).
                         into(imageView);
 
