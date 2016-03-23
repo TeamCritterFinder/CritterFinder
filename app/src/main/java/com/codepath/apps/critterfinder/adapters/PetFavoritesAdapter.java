@@ -122,6 +122,9 @@ public class PetFavoritesAdapter extends RecyclerView.Adapter<PetFavoritesAdapte
         //Set item views based on the data model
         TextView tvBreeds = viewHolder.tvPetFavBreeds;
         tvBreeds.setText(petModel.getBreedFullName());
+
+        ImageButton ibRemovePetFav = viewHolder.ibRemovePetPav;
+        ibRemovePetFav.setAlpha(1.0f);
     }
 
     // Return the total count of items
