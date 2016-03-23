@@ -12,6 +12,6 @@
     <item
         android:id="@+id/menu_item_favorites"
         android:title="@string/actionbar_favorites_title"
-        android:icon="@drawable/ic_heart_blue"
+        android:icon="@drawable/ic_blue_heart"
         app:showAsAction="ifRoom"/>
 </menu>
